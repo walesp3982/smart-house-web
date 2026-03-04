@@ -4,14 +4,14 @@ import MyButton from "./Button";
 
 describe("Button", () => {
   it("renderiza el texto correctamente", () => {
-    render(<MyButton children="Guardar" onClick={() => {}} />);
+    render(<MyButton onClick={() => {}}>Guardar</MyButton>);
 
     expect(screen.getByText("Guardar")).toBeInTheDocument();
   });
 
   it("llama a onClick al hacer click", () => {
     const handleClick = vi.fn(); // función mock, registra si fue llamada
-    render(<MyButton children="Guardar" onClick={handleClick} />);
+    render(<MyButton onClick={handleClick}>Guardar</MyButton>);
 
     fireEvent.click(screen.getByText("Guardar"));
 
@@ -20,7 +20,11 @@ describe("Button", () => {
 
   it("no llama a onClick si está disabled", () => {
     const handleClick = vi.fn();
-    render(<MyButton children="Guardar" disabled onClick={handleClick} />);
+    render(
+      <MyButton disabled onClick={handleClick}>
+        Guardar
+      </MyButton>
+    );
 
     fireEvent.click(screen.getByText("Guardar"));
 
