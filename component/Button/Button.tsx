@@ -1,14 +1,20 @@
 // components/Button.tsx
-type Props = {
-  label: string
-  disabled?: boolean
-  onClick: () => void
-}
+import Button from "@mui/material/Button";
 
-export default function Button({ label, disabled = false, onClick }: Props) {
+type Props = {
+  children: string;
+  disabled?: boolean;
+  onClick?: () => void;
+};
+
+export default function MyButton({
+  children: label,
+  disabled = false,
+  onClick,
+}: Props) {
   return (
-    <button onClick={onClick} disabled={disabled}>
+    <Button variant="contained" onClick={onClick} disabled={disabled}>
       {label}
-    </button>
-  )
+    </Button>
+  );
 }

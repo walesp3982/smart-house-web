@@ -1,7 +1,5 @@
+// TODO: Hacer DASHBOARD
+
 export default function Home() {
-  return (
-   <div>
-    Hola a todo el mundo
-   </div>
-  );
+  return <div>Hola a todo el mundo</div>;
 }
