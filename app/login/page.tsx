@@ -6,24 +6,74 @@ import "./login.css";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Background from "@/component/Background";
-import Card from "@/component/Card";
-
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = () => {};
+
+  const handleMouseUpPassword = (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.preventDefault();
+  };
   return (
     <Background>
-      <Card>
-        <h1>Iniciar Sesión</h1>
+      <Container maxWidth="sm">
+        <Paper elevation={3} sx={{ p: 4, mt: 8, borderRadius: "12px" }}>
+          <Stack spacing={5}>
+            <Typography variant="h4" align="center">
+              Iniciar sesión
+            </Typography>
+            <TextField label="Email" fullWidth />
+            <FormControl variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">
+                Password
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                type={showPassword ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label={
+                        showPassword
+                          ? "hide the password"
+                          : "display the password"
+                      }
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      onMouseUp={handleMouseUpPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password"
+              />
+            </FormControl>
 
-        <form>
-          <input
-            type="email"
-            placeholder="Correo electrónico"
-            className="input"
-          />
+            <Button variant="contained" size="large" fullWidth>
+              Entrar
+            </Button>
+          </Stack>
+        </Paper>
+      </Container>
 
-          <div className="password-container">
+      {/* <div className="password-container">
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Contraseña"
@@ -36,11 +86,7 @@ export default function Login() {
             >
               {showPassword ? <Visibility /> : <VisibilityOff />}
             </span>
-          </div>
-
-          <button className="button">Ingresar</button>
-        </form>
-      </Card>
+          </div> */}
     </Background>
   );
 }
