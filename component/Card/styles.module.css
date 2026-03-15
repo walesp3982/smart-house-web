@@ -1,0 +1,12 @@
+.card {
+  background: #1f4b57;
+  padding: 40px;
+  border-radius: 15px;
+  width: 350px;
+  text-align: center;
+}
+
+.card h1 {
+  margin-bottom: 30px;
+  color: white;
+}

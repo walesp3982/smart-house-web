@@ -5,13 +5,15 @@ import "./login.css";
 
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Background from "@/component/Background";
+import Card from "@/component/Card";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="container">
-      <div className="card">
+    <Background>
+      <Card>
         <h1>Iniciar Sesión</h1>
 
         <form>
@@ -38,7 +40,7 @@ export default function Login() {
 
           <button className="button">Ingresar</button>
         </form>
-      </div>
-    </div>
+      </Card>
+    </Background>
   );
 }
