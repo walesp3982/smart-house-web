@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "gen:types": "openapi-typescript http://localhost:8000/openapi.json -o src/lib/api/types.ts"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
@@ -19,6 +20,7 @@
     "@mui/material-nextjs": "^7.3.8",
     "@tanstack/react-query": "^5.90.21",
     "next": "16.1.6",
+    "openapi-fetch": "^0.17.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.2",
@@ -38,6 +40,7 @@
     "eslint-config-next": "16.1.6",
     "happy-dom": "^20.8.3",
     "jsdom": "^28.1.0",
+    "openapi-typescript": "^7.13.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.0.18"
