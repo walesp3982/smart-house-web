@@ -10,6 +10,7 @@ import {
   FieldPath,
   FieldValues,
 } from "react-hook-form";
+import FormHelperText from "@mui/material/FormHelperText";
 
 interface PasswordFieldProps<
   TFieldValues extends FieldValues,
@@ -46,6 +47,7 @@ export default function PasswordFieldProps<
         label="Password"
         {...field}
       />
+      <FormHelperText>{fieldState.error?.message}</FormHelperText>
     </FormControl>
   );
 }

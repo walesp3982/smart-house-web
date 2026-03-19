@@ -7,6 +7,13 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useForm, Controller } from "react-hook-form";
 
+import * as z from "zod";
+
+const DataSubmit = z.object({
+  email: z.email(),
+  password: z.string().min(1),
+});
+
 type FormValues = {
   email: string;
   password: string;
@@ -16,8 +23,16 @@ export default function LoginForm() {
     defaultValues: { email: "", password: "" },
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+  const onSubmit = (data_submit: FormValues) => {
+    const result = DataSubmit.safeParse({
+      email: data_submit.email,
+      password: data_submit.password,
+    });
+    if (!result.success) {
+      console.log(result.error);
+    } else {
+      console.log(result);
+    }
   };
 
   return (
