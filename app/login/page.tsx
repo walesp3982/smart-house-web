@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client"
 
 import { useState } from "react"
@@ -54,26 +55,55 @@ export default function Login() {
 
         <form onSubmit={handleLogin}>
 
+=======
+"use client";
+
+import { useState } from "react";
+import "./login.css";
+
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
+export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+
+  return (
+    <div className="container">
+      <div className="card">
+        <h1>Iniciar Sesión</h1>
+
+        <form>
+>>>>>>> b4b1dfa87f690a2176f2df8f6b033dd4de54dbc8
           <input
             type="email"
             placeholder="Correo electrónico"
             className="input"
+<<<<<<< HEAD
             value={email}
             onChange={(e)=>setEmail(e.target.value)}
           />
 
           <div className="password-container">
 
+=======
+          />
+
+          <div className="password-container">
+>>>>>>> b4b1dfa87f690a2176f2df8f6b033dd4de54dbc8
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Contraseña"
               className="input"
+<<<<<<< HEAD
               value={password}
               onChange={(e)=>setPassword(e.target.value)}
+=======
+>>>>>>> b4b1dfa87f690a2176f2df8f6b033dd4de54dbc8
             />
 
             <span
               className="eye"
+<<<<<<< HEAD
               onClick={()=>setShowPassword(!showPassword)}
             >
               {showPassword ? "👁" : "🙈"}
@@ -91,3 +121,17 @@ export default function Login() {
     </div>
   )
 }
+=======
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <Visibility /> : <VisibilityOff />}
+            </span>
+          </div>
+
+          <button className="button">Ingresar</button>
+        </form>
+      </div>
+    </div>
+  );
+}
+>>>>>>> b4b1dfa87f690a2176f2df8f6b033dd4de54dbc8
