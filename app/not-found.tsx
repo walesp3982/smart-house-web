@@ -34,7 +34,7 @@ export default function NotFound() {
         </Typography>
 
         <Typography variant="body1" color="text.secondary" sx={{ mb: 2, px: 2 }}>
-          Parece que esta habitación o dispositivo no existe en tu Smart House. 
+          Parece que esta habitación no existe en tu Smart House. 
 
         </Typography>
 
