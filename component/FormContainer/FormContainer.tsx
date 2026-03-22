@@ -9,7 +9,7 @@ export default function FormContainer({
   children,
 }: propsFormContainer): JSX.Element {
   return (
-    <Paper elevation={3} sx={{ p: 4, mt: 8, borderRadius: "12px" }}>
+    <Paper elevation={0} sx={{ p: 4, mt: 8, borderRadius: "12px" }}>
       <Stack spacing={5}>{children}</Stack>
     </Paper>
   );
