@@ -1,0 +1,275 @@
+/* Dashboard.module.css - Tema claro con contraste óptimo */
+
+/* Variables de color */
+:root {
+  --primary-dark: #005187;
+  --primary-medium: #4d82bc;
+  --primary-light: #84b6f4;
+  --primary-extra-light: #c4dafa;
+  --background-main: #fcffff;
+  --background-paper: #ffffff;
+  --sidebar-bg: #4d82bc;        /* ahora más claro */
+  --sidebar-text: #ffffff;
+  --sidebar-hover-bg: rgba(255, 255, 255, 0.2);
+  --text-primary: #fcfcfc;
+  --text-secondary: #84898f;
+  --border-color: #d1d5db;
+  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+}
+
+.root {
+  display: flex;
+  background-color: var(--background-main);
+  min-height: 100vh;
+}
+
+/* ========== SIDEBAR ========== */
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.sidebarPaper {
+  width: 260px;
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  border-right: none;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.05);
+}
+
+.sidebarHeader {
+  padding: 1.5rem;
+  color: var(--sidebar-text);
+}
+
+.sidebarHeader h6 {
+  font-weight: bold;
+}
+
+.sidebarHeader .caption {
+  opacity: 0.9;
+}
+
+.menuList {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.menuItem {
+  border-radius: 0.75rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s;
+}
+
+.menuItemActive {
+  background-color: var(--sidebar-hover-bg);
+  color: var(--sidebar-text);
+  font-weight: 500;
+}
+
+.menuItemInactive {
+  background-color: transparent;
+  color: var(--sidebar-text);
+  opacity: 0.85;
+}
+
+.menuItem:hover {
+  background-color: var(--sidebar-hover-bg);
+  color: var(--sidebar-text);
+  opacity: 1;
+}
+
+.menuIcon {
+  min-width: 40px;
+  color: inherit;
+}
+
+.userFooter {
+  margin-top: auto;
+  padding: 0.5rem 1rem;
+  background-color: rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.userAvatar {
+  width: 32px;
+  height: 32px;
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+.userInfo {
+  flex-grow: 1;
+}
+
+.userName {
+  display: block;
+  color: var(--sidebar-text);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.userEmail {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  color: var(--sidebar-text);
+}
+
+/* ========== CONTENIDO PRINCIPAL ========== */
+.mainContent {
+  flex-grow: 1;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Tarjetas */
+.card {
+  padding: 2rem;
+  width: 100%;
+  max-width: 550px;
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow);
+  text-align: center;
+  border: 1px solid var(--border-color);
+  background-color: var(--background-paper);
+}
+
+.cardLarge {
+  max-width: 800px;
+  padding: 2rem;
+}
+
+.title {
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.subtitle {
+  margin-bottom: 2rem;
+  color: var(--text-secondary);
+}
+
+/* Campos de texto */
+.textField {
+  background-color: var(--primary-extra-light);
+  border-radius: 0.5rem;
+}
+
+.textField .MuiFilledInput-root {
+  background-color: transparent;
+}
+
+/* Selector de casa */
+.formControl {
+  background-color: var(--primary-extra-light);
+  border-radius: 0.5rem;
+}
+
+/* Icono del Select (triángulo) - en azul */
+.formControl .MuiSelect-icon {
+  color: var(--primary-dark) !important;
+  transition: color 0.2s;
+}
+
+.formControl .MuiSelect-icon:hover {
+  color: var(--primary-medium) !important;
+}
+
+/* Botones */
+.newHouseButton {
+  border-radius: 1rem;
+  text-transform: none;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-color: var(--primary-medium);
+  color: var(--primary-dark);
+}
+
+.newHouseButton:hover {
+  border-color: var(--primary-dark);
+  background-color: rgba(0, 81, 135, 0.05);
+}
+
+.addDeviceButton {
+  background-color: var(--primary-dark);
+  color: white;
+  padding: 0.75rem;
+  border-radius: 1rem;
+  text-transform: none;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 4px 14px rgba(0, 81, 135, 0.2);
+  transition: all 0.2s;
+}
+
+.addDeviceButton:hover {
+  background-color: #003f66;
+  box-shadow: 0 6px 20px rgba(0, 81, 135, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Lista de dispositivos */
+.deviceItem {
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background-color: var(--primary-extra-light);
+  border: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.deviceItem:hover {
+  background-color: #e6f0ff;
+}
+
+.deviceInfo {
+  flex-grow: 1;
+}
+
+.deviceCode {
+  font-weight: bold;
+  color: var(--primary-dark);
+}
+
+.deviceDescription {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.deviceMeta {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Seguimiento */
+.trackingPlaceholder {
+  padding: 1.5rem;
+  background-color: var(--primary-extra-light);
+  border-radius: 0.75rem;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+
+.MuiMenuItem-root {
+  color: var(--text-primary) !important;
+}
+
+
+.MuiMenuItem-root:hover {
+  background-color: var(--primary-extra-light) !important;
+}
+
+/* Opción seleccionada */
+.Mui-selected {
+  background-color: var(--primary-light) !important;
+  color: var(--primary-dark) !important;
+}

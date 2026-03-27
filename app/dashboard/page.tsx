@@ -4,121 +4,74 @@ import {
   Box, Drawer, List, ListItem, ListItemButton, ListItemIcon,
   ListItemText, Typography, TextField, Button, Avatar,
   Paper, Select, MenuItem, InputLabel, FormControl, Stack,
-  IconButton, createTheme, ThemeProvider, Dialog, DialogTitle,
-  DialogContent, DialogActions, Alert, Snackbar
+  IconButton, Dialog, DialogTitle, DialogContent, DialogActions,
+  Alert, Snackbar
 } from '@mui/material';
 import {
   Home as HomeIcon, Devices as DeviceIcon,
   Timeline as TimelineIcon, Settings as SettingsIcon, AddCircleOutline as AddIcon,
-  DarkMode, LightMode, Edit as EditIcon, Delete as DeleteIcon
+  Edit as EditIcon, Delete as DeleteIcon
 } from '@mui/icons-material';
+import styles from './Dashboard.module.css';
 
 const drawerWidth = 260;
 
-// Traducciones
+// Traducciones (solo español fijo)
+const t = (key: keyof typeof translations) => translations[key];
+
 const translations = {
-  es: {
-    appName: '✨Tu casa inteligente✨',
-    appSubtitle: 'Panel de Control',
-    menuInicio: 'Inicio',
-    menuDispositivos: 'Dispositivos',
-    menuSeguimiento: 'Seguimiento',
-    welcome: 'Bienvenido',
-    enterDeviceCode: 'Ingrese el código de dispositivo',
-    deviceCodeLabel: 'Código de dispositivo',
-    deviceCodePlaceholder: 'Ej: SH-2024-XXXX',
-    deviceDescriptionLabel: 'Descripción (opcional)',
-    deviceDescriptionPlaceholder: 'Ej: Termostato sala',
-    selectHouseLabel: 'Seleccionar casa',
-    newHouseButton: 'Nueva Casa',
-    addDeviceButton: 'Agregar dispositivo',
-    myDevices: 'Mis Dispositivos',
-    noDevices: 'No tienes dispositivos agregados aún.',
-    houseLabel: 'Casa',
-    addedLabel: 'Agregado',
-    editDevice: 'Editar Dispositivo',
-    deviceCodeEditLabel: 'Código del dispositivo',
-    deleteConfirmTitle: 'Confirmar eliminación',
-    deleteConfirmMessage: '¿Estás seguro de que deseas eliminar el dispositivo "{device}"?',
-    cancel: 'Cancelar',
-    delete: 'Eliminar',
-    save: 'Guardar',
-    add: 'Agregar',
-    settings: 'Configuración',
-    userPreferences: 'Preferencias del usuario',
-    nameLabel: 'Nombre',
-    emailLabel: 'Email',
-    languageLabel: 'Idioma',
-    spanish: 'Español',
-    english: 'English',
-    close: 'Cerrar',
-    newHouseDialogTitle: 'Nueva Casa',
-    houseNameLabel: 'Nombre de la casa',
-    houseDescriptionLabel: 'Descripción (opcional)',
-    trackingTitle: 'Seguimiento de Actividad',
-    trackingDescription: 'Aquí podrás ver estadísticas y eventos de tus dispositivos.',
-    trackingPlaceholder: 'Gráficos y métricas próximamente.',
-    snackbarDeviceAdded: 'Dispositivo agregado correctamente',
-    snackbarDeviceUpdated: 'Dispositivo actualizado',
-    snackbarDeviceDeleted: 'Dispositivo eliminado',
-    snackbarHouseAdded: 'Casa "{name}" agregada',
-    snackbarSettingsSaved: 'Configuración guardada',
-    snackbarErrorDeviceCode: 'Por favor ingresa un código de dispositivo',
-    snackbarErrorSelectHouse: 'Selecciona una casa',
-    snackbarErrorHouseName: 'Ingresa un nombre para la casa',
-    snackbarErrorEmptyCode: 'El código no puede estar vacío',
-  },
-  en: {
-    appName: '✨Your smart home✨',
-    appSubtitle: 'Control Panel',
-    menuInicio: 'Home',
-    menuDispositivos: 'Devices',
-    menuSeguimiento: 'Tracking',
-    welcome: 'Welcome',
-    enterDeviceCode: 'Enter device code',
-    deviceCodeLabel: 'Device code',
-    deviceCodePlaceholder: 'Ex: SH-2024-XXXX',
-    deviceDescriptionLabel: 'Description (optional)',
-    deviceDescriptionPlaceholder: 'Ex: Living room thermostat',
-    selectHouseLabel: 'Select house',
-    newHouseButton: 'New House',
-    addDeviceButton: 'Add device',
-    myDevices: 'My Devices',
-    noDevices: "You don't have any devices yet.",
-    houseLabel: 'House',
-    addedLabel: 'Added',
-    editDevice: 'Edit Device',
-    deviceCodeEditLabel: 'Device code',
-    deleteConfirmTitle: 'Confirm deletion',
-    deleteConfirmMessage: 'Are you sure you want to delete the device "{device}"?',
-    cancel: 'Cancel',
-    delete: 'Delete',
-    save: 'Save',
-    add: 'Add',
-    settings: 'Settings',
-    userPreferences: 'User preferences',
-    nameLabel: 'Name',
-    emailLabel: 'Email',
-    languageLabel: 'Language',
-    spanish: 'Spanish',
-    english: 'English',
-    close: 'Close',
-    newHouseDialogTitle: 'New House',
-    houseNameLabel: 'House name',
-    houseDescriptionLabel: 'Description (optional)',
-    trackingTitle: 'Activity Tracking',
-    trackingDescription: 'Here you can see statistics and events of your devices.',
-    trackingPlaceholder: 'Charts and metrics coming soon.',
-    snackbarDeviceAdded: 'Device added successfully',
-    snackbarDeviceUpdated: 'Device updated',
-    snackbarDeviceDeleted: 'Device deleted',
-    snackbarHouseAdded: 'House "{name}" added',
-    snackbarSettingsSaved: 'Settings saved',
-    snackbarErrorDeviceCode: 'Please enter a device code',
-    snackbarErrorSelectHouse: 'Select a house',
-    snackbarErrorHouseName: 'Enter a house name',
-    snackbarErrorEmptyCode: 'Code cannot be empty',
-  }
+  appName: 'Tu casa inteligente✨',
+  appSubtitle: 'Panel de Control',
+  menuInicio: 'Inicio',
+  menuDispositivos: 'Dispositivos',
+  menuSeguimiento: 'Seguimiento',
+  welcome: 'Bienvenido',
+  enterDeviceCode: 'Ingrese el código de dispositivo',
+  deviceCodeLabel: 'Código de dispositivo',
+  deviceCodePlaceholder: 'Ej: SH-2024-XXXX',
+  deviceDescriptionLabel: 'Descripción (opcional)',
+  deviceDescriptionPlaceholder: 'Ej: Termostato sala',
+  selectHouseLabel: 'Seleccionar casa',
+  newHouseButton: 'Nueva Casa',
+  addDeviceButton: 'Agregar dispositivo',
+  myDevices: 'Mis Dispositivos',
+  noDevices: 'No tienes dispositivos agregados aún.',
+  houseLabel: 'Casa',
+  addedLabel: 'Agregado',
+  editDevice: 'Editar Dispositivo',
+  deviceCodeEditLabel: 'Código del dispositivo',
+  deleteConfirmTitle: 'Confirmar eliminación',
+  deleteConfirmMessage: '¿Estás seguro de que deseas eliminar el dispositivo "{device}"?',
+  cancel: 'Cancelar',
+  delete: 'Eliminar',
+  save: 'Guardar',
+  add: 'Agregar',
+  settings: 'Configuración',
+  nameLabel: 'Nombre',
+  emailLabel: 'Email',
+  close: 'Cerrar',
+  newHouseDialogTitle: 'Nueva Casa',
+  houseNameLabel: 'Nombre de la casa',
+  houseDescriptionLabel: 'Descripción (opcional)',
+  trackingTitle: 'Seguimiento de Actividad',
+  trackingDescription: 'Aquí podrás ver estadísticas y eventos de tus dispositivos.',
+  trackingPlaceholder: 'Gráficos y métricas próximamente.',
+  snackbarDeviceAdded: 'Dispositivo agregado correctamente',
+  snackbarDeviceUpdated: 'Dispositivo actualizado',
+  snackbarDeviceDeleted: 'Dispositivo eliminado',
+  snackbarHouseAdded: 'Casa "{name}" agregada',
+  snackbarSettingsSaved: 'Configuración guardada',
+  snackbarErrorDeviceCode: 'Por favor ingresa un código de dispositivo',
+  snackbarErrorSelectHouse: 'Selecciona una casa',
+  snackbarErrorHouseName: 'Ingresa un nombre para la casa',
+  snackbarErrorEmptyCode: 'El código no puede estar vacío',
+  // Casas predefinidas
+  houseMain: 'Casa Principal',
+  houseMainDesc: 'Residencia principal',
+  houseOffice: 'Oficina',
+  houseOfficeDesc: 'Oficina central',
+  houseCountry: 'Casa de Campo',
+  houseCountryDesc: 'Casa de vacaciones',
 };
 
 // Interfaces
@@ -127,41 +80,34 @@ interface House {
   name: string;
   description: string;
   icon: string;
+  isPredefined?: boolean;
 }
 
 interface Device {
   id: number;
   code: string;
   description?: string;
-  house: string;
-  houseId?: number;
+  houseId: number;
   addedAt: string;
 }
 
 interface UserProfile {
   name: string;
   email: string;
-  language: 'es' | 'en';
 }
 
 export default function DashboardPremium() {
-  const [darkMode, setDarkMode] = useState(false);
   const [activeSection, setActiveSection] = useState<'inicio' | 'dispositivos' | 'seguimiento'>('inicio');
 
   const [deviceCode, setDeviceCode] = useState('');
   const [deviceDescription, setDeviceDescription] = useState('');
-  const [selectedHouse, setSelectedHouse] = useState('');
-  const [houses, setHouses] = useState<House[]>([
-    { id: 1, name: 'Casa Principal', description: 'Residencia principal', icon: '🏠' },
-    { id: 2, name: 'Oficina', description: 'Oficina central', icon: '🏢' },
-    { id: 3, name: 'Casa de Campo', description: 'Finca los pinos', icon: '🏡' },
-  ]);
+  const [selectedHouseId, setSelectedHouseId] = useState<number | ''>('');
+  const [customHouses, setCustomHouses] = useState<House[]>([]);
   const [devices, setDevices] = useState<Device[]>([]);
 
   const [userProfile, setUserProfile] = useState<UserProfile>({
     name: 'Admin',
     email: 'admin@smarthome.com',
-    language: 'es',
   });
 
   const [openNewHouseDialog, setOpenNewHouseDialog] = useState(false);
@@ -184,65 +130,35 @@ export default function DashboardPremium() {
     severity: 'success',
   });
 
-  // Función de traducción
-  const t = (key: keyof typeof translations.es) => {
-    return translations[userProfile.language][key] || translations.es[key];
+  // Casas predefinidas (estáticas)
+  const predefinedHouses: House[] = useMemo(() => [
+    { id: 1, name: t('houseMain'), description: t('houseMainDesc'), icon: '🏠', isPredefined: true },
+    { id: 2, name: t('houseOffice'), description: t('houseOfficeDesc'), icon: '🏢', isPredefined: true },
+    { id: 3, name: t('houseCountry'), description: t('houseCountryDesc'), icon: '🏡', isPredefined: true },
+  ], []);
+
+  const allHouses = [...predefinedHouses, ...customHouses];
+
+  const getHouseNameById = (id: number) => {
+    const house = allHouses.find(h => h.id === id);
+    return house ? house.name : 'Desconocida';
   };
-
-  // Tema de Material-UI
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: darkMode ? 'dark' : 'light',
-          background: {
-            default: darkMode ? '#0f172a' : '#f4f6f8',
-            paper: darkMode ? '#1e293b' : '#ffffff',
-          },
-          primary: {
-            main: '#111827',
-          },
-        },
-        components: {
-          MuiDrawer: {
-            styleOverrides: {
-              paper: {
-                backgroundColor: darkMode ? '#0f172a' : '#111827',
-                color: darkMode ? '#cbd5e1' : '#9ca3af',
-                borderRight: 'none',
-              },
-            },
-          },
-        },
-      }),
-    [darkMode]
-  );
-
-  const toggleDarkMode = () => setDarkMode(prev => !prev);
-
-  const menuItems = [
-    { text: t('menuInicio'), icon: <HomeIcon />, id: 'inicio' as const },
-    { text: t('menuDispositivos'), icon: <DeviceIcon />, id: 'dispositivos' as const },
-    { text: t('menuSeguimiento'), icon: <TimelineIcon />, id: 'seguimiento' as const },
-  ];
 
   const handleAddDevice = () => {
     if (!deviceCode.trim()) {
       setSnackbar({ open: true, message: t('snackbarErrorDeviceCode'), severity: 'error' });
       return;
     }
-    if (!selectedHouse) {
+    if (!selectedHouseId) {
       setSnackbar({ open: true, message: t('snackbarErrorSelectHouse'), severity: 'error' });
       return;
     }
 
-    const house = houses.find(h => h.id === parseInt(selectedHouse));
     const newDevice: Device = {
       id: Date.now(),
       code: deviceCode,
       description: deviceDescription.trim() || undefined,
-      house: house?.name || selectedHouse,
-      houseId: house?.id,
+      houseId: selectedHouseId,
       addedAt: new Date().toLocaleString(),
     };
     setDevices([...devices, newDevice]);
@@ -256,15 +172,15 @@ export default function DashboardPremium() {
       setSnackbar({ open: true, message: t('snackbarErrorHouseName'), severity: 'error' });
       return;
     }
-    const newId = houses.length + 1;
+    const newId = Math.max(...allHouses.map(h => h.id), 0) + 1;
     const newHouse: House = {
       id: newId,
       name: newHouseName,
       description: newHouseDescription.trim() || 'Sin descripción',
-      icon: '🏠'
+      icon: '🏠',
     };
-    setHouses([...houses, newHouse]);
-    setSelectedHouse(newId.toString());
+    setCustomHouses([...customHouses, newHouse]);
+    setSelectedHouseId(newId);
     setNewHouseName('');
     setNewHouseDescription('');
     setOpenNewHouseDialog(false);
@@ -322,29 +238,19 @@ export default function DashboardPremium() {
 
   const handleOpenSettings = () => setOpenSettingsDialog(true);
 
+  const menuItems = [
+    { text: t('menuInicio'), icon: <HomeIcon />, id: 'inicio' as const },
+    { text: t('menuDispositivos'), icon: <DeviceIcon />, id: 'dispositivos' as const },
+    { text: t('menuSeguimiento'), icon: <TimelineIcon />, id: 'seguimiento' as const },
+  ];
+
   const renderContent = () => {
     switch (activeSection) {
       case 'inicio':
         return (
-          <Paper
-            elevation={0}
-            sx={{
-              p: 6,
-              width: '100%',
-              maxWidth: 550,
-              borderRadius: 6,
-              boxShadow: darkMode ? '0 10px 40px rgba(0,0,0,0.3)' : '0 10px 40px rgba(0,0,0,0.04)',
-              textAlign: 'center',
-              border: `1px solid ${darkMode ? '#334155' : '#e5e7eb'}`,
-              bgcolor: 'background.paper',
-            }}
-          >
-            <Typography variant="h3" fontWeight="800" sx={{ mb: 1, color: darkMode ? '#f1f5f9' : '#111827' }}>
-              {t('welcome')}
-            </Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-              {t('enterDeviceCode')}
-            </Typography>
+          <Paper elevation={0} className={styles.card}>
+            <Typography variant="h3" className={styles.title}>{t('welcome')}</Typography>
+            <Typography variant="body1" className={styles.subtitle}>{t('enterDeviceCode')}</Typography>
 
             <Stack spacing={3}>
               <TextField
@@ -354,12 +260,7 @@ export default function DashboardPremium() {
                 placeholder={t('deviceCodePlaceholder')}
                 value={deviceCode}
                 onChange={(e) => setDeviceCode(e.target.value)}
-                sx={{
-                  bgcolor: darkMode ? '#1e293b' : '#f9fafb',
-                  borderRadius: 2,
-                  '& .MuiFilledInput-root': { bgcolor: 'transparent' },
-                  '& .MuiInputLabel-root': { color: darkMode ? '#94a3b8' : undefined },
-                }}
+                className={styles.textField}
               />
               <TextField
                 fullWidth
@@ -368,27 +269,22 @@ export default function DashboardPremium() {
                 placeholder={t('deviceDescriptionPlaceholder')}
                 value={deviceDescription}
                 onChange={(e) => setDeviceDescription(e.target.value)}
-                sx={{
-                  bgcolor: darkMode ? '#1e293b' : '#f9fafb',
-                  borderRadius: 2,
-                  '& .MuiFilledInput-root': { bgcolor: 'transparent' },
-                  '& .MuiInputLabel-root': { color: darkMode ? '#94a3b8' : undefined },
-                }}
+                className={styles.textField}
               />
 
               <Box sx={{ display: 'flex', gap: 2 }}>
-                <FormControl fullWidth variant="filled" sx={{ bgcolor: darkMode ? '#1e293b' : '#f9fafb', borderRadius: 2 }}>
+                <FormControl fullWidth variant="filled" className={styles.formControl}>
                   <InputLabel>{t('selectHouseLabel')}</InputLabel>
                   <Select
-                    value={selectedHouse}
-                    onChange={(e) => setSelectedHouse(e.target.value)}
+                    value={selectedHouseId}
+                    onChange={(e) => setSelectedHouseId(e.target.value as number)}
                     label={t('selectHouseLabel')}
                     renderValue={(value) => {
-                      const house = houses.find(h => h.id === parseInt(value));
+                      const house = allHouses.find(h => h.id === value);
                       return house ? `${house.icon} ${house.name}` : '';
                     }}
                   >
-                    {houses.map((house) => (
+                    {allHouses.map((house) => (
                       <MenuItem key={house.id} value={house.id} sx={{ flexDirection: 'column', alignItems: 'flex-start' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                           <Typography component="span" sx={{ mr: 1 }}>{house.icon}</Typography>
@@ -406,13 +302,7 @@ export default function DashboardPremium() {
                   variant="outlined"
                   startIcon={<AddIcon />}
                   onClick={() => setOpenNewHouseDialog(true)}
-                  sx={{
-                    borderRadius: 3,
-                    textTransform: 'none',
-                    px: 3,
-                    borderColor: darkMode ? '#475569' : '#d1d5db',
-                    color: darkMode ? '#e2e8f0' : '#374151',
-                  }}
+                  className={styles.newHouseButton}
                 >
                   {t('newHouseButton')}
                 </Button>
@@ -422,20 +312,7 @@ export default function DashboardPremium() {
                 variant="contained"
                 fullWidth
                 onClick={handleAddDevice}
-                sx={{
-                  bgcolor: darkMode ? '#1e293b' : '#111827',
-                  color: 'white',
-                  py: 2,
-                  borderRadius: 3,
-                  textTransform: 'none',
-                  fontSize: '1rem',
-                  fontWeight: 'bold',
-                  boxShadow: darkMode ? '0 4px 14px rgba(0,0,0,0.5)' : '0 4px 14px rgba(0,0,0,0.2)',
-                  '&:hover': {
-                    bgcolor: darkMode ? '#0f172a' : '#000',
-                    boxShadow: darkMode ? '0 6px 20px rgba(0,0,0,0.7)' : '0 6px 20px rgba(0,0,0,0.3)',
-                  },
-                }}
+                className={styles.addDeviceButton}
               >
                 {t('addDeviceButton')}
               </Button>
@@ -445,64 +322,28 @@ export default function DashboardPremium() {
 
       case 'dispositivos':
         return (
-          <Paper
-            elevation={0}
-            sx={{
-              p: 4,
-              width: '100%',
-              maxWidth: 800,
-              borderRadius: 6,
-              boxShadow: darkMode ? '0 10px 40px rgba(0,0,0,0.3)' : '0 10px 40px rgba(0,0,0,0.04)',
-              border: `1px solid ${darkMode ? '#334155' : '#e5e7eb'}`,
-              bgcolor: 'background.paper',
-            }}
-          >
-            <Typography variant="h4" fontWeight="bold" sx={{ mb: 3, color: darkMode ? '#f1f5f9' : '#111827' }}>
-              {t('myDevices')}
-            </Typography>
+          <Paper elevation={0} className={`${styles.card} ${styles.cardLarge}`}>
+            <Typography variant="h4" className={styles.title}>{t('myDevices')}</Typography>
             {devices.length === 0 ? (
               <Typography color="text.secondary">{t('noDevices')}</Typography>
             ) : (
               <Stack spacing={2}>
                 {devices.map((device) => (
-                  <Box
-                    key={device.id}
-                    sx={{
-                      p: 2,
-                      borderRadius: 2,
-                      bgcolor: darkMode ? '#1e293b' : '#f9fafb',
-                      border: `1px solid ${darkMode ? '#334155' : '#e5e7eb'}`,
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center'
-                    }}
-                  >
-                    <Box sx={{ flexGrow: 1 }}>
-                      <Typography variant="subtitle1" fontWeight="bold">
-                        {device.code}
-                      </Typography>
+                  <Box key={device.id} className={styles.deviceItem}>
+                    <Box className={styles.deviceInfo}>
+                      <Typography className={styles.deviceCode}>{device.code}</Typography>
                       {device.description && (
-                        <Typography variant="body2" color="text.secondary">
-                          {device.description}
-                        </Typography>
+                        <Typography className={styles.deviceDescription}>{device.description}</Typography>
                       )}
-                      <Typography variant="body2" color="text.secondary">
-                        {t('houseLabel')}: {device.house} | {t('addedLabel')}: {device.addedAt}
+                      <Typography className={styles.deviceMeta}>
+                        {t('houseLabel')}: {getHouseNameById(device.houseId)} | {t('addedLabel')}: {device.addedAt}
                       </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', gap: 1 }}>
-                      <IconButton
-                        size="small"
-                        onClick={() => handleEditDevice(device)}
-                        sx={{ color: darkMode ? '#94a3b8' : '#64748b' }}
-                      >
+                      <IconButton size="small" onClick={() => handleEditDevice(device)}>
                         <EditIcon fontSize="small" />
                       </IconButton>
-                      <IconButton
-                        size="small"
-                        onClick={() => handleDeleteDevice(device)}
-                        sx={{ color: darkMode ? '#94a3b8' : '#64748b' }}
-                      >
+                      <IconButton size="small" onClick={() => handleDeleteDevice(device)}>
                         <DeleteIcon fontSize="small" />
                       </IconButton>
                     </Box>
@@ -515,25 +356,10 @@ export default function DashboardPremium() {
 
       case 'seguimiento':
         return (
-          <Paper
-            elevation={0}
-            sx={{
-              p: 4,
-              width: '100%',
-              maxWidth: 800,
-              borderRadius: 6,
-              boxShadow: darkMode ? '0 10px 40px rgba(0,0,0,0.3)' : '0 10px 40px rgba(0,0,0,0.04)',
-              border: `1px solid ${darkMode ? '#334155' : '#e5e7eb'}`,
-              bgcolor: 'background.paper',
-            }}
-          >
-            <Typography variant="h4" fontWeight="bold" sx={{ mb: 3, color: darkMode ? '#f1f5f9' : '#111827' }}>
-              {t('trackingTitle')}
-            </Typography>
-            <Typography color="text.secondary" sx={{ mb: 2 }}>
-              {t('trackingDescription')}
-            </Typography>
-            <Box sx={{ p: 3, bgcolor: darkMode ? '#0f172a' : '#f1f5f9', borderRadius: 2 }}>
+          <Paper elevation={0} className={`${styles.card} ${styles.cardLarge}`}>
+            <Typography variant="h4" className={styles.title}>{t('trackingTitle')}</Typography>
+            <Typography color="text.secondary" sx={{ mb: 2 }}>{t('trackingDescription')}</Typography>
+            <Box className={styles.trackingPlaceholder}>
               <Typography variant="body2" color="text.secondary" align="center">
                 {t('trackingPlaceholder')}
               </Typography>
@@ -547,92 +373,52 @@ export default function DashboardPremium() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box sx={{ display: 'flex', bgcolor: 'background.default', minHeight: '100vh' }}>
-        <Drawer
-          variant="permanent"
-          sx={{
-            width: drawerWidth,
-            '& .MuiDrawer-paper': { width: drawerWidth },
-          }}
-        >
-          <Box sx={{ p: 3, color: 'white' }}>
-            <Typography variant="h6" fontWeight="bold">{t('appName')}</Typography>
-            <Typography variant="caption" sx={{ opacity: 0.7 }}>{t('appSubtitle')}</Typography>
-          </Box>
-
-          <List sx={{ px: 2 }}>
-            {menuItems.map((item) => (
-              <ListItem key={item.id} disablePadding sx={{ mb: 1 }}>
-                <ListItemButton
-                  onClick={() => setActiveSection(item.id)}
-                  sx={{
-                    borderRadius: 2,
-                    bgcolor: activeSection === item.id ? 'rgba(255,255,255,0.08)' : 'transparent',
-                    color: activeSection === item.id ? 'white' : 'inherit',
-                    '&:hover': { bgcolor: 'rgba(255,255,255,0.12)', color: 'white' },
-                  }}
-                >
-                  <ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>
-                    {item.icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={item.text}
-                    primaryTypographyProps={{
-                      fontSize: '0.9rem',
-                      fontWeight: activeSection === item.id ? 600 : 400,
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-
-          <Box
-            sx={{
-              mt: 'auto',
-              p: 2,
-              bgcolor: darkMode ? '#1e293b' : '#1f2937',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 2,
-            }}
-          >
-            <Avatar sx={{ bgcolor: '#374151', width: 32, height: 32 }}>
-              {userProfile.name.charAt(0).toUpperCase()}
-            </Avatar>
-            <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="caption" color="white" display="block">
-                {userProfile.name}
-              </Typography>
-              <Typography variant="caption" sx={{ opacity: 0.5 }}>
-                {userProfile.email}
-              </Typography>
-            </Box>
-            <IconButton onClick={toggleDarkMode} sx={{ color: 'white' }}>
-              {darkMode ? <LightMode /> : <DarkMode />}
-            </IconButton>
-            <IconButton onClick={handleOpenSettings} sx={{ color: 'white' }}>
-              <SettingsIcon />
-            </IconButton>
-          </Box>
-        </Drawer>
-
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 1,
-            p: 6,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          {renderContent()}
+    <Box className={styles.root}>
+      <Drawer
+        variant="permanent"
+        className={styles.sidebar}
+        classes={{ paper: styles.sidebarPaper }}
+      >
+        <Box className={styles.sidebarHeader}>
+          <Typography variant="h6" fontWeight="bold">{t('appName')}</Typography>
+          <Typography variant="caption" className={styles.caption}>{t('appSubtitle')}</Typography>
         </Box>
+
+        <List className={styles.menuList}>
+          {menuItems.map((item) => (
+            <ListItem key={item.id} disablePadding sx={{ mb: 1 }}>
+              <ListItemButton
+                onClick={() => setActiveSection(item.id)}
+                className={`${styles.menuItem} ${
+                  activeSection === item.id ? styles.menuItemActive : styles.menuItemInactive
+                }`}
+              >
+                <ListItemIcon className={styles.menuIcon}>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+
+        <Box className={styles.userFooter}>
+          <Avatar className={styles.userAvatar}>
+            {userProfile.name.charAt(0).toUpperCase()}
+          </Avatar>
+          <Box className={styles.userInfo}>
+            <Typography className={styles.userName}>{userProfile.name}</Typography>
+            <Typography className={styles.userEmail}>{userProfile.email}</Typography>
+          </Box>
+          <IconButton onClick={handleOpenSettings} sx={{ color: 'white' }}>
+            <SettingsIcon />
+          </IconButton>
+        </Box>
+      </Drawer>
+
+      <Box component="main" className={styles.mainContent}>
+        {renderContent()}
       </Box>
 
-      {/* Diálogo Nueva Casa */}
+      {/* Diálogos */}
       <Dialog open={openNewHouseDialog} onClose={() => setOpenNewHouseDialog(false)}>
         <DialogTitle>{t('newHouseDialogTitle')}</DialogTitle>
         <DialogContent>
@@ -661,7 +447,6 @@ export default function DashboardPremium() {
         </DialogActions>
       </Dialog>
 
-      {/* Diálogo Editar Dispositivo */}
       <Dialog open={openEditDeviceDialog} onClose={() => setOpenEditDeviceDialog(false)}>
         <DialogTitle>{t('editDevice')}</DialogTitle>
         <DialogContent>
@@ -690,7 +475,6 @@ export default function DashboardPremium() {
         </DialogActions>
       </Dialog>
 
-      {/* Diálogo Confirmar Eliminación */}
       <Dialog open={deleteConfirmOpen} onClose={() => setDeleteConfirmOpen(false)}>
         <DialogTitle>{t('deleteConfirmTitle')}</DialogTitle>
         <DialogContent>
@@ -702,7 +486,6 @@ export default function DashboardPremium() {
         </DialogActions>
       </Dialog>
 
-      {/* Diálogo Configuración */}
       <Dialog open={openSettingsDialog} onClose={() => setOpenSettingsDialog(false)}>
         <DialogTitle>{t('settings')}</DialogTitle>
         <DialogContent>
@@ -723,19 +506,7 @@ export default function DashboardPremium() {
             type="email"
             value={userProfile.email}
             onChange={(e) => setUserProfile({ ...userProfile, email: e.target.value })}
-            sx={{ mb: 2 }}
           />
-          <FormControl fullWidth variant="outlined" sx={{ mb: 2 }}>
-            <InputLabel>{t('languageLabel')}</InputLabel>
-            <Select
-              label={t('languageLabel')}
-              value={userProfile.language}
-              onChange={(e) => setUserProfile({ ...userProfile, language: e.target.value as 'es' | 'en' })}
-            >
-              <MenuItem value="es">{t('spanish')}</MenuItem>
-              <MenuItem value="en">{t('english')}</MenuItem>
-            </Select>
-          </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenSettingsDialog(false)}>{t('cancel')}</Button>
@@ -743,7 +514,6 @@ export default function DashboardPremium() {
         </DialogActions>
       </Dialog>
 
-      {/* Snackbar de notificaciones */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={4000}
@@ -754,6 +524,6 @@ export default function DashboardPremium() {
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </ThemeProvider>
+    </Box>
   );
 }
