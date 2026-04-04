@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { getErrorMessage } from "@/lib/api/utils/error";
 
 export const loginSchema = z.object({
   email: z.email("Dirección de correo inválida"),
@@ -23,13 +24,15 @@ export function useLogin() {
   const onSubmit = async (value: LoginFormValues) => {
     setIsLoading(true);
     try {
-      const data = await loginUser(value.email, value.password);
-      toast.success("Sesión iniciada correctamente");
-      return data;
-    } catch {
-      toast.error("Credenciales inválidas", {
-        description: "Verifica tu correo y contraseña",
-      });
+      const { data, error } = await loginUser(value.email, value.password);
+      if (error) {
+        toast.error(getErrorMessage(error.detail));
+        return;
+      }
+      toast.success("Sesión iniciada. Redireccionando");
+      if (data) {
+        localStorage.setItem("token", data.access_token);
+      }
     } finally {
       setIsLoading(false);
     }
