@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { apiClient } from "@/src/lib/api/client";
+import { apiClient } from "@/lib/api/client";
 const schema = z.object({
   email: z.email("Dirección de correo inválida"),
   password: z.string().min(1, "Se requiere este campo"),
@@ -29,6 +29,9 @@ export default function LoginForm() {
           username: data_submit.email,
           password: data_submit.password,
           scope: "",
+        },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
         },
       });
       console.log("error", error);
