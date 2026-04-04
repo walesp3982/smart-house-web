@@ -55,6 +55,291 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/users/verified": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Get Verified User */
+        post: operations["get_verified_user_users_verified_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/email-verification/{token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Confirm Email */
+        get: operations["confirm_email_users_email_verification__token__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/devices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Device */
+        post: operations["create_device_devices_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/houses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get All House */
+        get: operations["get_all_house_houses_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/houses/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get House */
+        get: operations["get_house_houses__id__get"];
+        /** Update House */
+        put: operations["update_house_houses__id__put"];
+        post?: never;
+        /** Delete House */
+        delete: operations["delete_house_houses__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/houses/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create House */
+        post: operations["create_house_houses__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/houses/{house_id}/areas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Areas By House
+         * @description Obtiene todas las áreas de una casa.
+         */
+        get: operations["get_areas_by_house_houses__house_id__areas_get"];
+        put?: never;
+        /**
+         * Create Area
+         * @description Crea una nueva área en una casa.
+         */
+        post: operations["create_area_houses__house_id__areas_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/houses/{house_id}/areas/{area_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Area By Id
+         * @description Obtiene una área específica por su ID.
+         */
+        get: operations["get_area_by_id_houses__house_id__areas__area_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete Area
+         * @description Elimina una área.
+         */
+        delete: operations["delete_area_houses__house_id__areas__area_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Patch Area
+         * @description Actualiza parcialmente una área.
+         */
+        patch: operations["patch_area_houses__house_id__areas__area_id__patch"];
+        trace?: never;
+    };
+    "/installed_devices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Installed Devices
+         * @description Obtiene todos los installed_devices del usuario autenticado.
+         */
+        get: operations["get_installed_devices_installed_devices_get"];
+        put?: never;
+        /**
+         * Register Installed Device
+         * @description Registra un nuevo installed_device con uuid y código de verificación.
+         */
+        post: operations["register_installed_device_installed_devices_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/installed_devices/{installed_device_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Installed Device
+         * @description Obtiene un installed_device con join a device.
+         */
+        get: operations["get_installed_device_installed_devices__installed_device_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete Installed Device
+         * @description Elimina un installed_device.
+         */
+        delete: operations["delete_installed_device_installed_devices__installed_device_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Installed Device
+         * @description Actualiza un installed_device (name, house_id, area_id).
+         */
+        patch: operations["update_installed_device_installed_devices__installed_device_id__patch"];
+        trace?: never;
+    };
+    "/track_devices/device/{device_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Track By Device Id
+         * @description Obtiene el seguimiento de un dispositivo específico del usuario autenticado.
+         */
+        get: operations["get_track_by_device_id_track_devices_device__device_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/track_devices/house/{house_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Track By House Id
+         * @description Obtiene el seguimiento de los dispositivos de una casa.
+         */
+        get: operations["get_track_by_house_id_track_devices_house__house_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/track_devices/user": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Track By User Id
+         * @description Obtiene el seguimiento de todos los dispositivos del usuario autenticado.
+         */
+        get: operations["get_track_by_user_id_track_devices_user_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/voice/transcribe": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Transcribe Audio */
+        post: operations["transcribe_audio_voice_transcribe_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/": {
         parameters: {
             query?: never;
@@ -76,6 +361,21 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AreaResponse */
+        AreaResponse: {
+            /** Id */
+            id: number;
+            /** Name */
+            name: string;
+            type: components["schemas"]["AreaType"];
+            /** House Id */
+            house_id: number;
+        };
+        /**
+         * AreaType
+         * @enum {string}
+         */
+        AreaType: "living_room" | "bedroom" | "kitchen" | "outside";
         /** Body_token_token_post */
         Body_token_token_post: {
             /** Grant Type */
@@ -100,13 +400,103 @@ export interface components {
              */
             client_secret?: string | null;
         };
+        /** Body_transcribe_audio_voice_transcribe_post */
+        Body_transcribe_audio_voice_transcribe_post: {
+            /** File */
+            file: string;
+        };
+        /** CreateAreaRequest */
+        CreateAreaRequest: {
+            /** Name */
+            name: string;
+            type: components["schemas"]["AreaType"];
+        };
+        /** CreateDeviceRequest */
+        CreateDeviceRequest: {
+            /** Uuid */
+            uuid: string;
+            type: components["schemas"]["DeviceType"];
+            /** Activation Code */
+            activation_code: string;
+        };
+        /** CreateDeviceResponse */
+        CreateDeviceResponse: {
+            /** Message */
+            message: string;
+        };
+        /** CreateHouseRequest */
+        CreateHouseRequest: {
+            /** Name */
+            name: string;
+            /** Location */
+            location?: string | null;
+            /**
+             * Invitation Validation
+             * @default true
+             */
+            invitation_validation: boolean;
+        };
+        /** CreateInstalledDeviceRequest */
+        CreateInstalledDeviceRequest: {
+            /** Name */
+            name: string;
+            /** Uuid */
+            uuid: string;
+            /** Code Verification */
+            code_verification: string;
+            /** House Id */
+            house_id?: number | null;
+            /** Area Id */
+            area_id?: number | null;
+        };
+        /**
+         * DeviceType
+         * @enum {string}
+         */
+        DeviceType: "light" | "thermostat" | "camera" | "door" | "movement";
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
         };
-        /** UserDTO */
-        UserDTO: {
+        /** TrackDeviceResponse */
+        TrackDeviceResponse: {
+            /** Id */
+            id: number;
+            /** Device Id */
+            device_id: number;
+            /** Status */
+            status: string;
+            /**
+             * Timestamp
+             * Format: date-time
+             */
+            timestamp: string;
+        };
+        /** UpdateAreaRequest */
+        UpdateAreaRequest: {
+            /** Name */
+            name?: string | null;
+            type?: components["schemas"]["AreaType"] | null;
+        };
+        /** UpdateHouseRequest */
+        UpdateHouseRequest: {
+            /** Location */
+            location: string | null;
+            /** Name */
+            name: string | null;
+        };
+        /** UpdateInstalledDeviceRequest */
+        UpdateInstalledDeviceRequest: {
+            /** Name */
+            name?: string | null;
+            /** House Id */
+            house_id?: number | null;
+            /** Area Id */
+            area_id?: number | null;
+        };
+        /** UserRegisterRequest */
+        UserRegisterRequest: {
             /** Name */
             name: string;
             /**
@@ -130,8 +520,8 @@ export interface components {
             /** Context */
             ctx?: Record<string, never>;
         };
-        /** VisibleDataUser */
-        VisibleDataUser: {
+        /** VisibleDataUserResponse */
+        VisibleDataUserResponse: {
             /** Id */
             id: number;
             /** Name */
@@ -193,7 +583,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["UserDTO"];
+                "application/json": components["schemas"]["UserRegisterRequest"];
             };
         };
         responses: {
@@ -232,7 +622,687 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["VisibleDataUser"];
+                    "application/json": components["schemas"]["VisibleDataUserResponse"];
+                };
+            };
+        };
+    };
+    get_verified_user_users_verified_post: {
+        parameters: {
+            query: {
+                user_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    confirm_email_users_email_verification__token__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_device_devices_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateDeviceRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreateDeviceResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_all_house_houses_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    get_house_houses__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_house_houses__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateHouseRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_house_houses__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_house_houses__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateHouseRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_areas_by_house_houses__house_id__areas_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                house_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AreaResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_area_houses__house_id__areas_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                house_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateAreaRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AreaResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_area_by_id_houses__house_id__areas__area_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                house_id: number;
+                area_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AreaResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_area_houses__house_id__areas__area_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                house_id: number;
+                area_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    patch_area_houses__house_id__areas__area_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                house_id: number;
+                area_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateAreaRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AreaResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_installed_devices_installed_devices_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    }[];
+                };
+            };
+        };
+    };
+    register_installed_device_installed_devices_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateInstalledDeviceRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_installed_device_installed_devices__installed_device_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                installed_device_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_installed_device_installed_devices__installed_device_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                installed_device_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_installed_device_installed_devices__installed_device_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                installed_device_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateInstalledDeviceRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_track_by_device_id_track_devices_device__device_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                device_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrackDeviceResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_track_by_house_id_track_devices_house__house_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                house_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrackDeviceResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_track_by_user_id_track_devices_user_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrackDeviceResponse"][];
+                };
+            };
+        };
+    };
+    transcribe_audio_voice_transcribe_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_transcribe_audio_voice_transcribe_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
