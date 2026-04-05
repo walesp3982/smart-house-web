@@ -519,6 +519,11 @@ export interface components {
             /** Password */
             password: string;
         };
+        /** UserVerifiedStatusResponse */
+        UserVerifiedStatusResponse: {
+            /** Status */
+            status: boolean;
+        };
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -543,6 +548,8 @@ export interface components {
              * Format: email
              */
             email: string;
+            /** Is Verified */
+            is_verified: boolean;
         };
     };
     responses: never;
@@ -614,7 +621,16 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["VisibleDataUserResponse"];
+                };
+            };
+            /** @description Email duplicado */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -646,6 +662,15 @@ export interface operations {
                     "application/json": components["schemas"]["VisibleDataUserResponse"];
                 };
             };
+            /** @description Usuario no encontrado */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
         };
     };
     get_verified_user_users_verified_post: {
@@ -665,7 +690,16 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["UserVerifiedStatusResponse"];
+                };
+            };
+            /** @description Usuario no encontrado */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -697,6 +731,33 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Usuario no encontrado */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Token inválido */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validación de email inválida */
+            406: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
