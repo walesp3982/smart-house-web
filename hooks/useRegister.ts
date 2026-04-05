@@ -6,11 +6,18 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { getErrorMessage } from "@/lib/api/utils/error";
-export const registerSchema = z.object({
-  name: z.string().min(1, "Campo requerido"),
-  email: z.email("Dirección de email inválida"),
-  password: z.string().min(8, "Requerida contraseña de 8 caracteres"),
-});
+
+export const registerSchema = z
+  .object({
+    name: z.string().min(1, "Campo requerido"),
+    email: z.email("Dirección de email inválida"),
+    password: z.string().min(8, "Requerida contraseña de 8 caracteres"),
+    confirmed_password: z.string(),
+  })
+  .refine((data) => data.password === data.confirmed_password, {
+    message: "La contraseña no coincide",
+    path: ["confirmed_password"],
+  });
 
 export type RegisterFormValues = z.infer<typeof registerSchema>;
 
