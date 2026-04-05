@@ -6,3 +6,17 @@ export async function loginUser(email: string, password: string) {
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
   });
 }
+
+export async function registerUser(
+  email: string,
+  name: string,
+  password: string,
+) {
+  return await apiClient.POST("/users/register", {
+    body: {
+      email: email,
+      name: name,
+      password: password,
+    },
+  });
+}
