@@ -5,6 +5,8 @@ import { toast } from "sonner";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getErrorMessage } from "@/lib/api/utils/error";
+import { saveTokenCookie } from "@/app/actions/auth";
+import { useRouter } from "next/navigation";
 
 export const loginSchema = z.object({
   email: z.email("Dirección de correo inválida"),
@@ -15,7 +17,7 @@ export type LoginFormValues = z.infer<typeof loginSchema>;
 
 export function useLogin() {
   const [isLoading, setIsLoading] = useState(false);
-
+  const router = useRouter();
   const form = useForm<LoginFormValues>({
     defaultValues: { email: "", password: "" },
     resolver: zodResolver(loginSchema),
@@ -31,7 +33,9 @@ export function useLogin() {
       }
       toast.success("Sesión iniciada. Redireccionando");
       if (data) {
-        localStorage.setItem("token", data.access_token);
+        await saveTokenCookie(data.access_token);
+        toast.success("Sessión iniciada");
+        router.push("/dashboard");
       }
     } finally {
       setIsLoading(false);
