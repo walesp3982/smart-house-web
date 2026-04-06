@@ -62,10 +62,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
-        put?: never;
         /** Get Verified User */
-        post: operations["get_verified_user_users_verified_post"];
+        get: operations["get_verified_user_users_verified_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -263,6 +263,23 @@ export interface paths {
         patch: operations["update_installed_device_installed_devices__installed_device_id__patch"];
         trace?: never;
     };
+    "/installed_devices/{installed_device_id}/command": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Settings Installed Device */
+        post: operations["settings_installed_device_installed_devices__installed_device_id__command_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/track_devices/device/{device_id}": {
         parameters: {
             query?: never;
@@ -405,6 +422,19 @@ export interface components {
             /** File */
             file: string;
         };
+        /** Camera */
+        Camera: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "on" | "off";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "camera";
+        };
         /** CreateAreaRequest */
         CreateAreaRequest: {
             /** Name */
@@ -454,6 +484,19 @@ export interface components {
          * @enum {string}
          */
         DeviceType: "light" | "thermostat" | "camera" | "door" | "movement";
+        /** Door */
+        Door: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "on" | "off";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "door";
+        };
         /** ErrorResponse */
         ErrorResponse: {
             /** Detail */
@@ -463,6 +506,49 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** Light */
+        Light: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "on" | "off";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "light";
+        };
+        /** MovementSensor */
+        MovementSensor: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "on" | "off";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "movement";
+        };
+        /** TemperatureSensor */
+        TemperatureSensor: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "on" | "off";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "temperature";
+            /** Enable Auto */
+            enable_auto: boolean;
+            /** Has Limit */
+            has_limit: number;
         };
         /** Token */
         Token: {
@@ -673,7 +759,7 @@ export interface operations {
             };
         };
     };
-    get_verified_user_users_verified_post: {
+    get_verified_user_users_verified_get: {
         parameters: {
             query: {
                 user_id: number;
@@ -725,7 +811,7 @@ export interface operations {
         requestBody?: never;
         responses: {
             /** @description Successful Response */
-            200: {
+            307: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -1261,6 +1347,39 @@ export interface operations {
                     "application/json": {
                         [key: string]: unknown;
                     };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    settings_installed_device_installed_devices__installed_device_id__command_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Door"] | components["schemas"]["Light"] | components["schemas"]["MovementSensor"] | components["schemas"]["TemperatureSensor"] | components["schemas"]["Camera"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */
