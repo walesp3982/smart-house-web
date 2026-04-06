@@ -22,7 +22,7 @@ export default function LandingPage() {
       <Navbar onClickLogin={onClickLogin} onClickRegister={onClickRegister} />
       <HeroSection />
       <ImageCarousel />
-      <CTASection />
+      <CTASection onClickStarted={onClickRegister} />
     </Box>
   );
 }
