@@ -1,29 +1,36 @@
-/* Dashboard.module.css - Tema claro con contraste óptimo */
-
-/* Variables de color */
-:root {
-  --primary-dark: #005187;
-  --primary-medium: #4d82bc;
-  --primary-light: #84b6f4;
-  --primary-extra-light: #c4dafa;
-  --background-main: #fcffff;
-  --background-paper: #ffffff;
-  --sidebar-bg: #4d82bc;        /* ahora más claro */
-  --sidebar-text: #ffffff;
-  --sidebar-hover-bg: rgba(255, 255, 255, 0.2);
-  --text-primary: #fcfcfc;
-  --text-secondary: #84898f;
-  --border-color: #d1d5db;
-  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
-}
-
+/* ===========================
+   LAYOUT
+=========================== */
 .root {
   display: flex;
-  background-color: var(--background-main);
   min-height: 100vh;
+  background-image: url('/fondo_casa.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  position: relative;
 }
 
-/* ========== SIDEBAR ========== */
+/* Overlay semitransparente para legibilidad */
+.root::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65); /* Más oscuro para resaltar el azul eléctrico */
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Todo el contenido encima del overlay */
+.root > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===========================
+   SIDEBAR
+=========================== */
 .sidebar {
   width: 260px;
   flex-shrink: 0;
@@ -31,245 +38,316 @@
 
 .sidebarPaper {
   width: 260px;
-  background-color: var(--sidebar-bg);
-  color: var(--sidebar-text);
-  border-right: none;
-  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.85) !important; /* Negro intenso */
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebarHeader {
-  padding: 1.5rem;
-  color: var(--sidebar-text);
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 8px;
 }
 
 .sidebarHeader h6 {
-  font-weight: bold;
+  color: #ffffff;
+  font-size: 15px;
 }
 
-.sidebarHeader .caption {
-  opacity: 0.9;
+.caption {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 11px !important;
+  margin-top: 2px;
+  display: block;
 }
 
+/* Navigation */
 .menuList {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding: 8px 12px !important;
 }
 
 .menuItem {
-  border-radius: 0.75rem;
-  margin-bottom: 0.5rem;
-  transition: all 0.2s;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  transition: background 0.15s !important;
 }
 
 .menuItemActive {
-  background-color: var(--sidebar-hover-bg);
-  color: var(--sidebar-text);
-  font-weight: 500;
+  background: #00BFFF !important; /* Azul eléctrico */
+  color: #000000 !important;
+}
+
+.menuItemActive .menuIcon,
+.menuItemActive svg {
+  color: #000000 !important;
+}
+
+.menuItemActive span {
+  font-weight: 600 !important;
+  color: #000000 !important;
 }
 
 .menuItemInactive {
-  background-color: transparent;
-  color: var(--sidebar-text);
-  opacity: 0.85;
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 
-.menuItem:hover {
-  background-color: var(--sidebar-hover-bg);
-  color: var(--sidebar-text);
-  opacity: 1;
+.menuItemInactive:hover {
+  background: rgba(0, 191, 255, 0.2) !important; /* Azul eléctrico con opacidad */
+  color: #ffffff !important;
+}
+
+.menuItemInactive .menuIcon,
+.menuItemInactive svg {
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 
 .menuIcon {
-  min-width: 40px;
-  color: inherit;
+  min-width: 36px !important;
 }
 
+/* User footer */
 .userFooter {
-  margin-top: auto;
-  padding: 0.5rem 1rem;
-  background-color: rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 10px;
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: auto;
 }
 
 .userAvatar {
-  width: 32px;
-  height: 32px;
-  background-color: var(--primary-light);
-  color: var(--primary-dark);
+  width: 34px !important;
+  height: 34px !important;
+  font-size: 13px !important;
+  background: #00BFFF !important; /* Azul eléctrico */
+  color: #000000 !important;
 }
 
 .userInfo {
-  flex-grow: 1;
+  flex: 1;
+  overflow: hidden;
 }
 
 .userName {
-  display: block;
-  color: var(--sidebar-text);
-  font-size: 0.75rem;
-  line-height: 1.2;
-  font-weight: 500;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .userEmail {
-  font-size: 0.75rem;
-  opacity: 0.8;
-  color: var(--sidebar-text);
+  font-size: 11px !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* ========== CONTENIDO PRINCIPAL ========== */
+.settingsIcon {
+  color: rgba(255, 255, 255, 0.6) !important;
+  padding: 6px !important;
+}
+
+.settingsIcon:hover {
+  color: #00BFFF !important;
+  background: rgba(0, 191, 255, 0.15) !important;
+}
+
+/* ===========================
+   MAIN CONTENT
+=========================== */
 .mainContent {
-  flex-grow: 1;
-  padding: 2rem;
+  flex: 1;
+  padding: 48px;
+  overflow-y: auto;
   display: flex;
+  align-items: flex-start;
   justify-content: center;
-  align-items: center;
 }
 
-/* Tarjetas */
+/* ===========================
+   CARD (fondo blanco, texto negro)
+=========================== */
 .card {
-  padding: 2rem;
+  background: #ffffff !important;
+  border: 1px solid #e0e0e0 !important;
+  border-radius: 14px !important;
+  padding: 40px !important;
   width: 100%;
-  max-width: 550px;
-  border-radius: 1.5rem;
-  box-shadow: var(--shadow);
-  text-align: center;
-  border: 1px solid var(--border-color);
-  background-color: var(--background-paper);
+  max-width: 520px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
 }
 
-.cardLarge {
-  max-width: 800px;
-  padding: 2rem;
-}
-
+/* ===========================
+   TYPOGRAPHY
+=========================== */
 .title {
-  font-weight: 800;
-  margin-bottom: 0.5rem;
-  color: var(--text-primary);
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  color: #000000 !important; /* Negro */
+  letter-spacing: -0.5px !important;
+  margin-bottom: 8px !important;
 }
 
 .subtitle {
-  margin-bottom: 2rem;
-  color: var(--text-secondary);
+  color: #444444 !important;
+  margin-bottom: 32px !important;
+  font-size: 14px !important;
 }
 
-/* Campos de texto */
-.textField {
-  background-color: var(--primary-extra-light);
-  border-radius: 0.5rem;
-}
-
-.textField .MuiFilledInput-root {
-  background-color: transparent;
-}
-
-/* Selector de casa */
-.formControl {
-  background-color: var(--primary-extra-light);
-  border-radius: 0.5rem;
-}
-
-/* Icono del Select (triángulo) - en azul */
-.formControl .MuiSelect-icon {
-  color: var(--primary-dark) !important;
-  transition: color 0.2s;
-}
-
-.formControl .MuiSelect-icon:hover {
-  color: var(--primary-medium) !important;
-}
-
-/* Botones */
+/* ===========================
+   FORM BUTTONS
+=========================== */
 .newHouseButton {
-  border-radius: 1rem;
-  text-transform: none;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  border-color: var(--primary-medium);
-  color: var(--primary-dark);
+  border-color: #00BFFF !important;
+  color: #00BFFF !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
 }
 
 .newHouseButton:hover {
-  border-color: var(--primary-dark);
-  background-color: rgba(0, 81, 135, 0.05);
+  background: rgba(0, 191, 255, 0.08) !important;
+  border-color: #00BFFF !important;
 }
 
 .addDeviceButton {
-  background-color: var(--primary-dark);
-  color: white;
-  padding: 0.75rem;
-  border-radius: 1rem;
-  text-transform: none;
-  font-size: 1rem;
-  font-weight: bold;
-  box-shadow: 0 4px 14px rgba(0, 81, 135, 0.2);
-  transition: all 0.2s;
+  background: #00BFFF !important; /* Azul eléctrico */
+  color: #000000 !important; /* Texto negro para contraste */
+  font-weight: 600 !important;
+  padding: 12px !important;
+  border-radius: 8px !important;
+  text-transform: none !important;
+  font-size: 14px !important;
+  letter-spacing: 0 !important;
 }
 
 .addDeviceButton:hover {
-  background-color: #003f66;
-  box-shadow: 0 6px 20px rgba(0, 81, 135, 0.3);
-  transform: translateY(-1px);
+  background: #009ACD !important; /* Azul un poco más oscuro */
 }
 
-/* Lista de dispositivos */
+/* ===========================
+   DEVICE LIST ITEMS
+=========================== */
 .deviceItem {
-  padding: 0.75rem;
-  border-radius: 0.75rem;
-  background-color: var(--primary-extra-light);
-  border: 1px solid var(--border-color);
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  transition: all 0.2s;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  background: #fafafa;
+  transition: border-color 0.15s;
 }
 
 .deviceItem:hover {
-  background-color: #e6f0ff;
-}
-
-.deviceInfo {
-  flex-grow: 1;
+  border-color: #00BFFF;
 }
 
 .deviceCode {
-  font-weight: bold;
-  color: var(--primary-dark);
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #000000 !important;
 }
 
 .deviceDescription {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
+  font-size: 13px !important;
+  color: #444444 !important;
+  margin-top: 2px !important;
 }
 
 .deviceMeta {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
+  font-size: 11px !important;
+  color: #777777 !important;
+  margin-top: 4px !important;
 }
 
-/* Seguimiento */
+/* ===========================
+   TRACKING PLACEHOLDER
+=========================== */
 .trackingPlaceholder {
-  padding: 1.5rem;
-  background-color: var(--primary-extra-light);
-  border-radius: 0.75rem;
+  border: 1px dashed #00BFFF;
+  border-radius: 8px;
+  padding: 48px 24px;
   text-align: center;
-  color: var(--text-secondary);
+  background: #fafafa;
+  color: #00BFFF;
 }
 
-
-.MuiMenuItem-root {
-  color: var(--text-primary) !important;
+/* ===========================
+   MUI OVERRIDES — inputs negro
+=========================== */
+.card :global(.MuiInputBase-input) {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
 }
 
-
-.MuiMenuItem-root:hover {
-  background-color: var(--primary-extra-light) !important;
+.card :global(.MuiInputLabel-root) {
+  color: #555555 !important;
 }
 
-/* Opción seleccionada */
-.Mui-selected {
-  background-color: var(--primary-light) !important;
-  color: var(--primary-dark) !important;
+.card :global(.MuiInputLabel-root.Mui-focused) {
+  color: #00BFFF !important; /* Etiqueta azul eléctrico al enfocar */
+}
+
+.card :global(.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline) {
+  border-color: #00BFFF;
+}
+
+.card :global(.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline) {
+  border-color: #00BFFF;
+  border-width: 1.5px;
+}
+
+.card :global(.MuiSelect-select) {
+  color: #000000 !important;
+}
+
+.card :global(.MuiSelect-icon) {
+  color: #555555 !important;
+}
+
+/* ===========================
+   MUI OVERRIDES — Diálogos
+=========================== */
+:global(.MuiDialog-root .MuiInputBase-input) {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+:global(.MuiDialog-root .MuiInputLabel-root) {
+  color: #555555 !important;
+}
+
+:global(.MuiDialog-root .MuiInputLabel-root.Mui-focused) {
+  color: #00BFFF !important;
+}
+
+:global(.MuiDialog-root .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline) {
+  border-color: #00BFFF !important;
+}
+
+:global(.MuiDialog-root .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline) {
+  border-color: #00BFFF !important;
+  border-width: 1.5px !important;
+}
+
+/* Botones primarios en diálogos y generales */
+:global(.MuiButton-containedPrimary) {
+  background-color: #00BFFF !important;
+  color: #000000 !important;
+  text-transform: none !important;
+}
+
+:global(.MuiButton-containedPrimary:hover) {
+  background-color: #009ACD !important;
+}
+
+/* Botones secundarios o de texto */
+:global(.MuiButton-textPrimary) {
+  color: #00BFFF !important;
 }
