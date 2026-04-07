@@ -1,0 +1,353 @@
+/* ===========================
+   LAYOUT
+=========================== */
+.root {
+  display: flex;
+  min-height: 100vh;
+  background-image: url('/fondo_casa.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  position: relative;
+}
+
+/* Overlay semitransparente para legibilidad */
+.root::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65); /* Más oscuro para resaltar el azul eléctrico */
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Todo el contenido encima del overlay */
+.root > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===========================
+   SIDEBAR
+=========================== */
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.sidebarPaper {
+  width: 260px;
+  background: rgba(0, 0, 0, 0.85) !important; /* Negro intenso */
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarHeader {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 8px;
+}
+
+.sidebarHeader h6 {
+  color: #ffffff;
+  font-size: 15px;
+}
+
+.caption {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 11px !important;
+  margin-top: 2px;
+  display: block;
+}
+
+/* Navigation */
+.menuList {
+  padding: 8px 12px !important;
+}
+
+.menuItem {
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  transition: background 0.15s !important;
+}
+
+.menuItemActive {
+  background: #00BFFF !important; /* Azul eléctrico */
+  color: #000000 !important;
+}
+
+.menuItemActive .menuIcon,
+.menuItemActive svg {
+  color: #000000 !important;
+}
+
+.menuItemActive span {
+  font-weight: 600 !important;
+  color: #000000 !important;
+}
+
+.menuItemInactive {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.menuItemInactive:hover {
+  background: rgba(0, 191, 255, 0.2) !important; /* Azul eléctrico con opacidad */
+  color: #ffffff !important;
+}
+
+.menuItemInactive .menuIcon,
+.menuItemInactive svg {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.menuIcon {
+  min-width: 36px !important;
+}
+
+/* User footer */
+.userFooter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: auto;
+}
+
+.userAvatar {
+  width: 34px !important;
+  height: 34px !important;
+  font-size: 13px !important;
+  background: #00BFFF !important; /* Azul eléctrico */
+  color: #000000 !important;
+}
+
+.userInfo {
+  flex: 1;
+  overflow: hidden;
+}
+
+.userName {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userEmail {
+  font-size: 11px !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.settingsIcon {
+  color: rgba(255, 255, 255, 0.6) !important;
+  padding: 6px !important;
+}
+
+.settingsIcon:hover {
+  color: #00BFFF !important;
+  background: rgba(0, 191, 255, 0.15) !important;
+}
+
+/* ===========================
+   MAIN CONTENT
+=========================== */
+.mainContent {
+  flex: 1;
+  padding: 48px;
+  overflow-y: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* ===========================
+   CARD (fondo blanco, texto negro)
+=========================== */
+.card {
+  background: #ffffff !important;
+  border: 1px solid #e0e0e0 !important;
+  border-radius: 14px !important;
+  padding: 40px !important;
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ===========================
+   TYPOGRAPHY
+=========================== */
+.title {
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  color: #000000 !important; /* Negro */
+  letter-spacing: -0.5px !important;
+  margin-bottom: 8px !important;
+}
+
+.subtitle {
+  color: #444444 !important;
+  margin-bottom: 32px !important;
+  font-size: 14px !important;
+}
+
+/* ===========================
+   FORM BUTTONS
+=========================== */
+.newHouseButton {
+  border-color: #00BFFF !important;
+  color: #00BFFF !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+}
+
+.newHouseButton:hover {
+  background: rgba(0, 191, 255, 0.08) !important;
+  border-color: #00BFFF !important;
+}
+
+.addDeviceButton {
+  background: #00BFFF !important; /* Azul eléctrico */
+  color: #000000 !important; /* Texto negro para contraste */
+  font-weight: 600 !important;
+  padding: 12px !important;
+  border-radius: 8px !important;
+  text-transform: none !important;
+  font-size: 14px !important;
+  letter-spacing: 0 !important;
+}
+
+.addDeviceButton:hover {
+  background: #009ACD !important; /* Azul un poco más oscuro */
+}
+
+/* ===========================
+   DEVICE LIST ITEMS
+=========================== */
+.deviceItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  background: #fafafa;
+  transition: border-color 0.15s;
+}
+
+.deviceItem:hover {
+  border-color: #00BFFF;
+}
+
+.deviceCode {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #000000 !important;
+}
+
+.deviceDescription {
+  font-size: 13px !important;
+  color: #444444 !important;
+  margin-top: 2px !important;
+}
+
+.deviceMeta {
+  font-size: 11px !important;
+  color: #777777 !important;
+  margin-top: 4px !important;
+}
+
+/* ===========================
+   TRACKING PLACEHOLDER
+=========================== */
+.trackingPlaceholder {
+  border: 1px dashed #00BFFF;
+  border-radius: 8px;
+  padding: 48px 24px;
+  text-align: center;
+  background: #fafafa;
+  color: #00BFFF;
+}
+
+/* ===========================
+   MUI OVERRIDES — inputs negro
+=========================== */
+.card :global(.MuiInputBase-input) {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+.card :global(.MuiInputLabel-root) {
+  color: #555555 !important;
+}
+
+.card :global(.MuiInputLabel-root.Mui-focused) {
+  color: #00BFFF !important; /* Etiqueta azul eléctrico al enfocar */
+}
+
+.card :global(.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline) {
+  border-color: #00BFFF;
+}
+
+.card :global(.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline) {
+  border-color: #00BFFF;
+  border-width: 1.5px;
+}
+
+.card :global(.MuiSelect-select) {
+  color: #000000 !important;
+}
+
+.card :global(.MuiSelect-icon) {
+  color: #555555 !important;
+}
+
+/* ===========================
+   MUI OVERRIDES — Diálogos
+=========================== */
+:global(.MuiDialog-root .MuiInputBase-input) {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+:global(.MuiDialog-root .MuiInputLabel-root) {
+  color: #555555 !important;
+}
+
+:global(.MuiDialog-root .MuiInputLabel-root.Mui-focused) {
+  color: #00BFFF !important;
+}
+
+:global(.MuiDialog-root .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline) {
+  border-color: #00BFFF !important;
+}
+
+:global(.MuiDialog-root .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline) {
+  border-color: #00BFFF !important;
+  border-width: 1.5px !important;
+}
+
+/* Botones primarios en diálogos y generales */
+:global(.MuiButton-containedPrimary) {
+  background-color: #00BFFF !important;
+  color: #000000 !important;
+  text-transform: none !important;
+}
+
+:global(.MuiButton-containedPrimary:hover) {
+  background-color: #009ACD !important;
+}
+
+/* Botones secundarios o de texto */
+:global(.MuiButton-textPrimary) {
+  color: #00BFFF !important;
+}
