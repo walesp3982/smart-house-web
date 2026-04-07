@@ -4,7 +4,7 @@ import FormContainer from "@/component/Form/FormContainer";
 import { useRegister } from "@/hooks/useRegister";
 import { Button, Typography } from "@mui/material";
 import { JSX } from "react";
-import { BasicFieldText, PasswordFieldText, EmailTextField } from "@/component/Form/FormTextField";
+import { BasicTextField, PasswordTextField, EmailTextField } from "@/component/Form/FormTextField";
 export default function RegisterForm(): JSX.Element {
   const { form, isLoading, onSubmit } = useRegister();
   const { control, handleSubmit } = form;
@@ -14,7 +14,7 @@ export default function RegisterForm(): JSX.Element {
         <Typography variant="h4" align="center">
           Registrarse
         </Typography>
-        <BasicFieldText
+        <BasicTextField
           control={control}
           name="name"
           label="Nombre"
@@ -24,12 +24,12 @@ export default function RegisterForm(): JSX.Element {
           name="email"
           label="Correo electrónico"
         />
-        <PasswordFieldText
+        <PasswordTextField
           control={control}
           name="password"
           label="Contraseña"
         />
-        <PasswordFieldText
+        <PasswordTextField
           control={control}
           name="confirmed_password"
           label="Confirmar Contraseña"

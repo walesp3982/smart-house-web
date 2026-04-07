@@ -4,7 +4,7 @@ import FormContainer from "@/component/Form/FormContainer";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useLogin } from "@/hooks/useLogin";
-import { EmailTextField, PasswordFieldText } from "@/component/Form/FormTextField";
+import { EmailTextField, PasswordTextField } from "@/component/Form/FormTextField";
 export default function LoginForm() {
   const { form, isLoading, onSubmit } = useLogin();
 
@@ -22,7 +22,7 @@ export default function LoginForm() {
           name="email"
           label="Correo electrónico"
         />
-        <PasswordFieldText
+        <PasswordTextField
           control={control}
           name="password"
           label="Contraseña"
