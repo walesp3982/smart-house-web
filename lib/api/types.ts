@@ -45,10 +45,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
-        put?: never;
         /** Info Actual User */
-        post: operations["info_actual_user_users_me_post"];
+        get: operations["info_actual_user_users_me_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -730,7 +730,7 @@ export interface operations {
             };
         };
     };
-    info_actual_user_users_me_post: {
+    info_actual_user_users_me_get: {
         parameters: {
             query?: never;
             header?: never;
