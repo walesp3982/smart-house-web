@@ -4,9 +4,7 @@ import FormContainer from "@/component/Form/FormContainer";
 import { useRegister } from "@/hooks/useRegister";
 import { Button, Typography } from "@mui/material";
 import { JSX } from "react";
-import { Controller } from "react-hook-form";
-import PasswordField from "@/component/Form/FormContainer/Field/Password";
-import FormTextField from "@/component/Form/FormTextField";
+import { BasicFieldText, PasswordFieldText } from "@/component/Form/FormTextField";
 export default function RegisterForm(): JSX.Element {
   const { form, isLoading, onSubmit } = useRegister();
   const { control, handleSubmit } = form;
@@ -16,34 +14,25 @@ export default function RegisterForm(): JSX.Element {
         <Typography variant="h4" align="center">
           Registrarse
         </Typography>
-        <FormTextField
+        <BasicFieldText
           control={control}
           name="name"
           label="Nombre"
         />
-        <FormTextField
+        <BasicFieldText
           control={control}
           name="email"
-          type="email"
-          label="Email"
+          label="Correo electrónico"
         />
-        <Controller
+        <PasswordFieldText
           control={control}
           name="password"
-          render={({ field, fieldState }) => (
-            <PasswordField field={field} fieldState={fieldState} />
-          )}
+          label="Contraseña"
         />
-        <Controller
+        <PasswordFieldText
           control={control}
           name="confirmed_password"
-          render={({ field, fieldState }) => (
-            <PasswordField
-              field={field}
-              fieldState={fieldState}
-              name="Confirmar Password"
-            />
-          )}
+          label="Confirmar Contraseña"
         />
         <Button
           type="submit"

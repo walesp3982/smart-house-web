@@ -1,1 +1,2 @@
-export { default } from "./builder/Controller" 
+export { default as BasicFieldText } from "./BasicTextField"
+export { default as PasswordFieldText } from "./PasswordFieldText"

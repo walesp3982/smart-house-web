@@ -1,9 +1,9 @@
-// BasicTextField.tsx
-import { FieldValues, FieldPath, Controller } from "react-hook-form"
-import { Control } from "react-hook-form"
+import { Control, Controller, FieldPath, FieldValues } from "react-hook-form"
 import { FieldTextTemplate } from "./builder"
+import Password from "@/component/Form/Icons/Password"
+import { useState } from "react"
 
-interface BasicTextFieldProps
+interface PasswordFieldTextProps
     <TFieldValues extends FieldValues,
         TName extends FieldPath<TFieldValues>
     > {
@@ -13,10 +13,15 @@ interface BasicTextFieldProps
     id?: string
 }
 
-export default function BasicTextField
+export default function PasswordFieldText
     <TFieldValues extends FieldValues,
         TName extends FieldPath<TFieldValues>
-    >({ control, name, label, id }: BasicTextFieldProps<TFieldValues, TName>) {
+    >({ control, name, label, id }: PasswordFieldTextProps<TFieldValues, TName>) {
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleClickShowPassword = () => {
+        setShowPassword((state) => !state)
+    }
     return (
         <Controller
             control={control}
@@ -28,6 +33,7 @@ export default function BasicTextField
                     id={id}
                     field={field}
                     fieldState={fieldState}
+                    icon={<Password showPassword={showPassword} handleClickShowPassword={handleClickShowPassword} />}
                 />
             )}
         />
