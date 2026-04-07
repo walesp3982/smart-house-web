@@ -1,6 +1,6 @@
 import { Control, Controller, FieldPath, FieldValues } from "react-hook-form"
 import { FieldTextTemplate } from "./builder"
-import Password from "@/component/Form/Icons/Password"
+import PasswordIcon from "@/component/Form/Icons/PasswordIcon"
 import { useState } from "react"
 
 interface PasswordFieldTextProps
@@ -33,7 +33,7 @@ export default function PasswordFieldText
                     id={id}
                     field={field}
                     fieldState={fieldState}
-                    icon={<Password showPassword={showPassword} handleClickShowPassword={handleClickShowPassword} />}
+                    icon={<PasswordIcon showPassword={showPassword} handleClickShowPassword={handleClickShowPassword} />}
                 />
             )}
         />
