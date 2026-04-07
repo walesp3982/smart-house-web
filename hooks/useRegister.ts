@@ -25,7 +25,7 @@ export function useRegister() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const form = useForm<RegisterFormValues>({
-    defaultValues: { name: "", email: "", password: "" },
+    defaultValues: { name: "", email: "", password: "", confirmed_password: "" },
     resolver: zodResolver(registerSchema),
   });
 

@@ -6,7 +6,7 @@ const theme = createTheme({
   palette: {
     mode: "dark", // Priorizando desarrollo en modo dark,
     primary: {
-      main: "#7c8cf8", // azul/violeta suave, visible sobre fondos oscuros
+      main: "#2823bc", // azul/violeta suave, visible sobre fondos oscuros
     },
     secondary: {
       main: "#f48fb1", // rosa suave
@@ -25,7 +25,7 @@ const theme = createTheme({
     },
     background: {
       default: "#0f1117", // fondo del body, muy oscuro
-      paper: "#1a1d27", // fondo de Cards, Dialogs, Paper
+      paper: "#171717", // fondo de Cards, Dialogs, Paper
     },
     text: {
       primary: "#e2e8f0", // texto principal, blanco suave

@@ -9,7 +9,7 @@ export default function Background({ children }: propsBackground) {
     // <div className={styles.container}>
     <Box
       sx={{
-        background: "linear-gradient(135deg, #4e73df, #1cc88a)",
+        background: "linear-gradient(#00c6ff, #0072ff, #8e2de2)",
         minHeight: "100vh",
         display: "flex",
         justifyContent: "center",
