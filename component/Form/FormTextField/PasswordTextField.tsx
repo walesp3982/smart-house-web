@@ -3,7 +3,7 @@ import { FieldTextTemplate } from "./builder"
 import PasswordIcon from "@/component/Form/Icons/PasswordIcon"
 import { useState } from "react"
 
-interface PasswordFieldTextProps
+interface PasswordTextFieldProps
     <TFieldValues extends FieldValues,
         TName extends FieldPath<TFieldValues>
     > {
@@ -13,10 +13,10 @@ interface PasswordFieldTextProps
     id?: string
 }
 
-export default function PasswordFieldText
+export default function PasswordTextField
     <TFieldValues extends FieldValues,
         TName extends FieldPath<TFieldValues>
-    >({ control, name, label, id }: PasswordFieldTextProps<TFieldValues, TName>) {
+    >({ control, name, label, id }: PasswordTextFieldProps<TFieldValues, TName>) {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => {

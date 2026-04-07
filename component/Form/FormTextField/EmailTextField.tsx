@@ -2,7 +2,7 @@ import { Control, Controller, FieldPath, FieldValues } from "react-hook-form"
 import { FieldTextTemplate } from "./builder"
 import EmailIcon from '@mui/icons-material/Email'
 
-interface EmailFieldTextProps
+interface EmailTextFieldProps
     <TFieldValues extends FieldValues,
         TName extends FieldPath<TFieldValues>
     > {
@@ -12,10 +12,10 @@ interface EmailFieldTextProps
     id?: string
 }
 
-export default function EmailFieldText
+export default function EmailTextField
     <TFieldValues extends FieldValues,
         TName extends FieldPath<TFieldValues>
-    >({ control, name, label, id }: EmailFieldTextProps<TFieldValues, TName>) {
+    >({ control, name, label, id }: EmailTextFieldProps<TFieldValues, TName>) {
 
     return (
         <Controller
