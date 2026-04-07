@@ -2,11 +2,11 @@
 
 import FormContainer from "@/component/Form/FormContainer";
 import { useRegister } from "@/hooks/useRegister";
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { JSX } from "react";
 import { Controller } from "react-hook-form";
 import PasswordField from "@/component/Form/FormContainer/Field/Password";
-
+import FormTextField from "@/component/Form/FormTextField";
 export default function RegisterForm(): JSX.Element {
   const { form, isLoading, onSubmit } = useRegister();
   const { control, handleSubmit } = form;
@@ -16,29 +16,16 @@ export default function RegisterForm(): JSX.Element {
         <Typography variant="h4" align="center">
           Registrarse
         </Typography>
-        <Controller
+        <FormTextField
           control={control}
           name="name"
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              label="Nombre"
-              error={!!fieldState.error}
-              helperText={fieldState.error?.message}
-            />
-          )}
+          label="Nombre"
         />
-        <Controller
+        <FormTextField
           control={control}
           name="email"
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              label="Email"
-              error={!!fieldState.error}
-              helperText={fieldState.error?.message}
-            />
-          )}
+          type="email"
+          label="Email"
         />
         <Controller
           control={control}
