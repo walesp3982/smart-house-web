@@ -1,9 +1,8 @@
 import { Control, Controller, FieldPath, FieldValues } from "react-hook-form"
 import { FieldTextTemplate } from "./builder"
-import PasswordIcon from "@/component/Form/Icons/PasswordIcon"
-import { useState } from "react"
+import EmailIcon from '@mui/icons-material/Email'
 
-interface PasswordFieldTextProps
+interface EmailFieldTextProps
     <TFieldValues extends FieldValues,
         TName extends FieldPath<TFieldValues>
     > {
@@ -13,15 +12,11 @@ interface PasswordFieldTextProps
     id?: string
 }
 
-export default function PasswordFieldText
+export default function EmailFieldText
     <TFieldValues extends FieldValues,
         TName extends FieldPath<TFieldValues>
-    >({ control, name, label, id }: PasswordFieldTextProps<TFieldValues, TName>) {
-    const [showPassword, setShowPassword] = useState(false);
+    >({ control, name, label, id }: EmailFieldTextProps<TFieldValues, TName>) {
 
-    const handleClickShowPassword = () => {
-        setShowPassword((state) => !state)
-    }
     return (
         <Controller
             control={control}
@@ -29,11 +24,11 @@ export default function PasswordFieldText
             render={({ field, fieldState }) => (
                 <FieldTextTemplate
                     label={label}
-                    type={showPassword ? "text" : "password"}
+                    type="text"
                     id={id}
                     field={field}
                     fieldState={fieldState}
-                    icon={<PasswordIcon showPassword={!showPassword} handleClickShowPassword={handleClickShowPassword} />}
+                    icon={<EmailIcon />}
                 />
             )}
         />

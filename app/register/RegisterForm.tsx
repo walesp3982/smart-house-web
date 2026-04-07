@@ -4,7 +4,7 @@ import FormContainer from "@/component/Form/FormContainer";
 import { useRegister } from "@/hooks/useRegister";
 import { Button, Typography } from "@mui/material";
 import { JSX } from "react";
-import { BasicFieldText, PasswordFieldText } from "@/component/Form/FormTextField";
+import { BasicFieldText, PasswordFieldText, EmailTextField } from "@/component/Form/FormTextField";
 export default function RegisterForm(): JSX.Element {
   const { form, isLoading, onSubmit } = useRegister();
   const { control, handleSubmit } = form;
@@ -19,7 +19,7 @@ export default function RegisterForm(): JSX.Element {
           name="name"
           label="Nombre"
         />
-        <BasicFieldText
+        <EmailTextField
           control={control}
           name="email"
           label="Correo electrónico"

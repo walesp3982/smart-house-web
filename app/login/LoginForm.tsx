@@ -1,13 +1,10 @@
 "use client";
 
 import FormContainer from "@/component/Form/FormContainer";
-import PasswordField from "@/component/Form/FormContainer/Field/Password";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { Controller } from "react-hook-form";
 import { useLogin } from "@/hooks/useLogin";
-
+import { EmailTextField, PasswordFieldText } from "@/component/Form/FormTextField";
 export default function LoginForm() {
   const { form, isLoading, onSubmit } = useLogin();
 
@@ -19,25 +16,18 @@ export default function LoginForm() {
         <Typography variant="h4" align="center">
           Iniciar sesión
         </Typography>
-        <Controller
+
+        <EmailTextField
+          control={control}
           name="email"
-          control={control}
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              label="Email"
-              error={!!fieldState.error}
-              helperText={fieldState.error?.message}
-            ></TextField>
-          )}
+          label="Correo electrónico"
         />
-        <Controller
+        <PasswordFieldText
+          control={control}
           name="password"
-          control={control}
-          render={({ field, fieldState }) => (
-            <PasswordField field={field} fieldState={fieldState} />
-          )}
+          label="Contraseña"
         />
+
         <Button
           type="submit"
           disabled={isLoading}
