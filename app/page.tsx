@@ -18,7 +18,7 @@ export default function LandingPage() {
   };
 
   return (
-    <Box sx={{ minHeight: "100vh", backgroundColor: "#000" }}>
+    <Box>
       <Navbar onClickLogin={onClickLogin} onClickRegister={onClickRegister} />
       <HeroSection />
       <ImageCarousel />
