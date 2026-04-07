@@ -1,11 +1,11 @@
 "use client";
 
-import FormContainer from "@/component/FormContainer";
+import FormContainer from "@/component/Form/FormContainer";
 import { useRegister } from "@/hooks/useRegister";
 import { Button, TextField, Typography } from "@mui/material";
 import { JSX } from "react";
 import { Controller } from "react-hook-form";
-import PasswordField from "@/component/FormContainer/Field/Password";
+import PasswordField from "@/component/Form/FormContainer/Field/Password";
 
 export default function RegisterForm(): JSX.Element {
   const { form, isLoading, onSubmit } = useRegister();

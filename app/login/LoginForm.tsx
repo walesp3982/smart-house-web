@@ -1,7 +1,7 @@
 "use client";
 
-import FormContainer from "@/component/FormContainer";
-import PasswordField from "@/component/FormContainer/Field/Password";
+import FormContainer from "@/component/Form/FormContainer";
+import PasswordField from "@/component/Form/FormContainer/Field/Password";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
