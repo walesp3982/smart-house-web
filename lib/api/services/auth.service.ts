@@ -1,3 +1,4 @@
+"use server";
 import { apiClient } from "@/lib/api/client";
 
 export async function loginUser(email: string, password: string) {

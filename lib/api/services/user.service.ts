@@ -1,3 +1,5 @@
+"use server";
+
 import { apiClient } from "@/lib/api/client";
 
 export async function userMe() {
