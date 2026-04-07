@@ -1,3 +1,5 @@
+import "server-only";
+
 import createClient, { Middleware } from "openapi-fetch";
 import { paths } from "./types";
 import { cookies } from "next/headers";
