@@ -1,7 +1,7 @@
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import PasswordIcon from "../../Icons/Password";
+import PasswordIcon from "../../Icons/PasswordIcon";
 import { useState } from "react";
 
 import {
