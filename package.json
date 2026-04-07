@@ -9,7 +9,7 @@
     "lint": "eslint",
     "test": "vitest",
     "test:run": "vitest run",
-    "gen:types": "openapi-typescript http://localhost:8000/openapi.json -o src/lib/api/types.ts"
+    "gen:types": "openapi-typescript http://localhost:8000/openapi.json -o lib/api/types.ts"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",

@@ -5,6 +5,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import theme from "@/theme";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { Toaster } from "sonner";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -31,6 +32,7 @@ export default function RootLayout({
             {children}
           </ThemeProvider>
         </AppRouterCacheProvider>
+        <Toaster richColors position="top-center" theme="dark" />
       </body>
     </html>
   );

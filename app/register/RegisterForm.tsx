@@ -1,41 +1,61 @@
 "use client";
 
 import FormContainer from "@/component/FormContainer";
-import PasswordField from "@/component/FormContainer/Field/Password";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
+import { useRegister } from "@/hooks/useRegister";
+import { Button, TextField, Typography } from "@mui/material";
+import { JSX } from "react";
 import { Controller } from "react-hook-form";
-import { useLogin } from "@/hooks/useLogin";
+import PasswordField from "@/component/FormContainer/Field/Password";
 
-export default function LoginForm() {
-  const { form, isLoading, onSubmit } = useLogin();
-
+export default function RegisterForm(): JSX.Element {
+  const { form, isLoading, onSubmit } = useRegister();
   const { control, handleSubmit } = form;
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormContainer>
         <Typography variant="h4" align="center">
-          Iniciar sesión
+          Registrarse
         </Typography>
         <Controller
-          name="email"
           control={control}
+          name="name"
+          render={({ field, fieldState }) => (
+            <TextField
+              {...field}
+              label="Nombre"
+              error={!!fieldState.error}
+              helperText={fieldState.error?.message}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="email"
           render={({ field, fieldState }) => (
             <TextField
               {...field}
               label="Email"
               error={!!fieldState.error}
               helperText={fieldState.error?.message}
-            ></TextField>
+            />
           )}
         />
         <Controller
-          name="password"
           control={control}
+          name="password"
           render={({ field, fieldState }) => (
             <PasswordField field={field} fieldState={fieldState} />
+          )}
+        />
+        <Controller
+          control={control}
+          name="confirmed_password"
+          render={({ field, fieldState }) => (
+            <PasswordField
+              field={field}
+              fieldState={fieldState}
+              name="Confirmar Password"
+            />
           )}
         />
         <Button

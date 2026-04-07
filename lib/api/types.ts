@@ -45,10 +45,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
-        put?: never;
         /** Info Actual User */
-        post: operations["info_actual_user_users_me_post"];
+        get: operations["info_actual_user_users_me_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -62,10 +62,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
-        put?: never;
         /** Get Verified User */
-        post: operations["get_verified_user_users_verified_post"];
+        get: operations["get_verified_user_users_verified_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -263,6 +263,23 @@ export interface paths {
         patch: operations["update_installed_device_installed_devices__installed_device_id__patch"];
         trace?: never;
     };
+    "/installed_devices/{installed_device_id}/command": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Settings Installed Device */
+        post: operations["settings_installed_device_installed_devices__installed_device_id__command_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/track_devices/device/{device_id}": {
         parameters: {
             query?: never;
@@ -405,6 +422,19 @@ export interface components {
             /** File */
             file: string;
         };
+        /** Camera */
+        Camera: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "on" | "off";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "camera";
+        };
         /** CreateAreaRequest */
         CreateAreaRequest: {
             /** Name */
@@ -454,10 +484,78 @@ export interface components {
          * @enum {string}
          */
         DeviceType: "light" | "thermostat" | "camera" | "door" | "movement";
+        /** Door */
+        Door: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "on" | "off";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "door";
+        };
+        /** ErrorResponse */
+        ErrorResponse: {
+            /** Detail */
+            detail: string;
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** Light */
+        Light: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "on" | "off";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "light";
+        };
+        /** MovementSensor */
+        MovementSensor: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "on" | "off";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "movement";
+        };
+        /** TemperatureSensor */
+        TemperatureSensor: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "on" | "off";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "temperature";
+            /** Enable Auto */
+            enable_auto: boolean;
+            /** Has Limit */
+            has_limit: number;
+        };
+        /** Token */
+        Token: {
+            /** Access Token */
+            access_token: string;
+            /** Token Type */
+            token_type: string;
         };
         /** TrackDeviceResponse */
         TrackDeviceResponse: {
@@ -507,6 +605,11 @@ export interface components {
             /** Password */
             password: string;
         };
+        /** UserVerifiedStatusResponse */
+        UserVerifiedStatusResponse: {
+            /** Status */
+            status: boolean;
+        };
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -531,6 +634,8 @@ export interface components {
              * Format: email
              */
             email: string;
+            /** Is Verified */
+            is_verified: boolean;
         };
     };
     responses: never;
@@ -560,7 +665,16 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["Token"];
+                };
+            };
+            /** @description Credenciales inválidas */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -593,7 +707,16 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["VisibleDataUserResponse"];
+                };
+            };
+            /** @description Email duplicado */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -607,7 +730,7 @@ export interface operations {
             };
         };
     };
-    info_actual_user_users_me_post: {
+    info_actual_user_users_me_get: {
         parameters: {
             query?: never;
             header?: never;
@@ -625,9 +748,18 @@ export interface operations {
                     "application/json": components["schemas"]["VisibleDataUserResponse"];
                 };
             };
+            /** @description Usuario no encontrado */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
         };
     };
-    get_verified_user_users_verified_post: {
+    get_verified_user_users_verified_get: {
         parameters: {
             query: {
                 user_id: number;
@@ -644,7 +776,16 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["UserVerifiedStatusResponse"];
+                };
+            };
+            /** @description Usuario no encontrado */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -670,12 +811,39 @@ export interface operations {
         requestBody?: never;
         responses: {
             /** @description Successful Response */
-            200: {
+            307: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Usuario no encontrado */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Token inválido */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validación de email inválida */
+            406: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -1179,6 +1347,39 @@ export interface operations {
                     "application/json": {
                         [key: string]: unknown;
                     };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    settings_installed_device_installed_devices__installed_device_id__command_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Door"] | components["schemas"]["Light"] | components["schemas"]["MovementSensor"] | components["schemas"]["TemperatureSensor"] | components["schemas"]["Camera"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */

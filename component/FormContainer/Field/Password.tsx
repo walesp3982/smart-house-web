@@ -18,18 +18,21 @@ interface PasswordFieldProps<
 > {
   field: ControllerRenderProps<TFieldValues, TName>;
   fieldState: ControllerFieldState;
+  name?: string;
 }
 export default function PasswordFieldProps<
   TFieldValues extends FieldValues,
   TName extends FieldPath<TFieldValues>,
->({ field, fieldState }: PasswordFieldProps<TFieldValues, TName>) {
+>({ field, fieldState, name }: PasswordFieldProps<TFieldValues, TName>) {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () =>
     setShowPassword((show: boolean) => !show);
+
+  const label = typeof name === "undefined" ? "Password" : name;
   return (
     <FormControl variant="outlined" error={!!fieldState.error}>
-      <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+      <InputLabel htmlFor="outlined-adornment-password">{label}</InputLabel>
       <OutlinedInput
         id="outlined-adornment-password"
         type={showPassword ? "text" : "password"}
@@ -39,7 +42,7 @@ export default function PasswordFieldProps<
             handleClickShowPassword={handleClickShowPassword}
           ></PasswordIcon>
         }
-        label="Password"
+        label={label}
         {...field}
       />
       <FormHelperText>{fieldState.error?.message}</FormHelperText>
