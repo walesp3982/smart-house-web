@@ -1,5 +1,5 @@
 "use client";
 
-export function SettingsUser() {
+export default function SettingsUser() {
   return <div>Configuración</div>;
 }
