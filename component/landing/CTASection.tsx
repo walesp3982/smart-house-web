@@ -10,7 +10,7 @@ import Modal from "@mui/material/Modal";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import HomeIcon from "@mui/icons-material/Home";
-
+import { Paper } from "@mui/material";
 // ─── Pon aquí la ruta de tu imagen, ej: '/images/img4.jpeg' ──────────────
 const CTA_IMAGE_SRC = "/images/img2.png";
 // ─────────────────────────────────────────────────────────────────────────
@@ -26,21 +26,22 @@ const CTASection = ({ onClickStarted }: CTASectionProps) => {
         <Grid container spacing={3} alignItems="stretch">
           {/* Tarjeta izquierda */}
           <Grid size={{ xs: 12, md: 6 }}>
-            <Box
+            <Paper
               sx={{
-                backgroundColor: "#2a2a2a",
                 p: { xs: 4, md: 5 },
                 height: "100%",
                 minHeight: 320,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
+                borderRadius: 4,
                 alignItems: "center", // centra horizontalmente
                 textAlign: "center", // centra el texto
               }}
+              elevation={0}
             >
               <Typography
-                sx={{ fontSize: "1rem", lineHeight: 1.7, color: "#fff" }}
+                sx={{ fontSize: "2rem", lineHeight: 1.7, color: "#fff" }}
               >
                 Únete a miles de hogares que ya controlan su casa con la voz.
                 Configura luces, seguridad y temperatura desde cualquier lugar,
@@ -48,22 +49,20 @@ const CTASection = ({ onClickStarted }: CTASectionProps) => {
               </Typography>
 
               <Button
+                fullWidth
                 variant="contained"
                 size="large"
                 startIcon={<HomeIcon />}
                 sx={{
                   mt: 4,
-                  backgroundColor: "#fff",
-                  color: "#000",
                   fontWeight: 700,
                   px: 4,
-                  "&:hover": { backgroundColor: "#ddd" },
                 }}
                 onClick={onClickStarted}
               >
                 Empieza gratis
               </Button>
-            </Box>
+            </Paper>
           </Grid>
 
           {/* Imagen derecha — clic para agrandar */}

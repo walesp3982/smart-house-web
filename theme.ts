@@ -36,6 +36,15 @@ const theme = createTheme({
     fontFamily: "Roboto, Arial, sans-serif",
   },
   cssVariables: true,
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          backgroundColor: theme.palette.background.default,
+        }),
+      },
+    },
+  },
   // colorSchemes: {
   //   light: {
   //     // TODO: Revisar si se puede integrar
@@ -58,5 +67,3 @@ const theme = createTheme({
 });
 
 export default theme;
-
-

@@ -1,0 +1,282 @@
+/* ===========================
+   LAYOUT
+=========================== */
+.root {
+  display: flex;
+  min-height: 100vh;
+  /* background-image: url('/fondo_casa.jpg'); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  position: relative;
+}
+
+/* Overlay semitransparente para legibilidad */
+.root::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Todo el contenido encima del overlay */
+.root > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===========================
+   SIDEBAR
+=========================== */
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.sidebarPaper {
+  width: 260px;
+  background: var(--mui-palette-background-default) !important;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid var(--mui-palette-divider) !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarHeader {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid var(--mui-palette-divider);
+  margin-bottom: 8px;
+}
+
+.sidebarHeader h6 {
+  color: var(--mui-palette-text-primary);
+  font-size: 15px;
+}
+
+.caption {
+  color: var(--mui-palette-text-secondary) !important;
+  font-size: 11px !important;
+  margin-top: 2px;
+  display: block;
+}
+
+/* Navigation */
+.menuList {
+  padding: 8px 12px !important;
+}
+
+.menuItem {
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  transition: background 0.15s !important;
+}
+
+.menuItemActive {
+  background: var(--mui-palette-primary-main) !important;
+  color: var(--mui-palette-background-paper) !important;
+}
+
+.menuItemActive .menuIcon,
+.menuItemActive svg {
+  color: #ffffff !important;
+}
+
+.menuItemActive span {
+  font-weight: 600 !important;
+  color: #ffffff !important;
+}
+
+.menuItemInactive {
+  color: var(--mui-palette-text-secondary) !important;
+}
+
+.menuItemInactive:hover {
+  background: rgba(40, 35, 188, 0.15) !important;
+  color: var(--mui-palette-text-primary) !important;
+}
+
+.menuItemInactive .menuIcon,
+.menuItemInactive svg {
+  color: var(--mui-palette-text-secondary) !important;
+}
+
+.menuIcon {
+  min-width: 36px !important;
+}
+
+/* User footer */
+.userFooter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--mui-palette-divider);
+  margin-top: auto;
+}
+
+.userAvatar {
+  width: 34px !important;
+  height: 34px !important;
+  font-size: 13px !important;
+  background: var(--mui-palette-primary-main) !important;
+  color: var(--mui-palette-background-paper) !important;
+}
+
+.userInfo {
+  flex: 1;
+  overflow: hidden;
+}
+
+.userName {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--mui-palette-text-primary) !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userEmail {
+  font-size: 11px !important;
+  color: var(--mui-palette-text-secondary) !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.settingsIcon {
+  color: var(--mui-palette-text-secondary) !important;
+  padding: 6px !important;
+}
+
+.settingsIcon:hover {
+  color: var(--mui-palette-primary-main) !important;
+  background: rgba(40, 35, 188, 0.15) !important;
+}
+
+/* ===========================
+   MAIN CONTENT
+=========================== */
+.mainContent {
+  flex: 1;
+  padding: 48px;
+  overflow-y: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* ===========================
+   CARD (fondo blanco, texto negro)
+=========================== */
+.card {
+  background: var(--mui-palette-background-paper) !important;
+  border: 1px solid var(--mui-palette-divider) !important;
+  border-radius: 14px !important;
+  padding: 40px !important;
+  width: 100%;
+  max-width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+
+@media (min-width: 600px) {
+  .card {
+    max-width: 520px;
+  }
+}
+
+@media (min-width: 960px) {
+  .card {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .card {
+    max-width: 900px;
+  }
+}
+
+/* ===========================
+   TYPOGRAPHY
+=========================== */
+.title {
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  color: var(--mui-palette-text-primary) !important;
+  letter-spacing: -0.5px !important;
+  margin-bottom: 8px !important;
+}
+
+.subtitle {
+  color: var(--mui-palette-text-secondary) !important;
+  margin-bottom: 32px !important;
+  font-size: 14px !important;
+}
+
+.addDeviceButton {
+  background: var(--mui-palette-primary-main) !important;
+  color: var(--mui-palette-background-paper) !important;
+  font-weight: 600 !important;
+  padding: 12px !important;
+  border-radius: 8px !important;
+  text-transform: none !important;
+  font-size: 14px !important;
+  letter-spacing: 0 !important;
+}
+
+.addDeviceButton:hover {
+  background: rgba(40, 35, 188, 0.8) !important;
+}
+
+/* ===========================
+   DEVICE LIST ITEMS
+=========================== */
+.deviceItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--mui-palette-divider);
+  border-radius: 8px;
+  background: rgba(23, 23, 23, 0.5);
+  transition: border-color 0.15s;
+}
+
+.deviceItem:hover {
+  border-color: var(--mui-palette-primary-main);
+}
+
+.deviceCode {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: var(--mui-palette-text-primary) !important;
+}
+
+.deviceDescription {
+  font-size: 13px !important;
+  color: var(--mui-palette-text-secondary) !important;
+  margin-top: 2px !important;
+}
+
+.deviceMeta {
+  font-size: 11px !important;
+  color: var(--mui-palette-text-secondary) !important;
+  margin-top: 4px !important;
+}
+
+/* ===========================
+   TRACKING PLACEHOLDER
+=========================== */
+.trackingPlaceholder {
+  border: 1px dashed var(--mui-palette-primary-main);
+  border-radius: 8px;
+  padding: 48px 24px;
+  text-align: center;
+  background: rgba(23, 23, 23, 0.5);
+  color: var(--mui-palette-primary-main);
+}

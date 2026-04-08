@@ -2,11 +2,9 @@
 
 import FormContainer from "@/component/Form/FormContainer";
 import { useRegister } from "@/hooks/useRegister";
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { JSX } from "react";
-import { Controller } from "react-hook-form";
-import PasswordField from "@/component/Form/FormContainer/Field/Password";
-
+import { BasicTextField, PasswordTextField, EmailTextField } from "@/component/Form/FormTextField";
 export default function RegisterForm(): JSX.Element {
   const { form, isLoading, onSubmit } = useRegister();
   const { control, handleSubmit } = form;
@@ -16,47 +14,25 @@ export default function RegisterForm(): JSX.Element {
         <Typography variant="h4" align="center">
           Registrarse
         </Typography>
-        <Controller
+        <BasicTextField
           control={control}
           name="name"
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              label="Nombre"
-              error={!!fieldState.error}
-              helperText={fieldState.error?.message}
-            />
-          )}
+          label="Nombre"
         />
-        <Controller
+        <EmailTextField
           control={control}
           name="email"
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              label="Email"
-              error={!!fieldState.error}
-              helperText={fieldState.error?.message}
-            />
-          )}
+          label="Correo electrónico"
         />
-        <Controller
+        <PasswordTextField
           control={control}
           name="password"
-          render={({ field, fieldState }) => (
-            <PasswordField field={field} fieldState={fieldState} />
-          )}
+          label="Contraseña"
         />
-        <Controller
+        <PasswordTextField
           control={control}
           name="confirmed_password"
-          render={({ field, fieldState }) => (
-            <PasswordField
-              field={field}
-              fieldState={fieldState}
-              name="Confirmar Password"
-            />
-          )}
+          label="Confirmar Contraseña"
         />
         <Button
           type="submit"

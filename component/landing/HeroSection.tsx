@@ -8,10 +8,10 @@ const HeroSection = () => {
   return (
     <Box
       sx={{
-        pt: { xs: 8, md: 12 },
-        pb: { xs: 4, md: 6 },
+        pt: { xs: 10, md: 12, sm: 13 },
+        pb: { xs: 10, md: 12, sm: 13 },
         textAlign: "center",
-        backgroundColor: "#000", // ← fondo negro
+        backgroundColor: "rgba(0, 0, 0, 0.3)", // ← fondo negro
       }}
     >
       <Container maxWidth="md">
@@ -19,7 +19,7 @@ const HeroSection = () => {
           component="h1"
           sx={{
             fontWeight: 800,
-            fontSize: { xs: "2.8rem", sm: "3.5rem", md: "4.5rem" },
+            fontSize: { xs: "4rem", sm: "5rem", md: "6rem" },
             lineHeight: 1.1,
             letterSpacing: "-0.02em",
             mb: 4,
@@ -31,7 +31,7 @@ const HeroSection = () => {
 
         <Typography
           component="p"
-          sx={{ fontWeight: 700, fontSize: "1.1rem", color: "#fff" }} // ← texto blanco
+          sx={{ fontWeight: 700, fontSize: "1.5rem", color: "#ffffffc9" }} // ← texto blanco
         >
           &quot;Automatiza tu hogar con comandos de voz. Seguridad, confort y
           eficiencia en un solo lugar.&quot;

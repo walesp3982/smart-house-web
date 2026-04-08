@@ -18,7 +18,13 @@ export default function LandingPage() {
   };
 
   return (
-    <Box sx={{ minHeight: "100vh", backgroundColor: "#000" }}>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        background: "linear-gradient(#00c6ff, #0072ff, #8e2de2)",
+        backgroundAttachment: "fixed",
+      }}
+    >
       <Navbar onClickLogin={onClickLogin} onClickRegister={onClickRegister} />
       <HeroSection />
       <ImageCarousel />
