@@ -22,12 +22,6 @@ export interface UserProfile {
   email: string;
 }
 
-interface SnackbarState {
-  open: boolean;
-  message: string;
-  severity: "success" | "error" | "info" | "warning";
-}
-
 interface DashboardContextType {
   customHouses: House[];
   setCustomHouses: React.Dispatch<React.SetStateAction<House[]>>;
@@ -35,9 +29,6 @@ interface DashboardContextType {
   setDevices: React.Dispatch<React.SetStateAction<Device[]>>;
   userProfile: UserProfile;
   setUserProfile: React.Dispatch<React.SetStateAction<UserProfile>>;
-  snackbar: SnackbarState;
-  setSnackbar: React.Dispatch<React.SetStateAction<SnackbarState>>;
-  showSnackbar: (message: string, severity: SnackbarState["severity"]) => void;
 }
 
 const DashboardContext = createContext<DashboardContextType | undefined>(
@@ -51,14 +42,6 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     name: "Admin",
     email: "admin@smarthome.com",
   });
-  const [snackbar, setSnackbar] = useState<SnackbarState>({
-    open: false,
-    message: "",
-    severity: "success",
-  });
-
-  const showSnackbar = (message: string, severity: SnackbarState["severity"]) =>
-    setSnackbar({ open: true, message, severity });
 
   return (
     <DashboardContext.Provider
@@ -69,9 +52,6 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         setDevices,
         userProfile,
         setUserProfile,
-        snackbar,
-        setSnackbar,
-        showSnackbar,
       }}
     >
       {children}
