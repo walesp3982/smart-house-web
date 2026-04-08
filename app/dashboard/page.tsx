@@ -12,29 +12,21 @@ import {
   Select,
   MenuItem,
   Stack,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
 } from "@mui/material";
 import { AddCircleOutline as AddIcon } from "@mui/icons-material";
 import styles from "./Dashboard.module.css";
 import { translations } from "./tranlations";
 import { useDashboard } from "./DashboardContext";
-import { PREDEFINED_HOUSES, House } from "./dashboardUtils";
+import { PREDEFINED_HOUSES } from "./dashboardUtils";
 
 const t = (key: keyof typeof translations) => translations[key];
 
 export default function DashboardHomePage() {
-  const { customHouses, setCustomHouses, setDevices, showSnackbar } =
-    useDashboard();
+  const { customHouses, setDevices } = useDashboard();
 
   const [deviceCode, setDeviceCode] = useState("");
   const [deviceDescription, setDeviceDescription] = useState("");
   const [selectedHouseId, setSelectedHouseId] = useState<number | "">("");
-  const [openNewHouseDialog, setOpenNewHouseDialog] = useState(false);
-  const [newHouseName, setNewHouseName] = useState("");
-  const [newHouseDescription, setNewHouseDescription] = useState("");
 
   const allHouses = useMemo(
     () => [...PREDEFINED_HOUSES, ...customHouses],
@@ -42,11 +34,6 @@ export default function DashboardHomePage() {
   );
 
   const handleAddDevice = useCallback(() => {
-    if (!deviceCode.trim())
-      return showSnackbar(t("snackbarErrorDeviceCode"), "error");
-    if (!selectedHouseId)
-      return showSnackbar(t("snackbarErrorSelectHouse"), "error");
-
     setDevices((prev) => [
       ...prev,
       {
@@ -59,41 +46,7 @@ export default function DashboardHomePage() {
     ]);
     setDeviceCode("");
     setDeviceDescription("");
-    showSnackbar(t("snackbarDeviceAdded"), "success");
-  }, [
-    deviceCode,
-    selectedHouseId,
-    deviceDescription,
-    setDevices,
-    showSnackbar,
-  ]);
-
-  const handleAddNewHouse = useCallback(() => {
-    if (!newHouseName.trim())
-      return showSnackbar(t("snackbarErrorHouseName"), "error");
-
-    const newId = Math.max(...allHouses.map((h) => h.id), 0) + 1;
-    const newHouse: House = {
-      id: newId,
-      name: newHouseName.trim(),
-      description: newHouseDescription.trim() || "Sin descripción",
-    };
-    setCustomHouses((prev) => [...prev, newHouse]);
-    setSelectedHouseId(newId);
-    setNewHouseName("");
-    setNewHouseDescription("");
-    setOpenNewHouseDialog(false);
-    showSnackbar(
-      t("snackbarHouseAdded").replace("{name}", newHouse.name),
-      "success",
-    );
-  }, [
-    newHouseName,
-    newHouseDescription,
-    allHouses,
-    setCustomHouses,
-    showSnackbar,
-  ]);
+  }, [deviceCode, selectedHouseId, deviceDescription, setDevices]);
 
   return (
     <>
@@ -152,62 +105,18 @@ export default function DashboardHomePage() {
             <Button
               variant="outlined"
               startIcon={<AddIcon />}
-              onClick={() => setOpenNewHouseDialog(true)}
-              className={styles.newHouseButton}
+              // className={styles.newHouseButton}
               sx={{ whiteSpace: "nowrap", height: 56 }}
             >
               {t("newHouseButton")}
             </Button>
           </Box>
 
-          <Button
-            variant="contained"
-            fullWidth
-            onClick={handleAddDevice}
-            className={styles.addDeviceButton}
-          >
+          <Button variant="contained" fullWidth onClick={handleAddDevice}>
             {t("addDeviceButton")}
           </Button>
         </Stack>
       </Paper>
-
-      {/* DIALOG: Nueva Casa */}
-      <Dialog
-        open={openNewHouseDialog}
-        onClose={() => setOpenNewHouseDialog(false)}
-        fullWidth
-        maxWidth="xs"
-      >
-        <DialogTitle>{t("newHouseDialogTitle")}</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            fullWidth
-            variant="outlined"
-            label={t("houseNameLabel")}
-            value={newHouseName}
-            onChange={(e) => setNewHouseName(e.target.value)}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            margin="dense"
-            fullWidth
-            variant="outlined"
-            label={t("houseDescriptionLabel")}
-            value={newHouseDescription}
-            onChange={(e) => setNewHouseDescription(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenNewHouseDialog(false)}>
-            {t("cancel")}
-          </Button>
-          <Button onClick={handleAddNewHouse} variant="contained">
-            {t("add")}
-          </Button>
-        </DialogActions>
-      </Dialog>
     </>
   );
 }

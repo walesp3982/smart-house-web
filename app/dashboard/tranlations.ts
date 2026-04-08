@@ -11,7 +11,7 @@ export const translations = {
   deviceDescriptionLabel: "Descripción (opcional)",
   deviceDescriptionPlaceholder: "Ej: Termostato sala",
   selectHouseLabel: "Seleccionar casa",
-  newHouseButton: "Nueva Casa",
+  newHouseButton: "Casa",
   addDeviceButton: "Agregar dispositivo",
   myDevices: "Mis Dispositivos",
   noDevices: "No tienes dispositivos agregados aún.",

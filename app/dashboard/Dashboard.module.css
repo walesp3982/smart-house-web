@@ -82,7 +82,7 @@
 
 .menuItemActive .menuIcon,
 .menuItemActive svg {
-  color: var(--mui-palette-background-paper) !important;
+  color: #ffffff !important;
 }
 
 .menuItemActive span {
@@ -218,21 +218,6 @@
   font-size: 14px !important;
 }
 
-/* ===========================
-   FORM BUTTONS
-=========================== */
-.newHouseButton {
-  border-color: var(--mui-palette-primary-main) !important;
-  color: var(--mui-palette-primary-main) !important;
-  font-weight: 500 !important;
-  text-transform: none !important;
-}
-
-.newHouseButton:hover {
-  background: rgba(40, 35, 188, 0.08) !important;
-  border-color: var(--mui-palette-primary-main) !important;
-}
-
 .addDeviceButton {
   background: var(--mui-palette-primary-main) !important;
   color: var(--mui-palette-background-paper) !important;
@@ -294,85 +279,4 @@
   text-align: center;
   background: rgba(23, 23, 23, 0.5);
   color: var(--mui-palette-primary-main);
-}
-
-/* ===========================
-   MUI OVERRIDES — inputs negro
-=========================== */
-.card :global(.MuiInputBase-input) {
-  color: var(--mui-palette-text-primary) !important;
-  -webkit-text-fill-color: var(--mui-palette-text-primary) !important;
-}
-
-.card :global(.MuiInputLabel-root) {
-  color: var(--mui-palette-text-secondary) !important;
-}
-
-.card :global(.MuiInputLabel-root.Mui-focused) {
-  color: var(--mui-palette-primary-main) !important;
-}
-
-.card :global(.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline) {
-  border-color: var(--mui-palette-primary-main);
-}
-
-.card
-  :global(.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline) {
-  border-color: var(--mui-palette-primary-main);
-  border-width: 1.5px;
-}
-
-.card :global(.MuiSelect-select) {
-  color: var(--mui-palette-text-primary) !important;
-}
-
-.card :global(.MuiSelect-icon) {
-  color: var(--mui-palette-text-secondary) !important;
-}
-
-/* ===========================
-   MUI OVERRIDES — Diálogos
-=========================== */
-:global(.MuiDialog-root .MuiInputBase-input) {
-  color: var(--mui-palette-text-primary) !important;
-  -webkit-text-fill-color: var(--mui-palette-text-primary) !important;
-}
-
-:global(.MuiDialog-root .MuiInputLabel-root) {
-  color: var(--mui-palette-text-secondary) !important;
-}
-
-:global(.MuiDialog-root .MuiInputLabel-root.Mui-focused) {
-  color: var(--mui-palette-primary-main) !important;
-}
-
-:global(
-  .MuiDialog-root .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline
-) {
-  border-color: var(--mui-palette-primary-main) !important;
-}
-
-:global(
-  .MuiDialog-root
-    .MuiOutlinedInput-root.Mui-focused
-    .MuiOutlinedInput-notchedOutline
-) {
-  border-color: var(--mui-palette-primary-main) !important;
-  border-width: 1.5px !important;
-}
-
-/* Botones primarios en diálogos y generales */
-:global(.MuiButton-containedPrimary) {
-  background-color: var(--mui-palette-primary-main) !important;
-  color: var(--mui-palette-background-paper) !important;
-  text-transform: none !important;
-}
-
-:global(.MuiButton-containedPrimary:hover) {
-  background-color: rgba(40, 35, 188, 0.8) !important;
-}
-
-/* Botones secundarios o de texto */
-:global(.MuiButton-textPrimary) {
-  color: var(--mui-palette-primary-main) !important;
 }

@@ -63,7 +63,11 @@ function ButtonOption({ item, active }: ButtonOptionProps) {
             active ? styles.menuItemActive : styles.menuItemInactive
           }`}
         >
-          <ListItemIcon className={styles.menuIcon}>{item.icon}</ListItemIcon>
+          <ListItemIcon
+            className={`${styles.menuIcon} ${active ? styles.menuItemActive : styles.menuItemInactive}`}
+          >
+            {item.icon}
+          </ListItemIcon>
           <ListItemText primary={item.text} />
         </ListItemButton>
       </Link>
