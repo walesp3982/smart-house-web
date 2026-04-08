@@ -17,7 +17,7 @@ interface Device {
   addedAt: string;
 }
 
-interface UserProfile {
+export interface UserProfile {
   name: string;
   email: string;
 }
