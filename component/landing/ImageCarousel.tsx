@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
@@ -36,7 +36,7 @@ const ImageCarousel = () => {
             overflow: "hidden",
             width: "100%",
             // Pausa al hover
-            "&:hover .track": { animationPlayState: "paused" },
+            // "&:hover .track": { animationPlayState: "paused" },
           }}
         >
           <Box
@@ -81,7 +81,7 @@ const ImageCarousel = () => {
           </Box>
         </Box>
 
-        <Typography
+        {/* <Typography
           sx={{
             mt: 2,
             ml: 2,
@@ -91,7 +91,7 @@ const ImageCarousel = () => {
           }}
         >
           IMAGENES
-        </Typography>
+        </Typography> */}
       </Container>
 
       {/* Modal — imagen ampliada */}
