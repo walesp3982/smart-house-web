@@ -17,12 +17,7 @@
   content: "";
   position: fixed;
   inset: 0;
-  background: rgba(
-    0,
-    0,
-    0,
-    0.65
-  ); /* Más oscuro para resaltar el azul eléctrico */
+  background: rgba(0, 0, 0, 0.65);
   z-index: 0;
   pointer-events: none;
 }
@@ -43,27 +38,27 @@
 
 .sidebarPaper {
   width: 260px;
-  background: rgba(0, 0, 0, 0.85) !important; /* Negro intenso */
+  background: var(--mui-palette-background-default) !important;
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
-  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-right: 1px solid var(--mui-palette-divider) !important;
   display: flex;
   flex-direction: column;
 }
 
 .sidebarHeader {
   padding: 28px 24px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--mui-palette-divider);
   margin-bottom: 8px;
 }
 
 .sidebarHeader h6 {
-  color: #ffffff;
+  color: var(--mui-palette-text-primary);
   font-size: 15px;
 }
 
 .caption {
-  color: rgba(255, 255, 255, 0.5) !important;
+  color: var(--mui-palette-text-secondary) !important;
   font-size: 11px !important;
   margin-top: 2px;
   display: block;
@@ -81,37 +76,32 @@
 }
 
 .menuItemActive {
-  background: #00bfff !important; /* Azul eléctrico */
-  color: #000000 !important;
+  background: var(--mui-palette-primary-main) !important;
+  color: var(--mui-palette-background-paper) !important;
 }
 
 .menuItemActive .menuIcon,
 .menuItemActive svg {
-  color: #000000 !important;
+  color: var(--mui-palette-background-paper) !important;
 }
 
 .menuItemActive span {
   font-weight: 600 !important;
-  color: #000000 !important;
+  color: #ffffff !important;
 }
 
 .menuItemInactive {
-  color: rgba(255, 255, 255, 0.7) !important;
+  color: var(--mui-palette-text-secondary) !important;
 }
 
 .menuItemInactive:hover {
-  background: rgba(
-    0,
-    191,
-    255,
-    0.2
-  ) !important; /* Azul eléctrico con opacidad */
-  color: #ffffff !important;
+  background: rgba(40, 35, 188, 0.15) !important;
+  color: var(--mui-palette-text-primary) !important;
 }
 
 .menuItemInactive .menuIcon,
 .menuItemInactive svg {
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: var(--mui-palette-text-secondary) !important;
 }
 
 .menuIcon {
@@ -124,7 +114,7 @@
   align-items: center;
   gap: 10px;
   padding: 16px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--mui-palette-divider);
   margin-top: auto;
 }
 
@@ -132,8 +122,8 @@
   width: 34px !important;
   height: 34px !important;
   font-size: 13px !important;
-  background: #00bfff !important; /* Azul eléctrico */
-  color: #000000 !important;
+  background: var(--mui-palette-primary-main) !important;
+  color: var(--mui-palette-background-paper) !important;
 }
 
 .userInfo {
@@ -144,7 +134,7 @@
 .userName {
   font-size: 13px !important;
   font-weight: 600 !important;
-  color: #ffffff !important;
+  color: var(--mui-palette-text-primary) !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -152,20 +142,20 @@
 
 .userEmail {
   font-size: 11px !important;
-  color: rgba(255, 255, 255, 0.5) !important;
+  color: var(--mui-palette-text-secondary) !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .settingsIcon {
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: var(--mui-palette-text-secondary) !important;
   padding: 6px !important;
 }
 
 .settingsIcon:hover {
-  color: #00bfff !important;
-  background: rgba(0, 191, 255, 0.15) !important;
+  color: var(--mui-palette-primary-main) !important;
+  background: rgba(40, 35, 188, 0.15) !important;
 }
 
 /* ===========================
@@ -184,13 +174,31 @@
    CARD (fondo blanco, texto negro)
 =========================== */
 .card {
-  background: #ffffff !important;
-  border: 1px solid #e0e0e0 !important;
+  background: var(--mui-palette-background-paper) !important;
+  border: 1px solid var(--mui-palette-divider) !important;
   border-radius: 14px !important;
   padding: 40px !important;
   width: 100%;
-  max-width: 520px;
+  max-width: 100%;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+
+@media (min-width: 600px) {
+  .card {
+    max-width: 520px;
+  }
+}
+
+@media (min-width: 960px) {
+  .card {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .card {
+    max-width: 900px;
+  }
 }
 
 /* ===========================
@@ -199,13 +207,13 @@
 .title {
   font-size: 2rem !important;
   font-weight: 700 !important;
-  color: #000000 !important; /* Negro */
+  color: var(--mui-palette-text-primary) !important;
   letter-spacing: -0.5px !important;
   margin-bottom: 8px !important;
 }
 
 .subtitle {
-  color: #444444 !important;
+  color: var(--mui-palette-text-secondary) !important;
   margin-bottom: 32px !important;
   font-size: 14px !important;
 }
@@ -214,20 +222,20 @@
    FORM BUTTONS
 =========================== */
 .newHouseButton {
-  border-color: #00bfff !important;
-  color: #00bfff !important;
+  border-color: var(--mui-palette-primary-main) !important;
+  color: var(--mui-palette-primary-main) !important;
   font-weight: 500 !important;
   text-transform: none !important;
 }
 
 .newHouseButton:hover {
-  background: rgba(0, 191, 255, 0.08) !important;
-  border-color: #00bfff !important;
+  background: rgba(40, 35, 188, 0.08) !important;
+  border-color: var(--mui-palette-primary-main) !important;
 }
 
 .addDeviceButton {
-  background: #00bfff !important; /* Azul eléctrico */
-  color: #000000 !important; /* Texto negro para contraste */
+  background: var(--mui-palette-primary-main) !important;
+  color: var(--mui-palette-background-paper) !important;
   font-weight: 600 !important;
   padding: 12px !important;
   border-radius: 8px !important;
@@ -237,7 +245,7 @@
 }
 
 .addDeviceButton:hover {
-  background: #009acd !important; /* Azul un poco más oscuro */
+  background: rgba(40, 35, 188, 0.8) !important;
 }
 
 /* ===========================
@@ -248,31 +256,31 @@
   align-items: center;
   gap: 12px;
   padding: 14px 16px;
-  border: 1px solid #e8e8e8;
+  border: 1px solid var(--mui-palette-divider);
   border-radius: 8px;
-  background: #fafafa;
+  background: rgba(23, 23, 23, 0.5);
   transition: border-color 0.15s;
 }
 
 .deviceItem:hover {
-  border-color: #00bfff;
+  border-color: var(--mui-palette-primary-main);
 }
 
 .deviceCode {
   font-size: 14px !important;
   font-weight: 600 !important;
-  color: #000000 !important;
+  color: var(--mui-palette-text-primary) !important;
 }
 
 .deviceDescription {
   font-size: 13px !important;
-  color: #444444 !important;
+  color: var(--mui-palette-text-secondary) !important;
   margin-top: 2px !important;
 }
 
 .deviceMeta {
   font-size: 11px !important;
-  color: #777777 !important;
+  color: var(--mui-palette-text-secondary) !important;
   margin-top: 4px !important;
 }
 
@@ -280,68 +288,68 @@
    TRACKING PLACEHOLDER
 =========================== */
 .trackingPlaceholder {
-  border: 1px dashed #00bfff;
+  border: 1px dashed var(--mui-palette-primary-main);
   border-radius: 8px;
   padding: 48px 24px;
   text-align: center;
-  background: #fafafa;
-  color: #00bfff;
+  background: rgba(23, 23, 23, 0.5);
+  color: var(--mui-palette-primary-main);
 }
 
 /* ===========================
    MUI OVERRIDES — inputs negro
 =========================== */
 .card :global(.MuiInputBase-input) {
-  color: #000000 !important;
-  -webkit-text-fill-color: #000000 !important;
+  color: var(--mui-palette-text-primary) !important;
+  -webkit-text-fill-color: var(--mui-palette-text-primary) !important;
 }
 
 .card :global(.MuiInputLabel-root) {
-  color: #555555 !important;
+  color: var(--mui-palette-text-secondary) !important;
 }
 
 .card :global(.MuiInputLabel-root.Mui-focused) {
-  color: #00bfff !important; /* Etiqueta azul eléctrico al enfocar */
+  color: var(--mui-palette-primary-main) !important;
 }
 
 .card :global(.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline) {
-  border-color: #00bfff;
+  border-color: var(--mui-palette-primary-main);
 }
 
 .card
   :global(.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline) {
-  border-color: #00bfff;
+  border-color: var(--mui-palette-primary-main);
   border-width: 1.5px;
 }
 
 .card :global(.MuiSelect-select) {
-  color: #000000 !important;
+  color: var(--mui-palette-text-primary) !important;
 }
 
 .card :global(.MuiSelect-icon) {
-  color: #555555 !important;
+  color: var(--mui-palette-text-secondary) !important;
 }
 
 /* ===========================
    MUI OVERRIDES — Diálogos
 =========================== */
 :global(.MuiDialog-root .MuiInputBase-input) {
-  color: #000000 !important;
-  -webkit-text-fill-color: #000000 !important;
+  color: var(--mui-palette-text-primary) !important;
+  -webkit-text-fill-color: var(--mui-palette-text-primary) !important;
 }
 
 :global(.MuiDialog-root .MuiInputLabel-root) {
-  color: #555555 !important;
+  color: var(--mui-palette-text-secondary) !important;
 }
 
 :global(.MuiDialog-root .MuiInputLabel-root.Mui-focused) {
-  color: #00bfff !important;
+  color: var(--mui-palette-primary-main) !important;
 }
 
 :global(
   .MuiDialog-root .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline
 ) {
-  border-color: #00bfff !important;
+  border-color: var(--mui-palette-primary-main) !important;
 }
 
 :global(
@@ -349,22 +357,22 @@
     .MuiOutlinedInput-root.Mui-focused
     .MuiOutlinedInput-notchedOutline
 ) {
-  border-color: #00bfff !important;
+  border-color: var(--mui-palette-primary-main) !important;
   border-width: 1.5px !important;
 }
 
 /* Botones primarios en diálogos y generales */
 :global(.MuiButton-containedPrimary) {
-  background-color: #00bfff !important;
-  color: #000000 !important;
+  background-color: var(--mui-palette-primary-main) !important;
+  color: var(--mui-palette-background-paper) !important;
   text-transform: none !important;
 }
 
 :global(.MuiButton-containedPrimary:hover) {
-  background-color: #009acd !important;
+  background-color: rgba(40, 35, 188, 0.8) !important;
 }
 
 /* Botones secundarios o de texto */
 :global(.MuiButton-textPrimary) {
-  color: #00bfff !important;
+  color: var(--mui-palette-primary-main) !important;
 }

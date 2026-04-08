@@ -23,7 +23,7 @@ import { translations } from "../tranlations";
 const t = (key: keyof typeof translations) => translations[key];
 
 export default function DevicesPage() {
-  const { devices, setDevices, customHouses, showSnackbar } = useDashboard();
+  const { devices, setDevices, customHouses } = useDashboard();
   const [openEditDeviceDialog, setOpenEditDeviceDialog] = useState(false);
   const [currentDevice, setCurrentDevice] = useState<
     (typeof devices)[0] | null
@@ -48,9 +48,6 @@ export default function DevicesPage() {
   }, []);
 
   const handleSaveEditDevice = useCallback(() => {
-    if (!editDeviceCode.trim())
-      return showSnackbar(t("snackbarErrorEmptyCode"), "error");
-
     setDevices((prev) =>
       prev.map((d) =>
         d.id === currentDevice?.id
@@ -64,14 +61,7 @@ export default function DevicesPage() {
     );
     setOpenEditDeviceDialog(false);
     setCurrentDevice(null);
-    showSnackbar(t("snackbarDeviceUpdated"), "success");
-  }, [
-    editDeviceCode,
-    editDeviceDescription,
-    currentDevice,
-    setDevices,
-    showSnackbar,
-  ]);
+  }, [editDeviceCode, editDeviceDescription, currentDevice, setDevices]);
 
   const handleDeleteDevice = useCallback((device: (typeof devices)[0]) => {
     setDeviceToDelete(device);
@@ -83,8 +73,7 @@ export default function DevicesPage() {
     setDevices((prev) => prev.filter((d) => d.id !== deviceToDelete.id));
     setDeleteConfirmOpen(false);
     setDeviceToDelete(null);
-    showSnackbar(t("snackbarDeviceDeleted"), "success");
-  }, [deviceToDelete, setDevices, showSnackbar]);
+  }, [deviceToDelete, setDevices]);
 
   return (
     <>
