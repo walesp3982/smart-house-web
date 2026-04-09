@@ -2,10 +2,12 @@
 import { apiClient } from "@/lib/api/client";
 
 export async function loginUser(email: string, password: string) {
-  return await apiClient.POST("/token", {
+  const { data, error, response } = await apiClient.POST("/token", {
     body: { username: email, password: password, scope: "" },
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
   });
+
+  return { data, error, ok: response.ok, status: response.status }
 }
 
 export async function registerUser(
@@ -13,11 +15,18 @@ export async function registerUser(
   name: string,
   password: string,
 ) {
-  return await apiClient.POST("/users/register", {
+  const { data, error, response } = await apiClient.POST("/users/register", {
     body: {
       email: email,
       name: name,
       password: password,
     },
   });
+
+  return {
+    data,
+    error,
+    ok: response.ok,
+    status: response.status,
+  }
 }

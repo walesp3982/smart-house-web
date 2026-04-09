@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getErrorMessage } from "@/lib/api/utils/error";
-import { saveTokenCookie } from "@/app/actions/auth";
+import { saveTokenCookie } from "@/actions/auth";
 import { useRouter } from "next/navigation";
 
 export const loginSchema = z.object({

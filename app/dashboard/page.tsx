@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Paper,
@@ -16,37 +16,14 @@ import {
 import { AddCircleOutline as AddIcon } from "@mui/icons-material";
 import styles from "./Dashboard.module.css";
 import { translations } from "./tranlations";
-import { useDashboard } from "./DashboardContext";
-import { PREDEFINED_HOUSES } from "./dashboardUtils";
 
 const t = (key: keyof typeof translations) => translations[key];
 
 export default function DashboardHomePage() {
-  const { customHouses, setDevices } = useDashboard();
 
   const [deviceCode, setDeviceCode] = useState("");
   const [deviceDescription, setDeviceDescription] = useState("");
   const [selectedHouseId, setSelectedHouseId] = useState<number | "">("");
-
-  const allHouses = useMemo(
-    () => [...PREDEFINED_HOUSES, ...customHouses],
-    [customHouses],
-  );
-
-  const handleAddDevice = useCallback(() => {
-    setDevices((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        code: deviceCode.trim(),
-        description: deviceDescription.trim() || undefined,
-        houseId: selectedHouseId as number,
-        addedAt: new Date().toLocaleString(),
-      },
-    ]);
-    setDeviceCode("");
-    setDeviceDescription("");
-  }, [deviceCode, selectedHouseId, deviceDescription, setDevices]);
 
   return (
     <>
@@ -83,22 +60,17 @@ export default function DashboardHomePage() {
                 value={selectedHouseId}
                 label={t("selectHouseLabel")}
                 onChange={(e) => setSelectedHouseId(e.target.value as number)}
-                renderValue={(value) =>
-                  allHouses.find((h) => h.id === value)?.name ?? ""
-                }
               >
-                {allHouses.map((house) => (
-                  <MenuItem key={house.id} value={house.id}>
-                    <Box>
-                      <Typography variant="body2" fontWeight={500}>
-                        {house.name}
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        {house.description}
-                      </Typography>
-                    </Box>
-                  </MenuItem>
-                ))}
+                <MenuItem value="algo">
+                  <Box>
+                    <Typography variant="body2" fontWeight={500}>
+                      algo
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      algo
+                    </Typography>
+                  </Box>
+                </MenuItem>
               </Select>
             </FormControl>
 
@@ -112,7 +84,7 @@ export default function DashboardHomePage() {
             </Button>
           </Box>
 
-          <Button variant="contained" fullWidth onClick={handleAddDevice}>
+          <Button variant="contained" fullWidth>
             {t("addDeviceButton")}
           </Button>
         </Stack>

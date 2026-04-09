@@ -55,7 +55,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/users/verified": {
+    "/users/verified/{user_id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -63,7 +63,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get Verified User */
-        get: operations["get_verified_user_users_verified_get"];
+        get: operations["get_verified_user_users_verified__user_id__get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -113,8 +113,25 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get All House */
-        get: operations["get_all_house_houses_get"];
+        /** Get All Houses */
+        get: operations["get_all_houses_houses_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/houses/with-areas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get All Houses With Areas */
+        get: operations["get_all_houses_with_areas_houses_with_areas_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -229,6 +246,26 @@ export interface paths {
          * @description Registra un nuevo installed_device con uuid y código de verificación.
          */
         post: operations["register_installed_device_installed_devices_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/installed_devices/with-devices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Installed Devices With Device Info
+         * @description Obtiene installed_devices del usuario con información del dispositivo.
+         */
+        get: operations["get_installed_devices_with_device_info_installed_devices_with_devices_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -378,6 +415,16 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AreaEntity */
+        AreaEntity: {
+            /** Id */
+            id?: number | null;
+            /** Name */
+            name: string;
+            type: components["schemas"]["AreaType"];
+            /** House Id */
+            house_id: number;
+        };
         /** AreaResponse */
         AreaResponse: {
             /** Id */
@@ -479,6 +526,15 @@ export interface components {
             /** Area Id */
             area_id?: number | null;
         };
+        /** DeviceResponse */
+        DeviceResponse: {
+            /** Id */
+            id?: number | null;
+            /** Device Uuid */
+            device_uuid: string;
+            /** Type */
+            type: string;
+        };
         /**
          * DeviceType
          * @enum {string}
@@ -506,6 +562,61 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** HouseEntity */
+        HouseEntity: {
+            /** Id */
+            id?: number | null;
+            /** Name */
+            name: string;
+            /** User Id */
+            user_id: number;
+            /** Location */
+            location?: string | null;
+            /** Invitation Validation */
+            invitation_validation: boolean;
+        };
+        /** HouseWithAreas */
+        HouseWithAreas: {
+            /** Id */
+            id?: number | null;
+            /** Name */
+            name: string;
+            /** User Id */
+            user_id: number;
+            /** Location */
+            location?: string | null;
+            /** Invitation Validation */
+            invitation_validation: boolean;
+            /** Areas */
+            areas: components["schemas"]["AreaEntity"][];
+        };
+        /** InstalledDeviceResponse */
+        InstalledDeviceResponse: {
+            /** Id */
+            id?: number | null;
+            /** Name */
+            name: string;
+            /** Device Id */
+            device_id: number;
+            /** House Id */
+            house_id?: number | null;
+            /** Area Id */
+            area_id?: number | null;
+        };
+        /** InstalledDeviceWithDeviceResponse */
+        InstalledDeviceWithDeviceResponse: {
+            /** Id */
+            id?: number | null;
+            /** Name */
+            name: string;
+            /** Device Id */
+            device_id: number;
+            /** House Id */
+            house_id?: number | null;
+            /** Area Id */
+            area_id?: number | null;
+            device: components["schemas"]["DeviceResponse"];
         };
         /** Light */
         Light: {
@@ -571,6 +682,17 @@ export interface components {
              */
             timestamp: string;
         };
+        /** TranscribeResponse */
+        TranscribeResponse: {
+            /** Transcription */
+            transcription: string;
+            /** Action */
+            action: string;
+            /** Device */
+            device?: string | null;
+            /** Message */
+            message: string;
+        };
         /** UpdateAreaRequest */
         UpdateAreaRequest: {
             /** Name */
@@ -583,6 +705,13 @@ export interface components {
             location: string | null;
             /** Name */
             name: string | null;
+        };
+        /** UpdateHouseResponse */
+        UpdateHouseResponse: {
+            /** Message */
+            message: string;
+            /** Updated */
+            updated: boolean;
         };
         /** UpdateInstalledDeviceRequest */
         UpdateInstalledDeviceRequest: {
@@ -659,7 +788,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Token de acceso generado */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -701,7 +830,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Usuario registrado exitosamente */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -710,7 +839,7 @@ export interface operations {
                     "application/json": components["schemas"]["VisibleDataUserResponse"];
                 };
             };
-            /** @description Email duplicado */
+            /** @description Email ya registrado */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -739,7 +868,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Información del usuario actual */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -748,7 +877,7 @@ export interface operations {
                     "application/json": components["schemas"]["VisibleDataUserResponse"];
                 };
             };
-            /** @description Usuario no encontrado */
+            /** @description Usuario no autenticado */
             401: {
                 headers: {
                     [name: string]: unknown;
@@ -759,18 +888,18 @@ export interface operations {
             };
         };
     };
-    get_verified_user_users_verified_get: {
+    get_verified_user_users_verified__user_id__get: {
         parameters: {
-            query: {
+            query?: never;
+            header?: never;
+            path: {
                 user_id: number;
             };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Estado de verificación del usuario */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -870,13 +999,22 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Dispositivo creado exitosamente */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["CreateDeviceResponse"];
+                };
+            };
+            /** @description UUID del dispositivo ya registrado */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -890,7 +1028,7 @@ export interface operations {
             };
         };
     };
-    get_all_house_houses_get: {
+    get_all_houses_houses_get: {
         parameters: {
             query?: never;
             header?: never;
@@ -899,13 +1037,51 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Lista de casas del usuario */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["HouseEntity"][];
+                };
+            };
+            /** @description Usuario no autenticado */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_all_houses_with_areas_houses_with_areas_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Lista de casas del usuario con áreas */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HouseWithAreas"][];
+                };
+            };
+            /** @description Usuario no autenticado */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -921,13 +1097,31 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Casa encontrada */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["HouseEntity"];
+                };
+            };
+            /** @description Usuario no autenticado o no autorizado */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Casa no encontrada */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -956,13 +1150,31 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Casa actualizada */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["UpdateHouseResponse"];
+                };
+            };
+            /** @description Usuario no autenticado o no autorizado */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Casa no encontrada */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -987,12 +1199,30 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Casa eliminada exitosamente */
             204: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Usuario no autenticado o no autorizado */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Casa no encontrada */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
             };
             /** @description Validation Error */
             422: {
@@ -1018,13 +1248,22 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Casa creada exitosamente */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["HouseEntity"];
+                };
+            };
+            /** @description Usuario no autenticado */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -1049,13 +1288,40 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Lista de áreas de la casa */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["AreaResponse"][];
+                };
+            };
+            /** @description ID de usuario no encontrado */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description No tienes acceso a esta casa */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Casa no encontrada */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -1084,13 +1350,49 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Área creada exitosamente */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["AreaResponse"];
+                };
+            };
+            /** @description ID de usuario no encontrado o datos inválidos */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description No tienes acceso a esta casa */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Casa no encontrada */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Nombre de área duplicado en la casa */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -1116,13 +1418,40 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Área encontrada */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["AreaResponse"];
+                };
+            };
+            /** @description ID de usuario no encontrado */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description No tienes acceso a esta casa */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Casa o área no encontrada */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -1148,13 +1477,38 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
-            200: {
+            /** @description Área eliminada exitosamente */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description ID de usuario no encontrado */
+            400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description No tienes acceso a esta casa */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Casa o área no encontrada */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -1184,13 +1538,40 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Área actualizada exitosamente */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["AreaResponse"];
+                };
+            };
+            /** @description ID de usuario no encontrado */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description No tienes acceso a esta casa */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Casa o área no encontrada */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -1213,15 +1594,22 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Lista de dispositivos instalados del usuario */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    }[];
+                    "application/json": components["schemas"]["InstalledDeviceResponse"][];
+                };
+            };
+            /** @description ID de usuario no encontrado */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -1239,15 +1627,31 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Dispositivo instalado registrado exitosamente */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
+                    "application/json": components["schemas"]["InstalledDeviceResponse"];
+                };
+            };
+            /** @description ID de usuario no encontrado o datos inválidos */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Dispositivo ya registrado */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -1257,6 +1661,44 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+            /** @description Error interno al crear el dispositivo */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_installed_devices_with_device_info_installed_devices_with_devices_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Lista de dispositivos instalados con información del dispositivo */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InstalledDeviceWithDeviceResponse"][];
+                };
+            };
+            /** @description ID de usuario no encontrado */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -1272,15 +1714,40 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Dispositivo encontrado con información del dispositivo */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
+                    "application/json": components["schemas"]["InstalledDeviceWithDeviceResponse"];
+                };
+            };
+            /** @description ID de usuario no encontrado */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description No autorizado para acceder al dispositivo */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Dispositivo instalado no encontrado */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -1305,12 +1772,39 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Dispositivo instalado eliminado exitosamente */
             204: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description ID de usuario no encontrado */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description No autorizado para acceder al dispositivo */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Dispositivo instalado no encontrado */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
             };
             /** @description Validation Error */
             422: {
@@ -1338,15 +1832,40 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Dispositivo instalado actualizado exitosamente */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
+                    "application/json": components["schemas"]["InstalledDeviceResponse"];
+                };
+            };
+            /** @description ID de usuario no encontrado o datos inválidos */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description No autorizado para acceder al dispositivo */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Dispositivo instalado no encontrado */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -1364,7 +1883,9 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                installed_device_id: number;
+            };
             cookie?: never;
         };
         requestBody: {
@@ -1373,13 +1894,40 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Comando enviado al dispositivo */
             202: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Datos del comando inválidos */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description No autorizado para acceder al dispositivo */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Dispositivo instalado no encontrado */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -1404,13 +1952,31 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Lista de seguimientos del dispositivo */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["TrackDeviceResponse"][];
+                };
+            };
+            /** @description ID de usuario no encontrado */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Dispositivo no encontrado o no autorizado */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -1435,13 +2001,31 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Lista de seguimientos de los dispositivos de la casa */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["TrackDeviceResponse"][];
+                };
+            };
+            /** @description ID de usuario no encontrado */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Casa no encontrada o no autorizada */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -1464,13 +2048,22 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Seguimientos de todos los dispositivos del usuario */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["TrackDeviceResponse"][];
+                };
+            };
+            /** @description ID de usuario no encontrado */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -1488,13 +2081,22 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Transcripción y comando procesado exitosamente */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["TranscribeResponse"];
+                };
+            };
+            /** @description Archivo no válido o audio no reconocido */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation Error */
@@ -1504,6 +2106,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+            /** @description Error interno del servidor */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
