@@ -252,6 +252,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/installed_devices/with-devices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Installed Devices With Device Info
+         * @description Obtiene installed_devices del usuario con información del dispositivo.
+         */
+        get: operations["get_installed_devices_with_device_info_installed_devices_with_devices_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/installed_devices/{installed_device_id}": {
         parameters: {
             query?: never;
@@ -1645,6 +1665,35 @@ export interface operations {
             };
             /** @description Error interno al crear el dispositivo */
             500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_installed_devices_with_device_info_installed_devices_with_devices_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Lista de dispositivos instalados con información del dispositivo */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InstalledDeviceWithDeviceResponse"][];
+                };
+            };
+            /** @description ID de usuario no encontrado */
+            400: {
                 headers: {
                     [name: string]: unknown;
                 };

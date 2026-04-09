@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteTokenCookie } from "@/app/actions/auth";
+import { deleteTokenCookie } from "@/actions/auth";
 import { useRouter } from "next/router";
 
 export function useLogout() {

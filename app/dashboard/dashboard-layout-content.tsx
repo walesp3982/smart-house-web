@@ -115,7 +115,19 @@ function SideBarHeader() {
     );
 }
 
-function SideBarFooter({ userProfile }: { userProfile: UserProfile }) {
+function SideBarFooter({ userProfile }: { userProfile: UserProfile | null }) {
+    if (!userProfile) {
+        return (
+            <Box className={styles.userFooter}>
+                <Box className={styles.userAvatar}>
+                    <Typography className={styles.userName}>Error al obtener al usuario</Typography>
+                    <Typography className={styles.userEmail}>
+                        Intente de nuevo
+                    </Typography>
+                </Box>
+            </Box>
+        )
+    }
     return (
         <Box className={styles.userFooter}>
             <Avatar className={styles.userAvatar}>
