@@ -113,8 +113,25 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get All House */
-        get: operations["get_all_house_houses_get"];
+        /** Get All Houses */
+        get: operations["get_all_houses_houses_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/houses/with-areas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get All Houses With Areas */
+        get: operations["get_all_houses_with_areas_houses_with_areas_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -991,25 +1008,22 @@ export interface operations {
             };
         };
     };
-    get_all_house_houses_get: {
+    get_all_houses_houses_get: {
         parameters: {
-            query?: {
-                /** @description Incluir recursos relacionados, ej: areas */
-                include?: string | null;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Lista de casas del usuario, opcionalmente con áreas */
+            /** @description Lista de casas del usuario */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HouseWithAreas"][] | components["schemas"]["HouseEntity"][];
+                    "application/json": components["schemas"]["HouseEntity"][];
                 };
             };
             /** @description Usuario no autenticado */
@@ -1021,13 +1035,33 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Validation Error */
-            422: {
+        };
+    };
+    get_all_houses_with_areas_houses_with_areas_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Lista de casas del usuario con áreas */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": components["schemas"]["HouseWithAreas"][];
+                };
+            };
+            /** @description Usuario no autenticado */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };

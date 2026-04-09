@@ -2,16 +2,23 @@
 
 import { apiClient } from "@/lib/api/client";
 
-export async function getAllHouses() {
-  return await apiClient.GET("/houses", {});
+export async function getAllHousesWithArea() {
+  const { data, error, response } = await apiClient.GET("/houses/with-areas", {
+    params: {
+    }
+  })
+
+  return { data, error, ok: response.ok, status: response.status }
 }
 
 export async function getHouseById(id: number) {
-  return await apiClient.GET("/houses/{id}", {
+  const { data, error, response } = await apiClient.GET("/houses/{id}", {
     params: {
       path: { id },
     },
   });
+
+  return { data, error, ok: response.ok, status: response.status }
 }
 
 interface CreateHouseRequest {
