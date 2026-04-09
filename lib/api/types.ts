@@ -55,7 +55,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/users/verified": {
+    "/users/verified/{user_id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -63,7 +63,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get Verified User */
-        get: operations["get_verified_user_users_verified_get"];
+        get: operations["get_verified_user_users_verified__user_id__get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -851,13 +851,13 @@ export interface operations {
             };
         };
     };
-    get_verified_user_users_verified_get: {
+    get_verified_user_users_verified__user_id__get: {
         parameters: {
-            query: {
+            query?: never;
+            header?: never;
+            path: {
                 user_id: number;
             };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
