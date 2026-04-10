@@ -31,7 +31,6 @@ export function useLogin() {
         toast.error(getErrorMessage(error.detail));
         return;
       }
-      toast.success("Sesión iniciada. Redireccionando");
       if (data) {
         await saveTokenCookie(data.access_token);
         toast.success("Sessión iniciada");
