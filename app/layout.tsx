@@ -24,8 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body className={`${roboto.className} antialiased`}>
+    <html lang="es" className="h-full">
+      <body className={`${roboto.className} antialiased min-h-screen flex flex-col`}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />

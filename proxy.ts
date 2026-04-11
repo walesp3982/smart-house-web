@@ -2,26 +2,31 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtDecode } from "jwt-decode";
 
-const PUBLIC_ROUTES = ["/login", "/register"];
-const LANDING_PAGE = "/"
+const PUBLIC_ROUTES = ["/login", "/register", "/verify-email"];
+const LANDING_PAGE = "/";
+
 export function proxy(request: NextRequest) {
   const token = request.cookies.get("access_token")?.value;
-  const isPublicRoute = PUBLIC_ROUTES.includes(request.nextUrl.pathname);
-  const isLandingPage = request.nextUrl.pathname == LANDING_PAGE
+
+  const isPublicRoute = PUBLIC_ROUTES.some((route) =>
+    request.nextUrl.pathname.startsWith(route)
+  );
+
+  const isLandingPage = request.nextUrl.pathname === LANDING_PAGE;
+
   if (!token) {
     if (!isPublicRoute && !isLandingPage) {
       return NextResponse.redirect(new URL("/login", request.url));
-
     }
     return NextResponse.next();
   }
 
   try {
-    const decode = jwtDecode(token);
+    const decode: any = jwtDecode(token);
     const isExpired = decode.exp ? decode.exp * 1000 < Date.now() : true;
 
     if (isExpired) {
-      const response = NextResponse.redirect(new URL("/login", request.url))
+      const response = NextResponse.redirect(new URL("/login", request.url));
       response.cookies.delete("access_token");
       return response;
     }
@@ -31,7 +36,7 @@ export function proxy(request: NextRequest) {
     return response;
   }
 
-  if (token && isPublicRoute) {
+  if (token && isPublicRoute && request.nextUrl.pathname !== "/verify-email") {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 

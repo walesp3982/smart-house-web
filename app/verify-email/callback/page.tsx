@@ -2,25 +2,55 @@ import { redirect } from "next/navigation";
 
 const statusValues = ["success", "expired", "invalid"];
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
-  searchParams: { status?: string };
+  searchParams: Promise<{ status?: string }>;
 }) {
-  const status = searchParams.status;
+  const params = await searchParams;
+  const status = params.status;
 
-  if (statusValues.findIndex((state) => state == status) === -1) {
+  if (!status || !statusValues.includes(status)) {
     redirect("/");
   }
+
   if (status === "success") {
-    // opcional: redirigir directo
     redirect("/dashboard");
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      {status === "expired" && <p>El enlace ha expirado</p>}
-      {status === "invalid" && <p>Token inválido</p>}
+  <div
+    style={{
+      position: "fixed",
+      inset: 0,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    <div style={{ textAlign: "center" }}>
+      {status === "expired" && (
+        <>
+          <h1 style={{ fontSize: "28px", fontWeight: "bold", color: "red" }}>
+            ⏰ Enlace expirado
+          </h1>
+          <p style={{ color: "gray" }}>
+            El enlace de verificación ya no es válido.
+          </p>
+        </>
+      )}
+
+      {status === "invalid" && (
+        <>
+          <h1 style={{ fontSize: "28px", fontWeight: "bold", color: "red" }}>
+            ❌ Token inválido
+          </h1>
+          <p style={{ color: "gray" }}>
+            El enlace de verificación no es correcto.
+          </p>
+        </>
+      )}
     </div>
-  );
+  </div>
+);
 }
