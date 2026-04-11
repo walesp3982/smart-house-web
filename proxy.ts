@@ -5,6 +5,11 @@ import { jwtDecode } from "jwt-decode";
 const PUBLIC_ROUTES = ["/login", "/register", "/verify-email"];
 const LANDING_PAGE = "/";
 
+type JwtPayload = {
+  exp?: number;
+  [key: string]: unknown;
+};
+
 export function proxy(request: NextRequest) {
   const token = request.cookies.get("access_token")?.value;
 
@@ -24,7 +29,8 @@ export function proxy(request: NextRequest) {
   }
 
   try {
-    const decode = jwtDecode<{ exp?: number }>(token);
+    const decode = jwtDecode<JwtPayload>(token);
+
     const isExpired = decode.exp
       ? decode.exp * 1000 < Date.now()
       : true;
