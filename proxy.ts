@@ -8,12 +8,15 @@ const LANDING_PAGE = "/";
 export function proxy(request: NextRequest) {
   const token = request.cookies.get("access_token")?.value;
 
+  const pathname = request.nextUrl.pathname;
+
   const isPublicRoute = PUBLIC_ROUTES.some((route) =>
-    request.nextUrl.pathname.startsWith(route)
+    pathname.startsWith(route)
   );
 
-  const isLandingPage = request.nextUrl.pathname === LANDING_PAGE;
+  const isLandingPage = pathname === LANDING_PAGE;
 
+  // 🔓 Sin token
   if (!token) {
     if (!isPublicRoute && !isLandingPage) {
       return NextResponse.redirect(new URL("/login", request.url));
@@ -21,22 +24,30 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // 🔐 Con token
   try {
     const decode = jwtDecode<{ exp?: number }>(token);
-    const isExpired = decode.exp ? decode.exp * 1000 < Date.now() : true;
+    const isExpired = decode.exp
+      ? decode.exp * 1000 < Date.now()
+      : true;
 
     if (isExpired) {
-      const response = NextResponse.redirect(new URL("/login", request.url));
+      const response = NextResponse.redirect(
+        new URL("/login", request.url)
+      );
       response.cookies.delete("access_token");
       return response;
     }
   } catch {
-    const response = NextResponse.redirect(new URL("/login", request.url));
+    const response = NextResponse.redirect(
+      new URL("/login", request.url)
+    );
     response.cookies.delete("access_token");
     return response;
   }
 
-  if (token && isPublicRoute && request.nextUrl.pathname !== "/verify-email") {
+  // 🚫 Evitar redirección en verify-email
+  if (token && isPublicRoute && !pathname.startsWith("/verify-email")) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
