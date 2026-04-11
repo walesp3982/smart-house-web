@@ -18,7 +18,7 @@ export default function DashboardHomePage() {
   return (
     <>
       <Container maxWidth="sm">
-        <form onSubmit={() => handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <FormContainer
             title={t("welcome")}
             subtitle={t("enterDeviceCode")}>
@@ -26,11 +26,11 @@ export default function DashboardHomePage() {
             <BasicTextField
               control={control}
               label={t("deviceCodeLabel")}
-              name="code_verificación"
+              name="uuid"
             />
             <BasicTextField
               control={control}
-              name="uuid"
+              name="code_verificacion"
               label="Código de verificación"
             />
 
