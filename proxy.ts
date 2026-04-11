@@ -16,7 +16,6 @@ export function proxy(request: NextRequest) {
 
   const isLandingPage = pathname === LANDING_PAGE;
 
-  // 🔓 Sin token
   if (!token) {
     if (!isPublicRoute && !isLandingPage) {
       return NextResponse.redirect(new URL("/login", request.url));
@@ -24,7 +23,6 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 🔐 Con token
   try {
     const decode = jwtDecode<{ exp?: number }>(token);
     const isExpired = decode.exp
@@ -46,7 +44,6 @@ export function proxy(request: NextRequest) {
     return response;
   }
 
-  // 🚫 Evitar redirección en verify-email
   if (token && isPublicRoute && !pathname.startsWith("/verify-email")) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
