@@ -12,11 +12,13 @@ export async function getInstalledDevicesWithDevice() {
 }
 
 export async function getInstalledDeviceById(installedDeviceId: number) {
-  return await apiClient.GET("/installed_devices/{installed_device_id}", {
+  const { data, error, response } = await apiClient.GET("/installed_devices/{installed_device_id}", {
     params: {
       path: { installed_device_id: installedDeviceId },
     },
   });
+
+  return { data, error, ok: response.ok, status: response.status }
 }
 
 interface RegisterInstalledDeviceRequest {
@@ -30,9 +32,11 @@ interface RegisterInstalledDeviceRequest {
 export async function registerInstalledDevice(
   body: RegisterInstalledDeviceRequest,
 ) {
-  return await apiClient.POST("/installed_devices", {
+  const { data, error, response } = await apiClient.POST("/installed_devices", {
     body,
   });
+
+  return { data, error, ok: response.ok, status: response.status }
 }
 
 export async function updateInstalledDevice(
