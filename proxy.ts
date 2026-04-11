@@ -22,7 +22,7 @@ export function proxy(request: NextRequest) {
   }
 
   try {
-    const decode: any = jwtDecode(token);
+    const decode = jwtDecode<{ exp?: number }>(token);
     const isExpired = decode.exp ? decode.exp * 1000 < Date.now() : true;
 
     if (isExpired) {
