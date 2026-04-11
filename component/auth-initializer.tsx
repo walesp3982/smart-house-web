@@ -3,6 +3,7 @@ import { useUserStore } from "@/store/user-store"
 import { useHouseStore } from "@/store/house-store"
 import { useInstalledDevicesStore } from "@/store/installed-devices-store"
 import type { components } from "@/lib/api/types"
+import { useRef } from "react"
 
 type UserData = components["schemas"]["VisibleDataUserResponse"]
 type HouseData = components["schemas"]["HouseWithAreas"]
@@ -15,8 +16,19 @@ interface UserStoreInitializerProps {
     installedDeviceData: InstalledDevicesData[]
 }
 export function UserStoreInitializer({ userData, houseData, installedDeviceData }: UserStoreInitializerProps) {
-    useUserStore.setState({ user: userData }) // ✅ fuera de hooks, durante el render del módulo
-    useHouseStore.setState({ house: houseData })
-    useInstalledDevicesStore.setState({ installedDevices: installedDeviceData })
+    const initilized = useRef(false)
+
+    if (!initilized.current) {
+        initilized.current = true
+        useUserStore.setState({ user: userData })
+        useHouseStore.setState({ house: houseData })
+        useInstalledDevicesStore.setState({ installedDevices: installedDeviceData })
+    }
+    // useMemo(() => {
+    //     useUserStore.setState({ user: userData })
+    //     useHouseStore.setState({ house: houseData })
+    //     useInstalledDevicesStore.setState({ installedDevices: installedDeviceData })
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [])
     return null
 }
