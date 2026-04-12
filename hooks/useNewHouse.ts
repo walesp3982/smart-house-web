@@ -9,8 +9,8 @@ import { useHouseStore } from "@/store/house-store"
 import { getAllHousesUser } from "@/actions/houses/houses.actions"
 
 const NewHouseSchema = z.object({
-    name: z.string().min(1, "Se requiere un nombre"),
-    location: z.string(),
+    name: z.string().min(1, "Se requiere un nombre").max(50, "Límite máximo de caracteres"),
+    location: z.string().max(50, "Limite máximo de caracteres"),
 })
 
 type NewHouseValues = z.infer<typeof NewHouseSchema>
