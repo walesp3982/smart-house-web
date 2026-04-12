@@ -6,6 +6,7 @@ import {
   Stack,
   Box,
   Button,
+  Grid,
 } from "@mui/material";
 import styles from "../Dashboard.module.css";
 import { translations } from "../tranlations";
@@ -73,16 +74,23 @@ export default function DevicesPage() {
   return (
     <>
       <Paper elevation={0} className={styles.card}>
-        <Typography variant="h4" className={styles.title}>
-          {t("myDevices")}
-        </Typography>
-        <Button
-          type="submit"
-          variant="contained"
-          size="large"
-          fullWidth
-          onClick={() => setDialogNewHouse(true)}
-        >Agregar Casa</Button>
+        <Grid container spacing={2} alignItems={"center"} >
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Typography variant="h4" className={styles.title}>
+              {t("myDevices")}
+            </Typography>
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              fullWidth
+              onClick={() => setDialogNewHouse(true)}
+            >Agregar Casa</Button>
+          </Grid>
+        </Grid>
+
         {installedDevices && installedDevices.length === 0 ? (
           <Typography color="text.secondary">{t("noDevices")}</Typography>
         ) : (
