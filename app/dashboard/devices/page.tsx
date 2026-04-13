@@ -10,105 +10,95 @@ import {
 } from "@mui/material";
 import styles from "../Dashboard.module.css";
 import { translations } from "../tranlations";
-import { useInstalledDevicesStore } from "@/store/installed-devices-store";
-import { AppDialog } from "@/component/Dialog/AppDialog";
 import { useState } from "react";
-import { useNewHouse } from "@/hooks/useNewHouse";
-import { BasicTextField } from "@/component/Form/FormTextField";
+import { useHouseStore } from "@/store/house-store";
 
+
+import { useInstalledDevicesStore } from "@/store/installed-devices-store";
 const t = (key: keyof typeof translations) => translations[key];
+import type { InstalledDeviceType } from "@/store/installed-devices-store";
+import { EditDeviceDrawer } from "./EditDeviceDrawer";
+import { CreateNewHouseDialog } from "./CreateNewHouseDialog";
+import { DeviceItemActivity, HouseItem } from "./ListDevices";
 
 
-interface CreateNewHouseDialogProps {
-  activatedDialog: boolean
-  desactivatedDialog: () => void
+
+interface HeaderDevicesProps {
+  openDialogHouse: () => void
 }
 
-export function CreateNewHouseDialog({
-  activatedDialog, desactivatedDialog
-}: CreateNewHouseDialogProps) {
-  const { form, isLoading, onSubmit } = useNewHouse()
-  const { control, handleSubmit } = form;
-
+function HeaderDevices({ openDialogHouse }: HeaderDevicesProps) {
   return (
-    <AppDialog
-      open={activatedDialog}
-      onClose={desactivatedDialog}
-      title="Agregar nueva casa"
-      description="ingrese los datos para crear una nueva casa"
-      onSubmit={handleSubmit(onSubmit)}
-      actions={
-        <>
-          <Button onClick={desactivatedDialog} disabled={isLoading}>
-            Cancelar
-          </Button>
-          <Button
-            type="submit" variant="contained" disabled={isLoading}>
-            {isLoading ? "Cargando..." : "Enviar"}
-          </Button>
-        </>
-      }
-    >
-      <Stack spacing={2} sx={{ my: 4 }}>
-        <BasicTextField
-          control={control}
-          name="name"
-          label="Nombre de la casa"
-        />
-
-        <BasicTextField
-          control={control}
-          name="location"
-          label="Ubicación (Opcional)"
-        />
-      </Stack>
-    </AppDialog>
+    <Grid container spacing={2} alignItems="center">
+      <Grid size={{ xs: 12, md: 6 }}>
+        <Typography variant="h4" className={styles.title}>
+          {t("myDevices")}
+        </Typography>
+      </Grid>
+      <Grid size={{ xs: 12, md: 6 }}>
+        <Button variant="contained" size="large" fullWidth
+          onClick={openDialogHouse}>
+          Agregar Casa
+        </Button>
+      </Grid>
+    </Grid>
   )
 }
 
-
+// ─── DevicesPage ──────────────────────────────────────────────────────────────
 export default function DevicesPage() {
-  const installedDevices = useInstalledDevicesStore(state => state.installedDevices);
-  const [dialogNewHouse, setDialogNewHouse] = useState(false)
+  const [dialogNewHouse, setDialogNewHouse] = useState(false);
+  const houses = useHouseStore((state) => state.house);
+  const installedDevices = useInstalledDevicesStore((state) => state.installedDevices);
+  const [editingDevice, setEditingDevice] = useState<InstalledDeviceType | null>(null);
+
+  // devices sin ninguna casa asignada
+  const orphanDevices = installedDevices?.filter((d) => !d.house_id) ?? [];
 
   return (
     <>
       <Paper elevation={0} className={styles.card}>
-        <Grid container spacing={2} alignItems={"center"} >
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Typography variant="h4" className={styles.title}>
-              {t("myDevices")}
-            </Typography>
-          </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              fullWidth
-              onClick={() => setDialogNewHouse(true)}
-            >Agregar Casa</Button>
-          </Grid>
-        </Grid>
+        {/* Header */}
+        <HeaderDevices
+          openDialogHouse={() => setDialogNewHouse(true)}
+        />
 
-        {installedDevices && installedDevices.length === 0 ? (
-          <Typography color="text.secondary">{t("noDevices")}</Typography>
-        ) : (
-          <Stack spacing={2} mt={2}>
-            {installedDevices && installedDevices.map((device) => (
-              <Box key={device.id} className={styles.deviceItem}>
-                <Typography className={styles.deviceCode}>
-                  {device.id} {device.name}
-                </Typography>
-              </Box>
-            ))}
-          </Stack>
-        )}
+        <Stack spacing={2} mt={2}>
+          {/* Sección: sin casa */}
+          {orphanDevices.length > 0 && (
+            <Box>
+              <Typography variant="caption" sx={{ color: "text.secondary", pl: 0.5 }}>
+                Sin casa asignada
+              </Typography>
+              <Stack spacing={0.5} mt={0.5}>
+                {orphanDevices.map((d) => (
+                  <DeviceItemActivity key={d.id} device={d} indentLevel={0} onEdit={() => setEditingDevice(d)} />
+                ))}
+              </Stack>
+            </Box>
+          )}
+
+          {/* Sección: casas */}
+          {houses?.map((house) => (
+            <HouseItem
+              key={house.id}
+              house={house}
+              onEditDevice={(device: InstalledDeviceType) => setEditingDevice(device)}
+              allDevices={installedDevices ?? []}
+            />
+          ))}
+        </Stack>
       </Paper>
 
       <CreateNewHouseDialog
         activatedDialog={dialogNewHouse}
         desactivatedDialog={() => setDialogNewHouse(false)}
+      />
+
+      <EditDeviceDrawer
+        device={editingDevice}
+        open={!!editingDevice}
+        onClose={() => setEditingDevice(null)}
       />
     </>
   );
