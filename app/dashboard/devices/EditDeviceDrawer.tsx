@@ -11,7 +11,7 @@ import AppDrawer from "@/component/Drawer";
 
 
 interface EditDeviceDrawerProps {
-    device: InstalledDeviceType | null;
+    device: InstalledDeviceType;
     open: boolean;
     onClose: () => void;
 }
