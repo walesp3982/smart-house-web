@@ -41,12 +41,14 @@ interface UpdateHouseRequest {
 }
 
 export async function updateHouse(id: number, body: UpdateHouseRequest) {
-  return await apiClient.PUT("/houses/{id}", {
+  const { data, error, response } = await apiClient.PUT("/houses/{id}", {
     params: {
       path: { id },
     },
     body,
   });
+
+  return { data, error, ok: response.ok, status: response.status }
 }
 
 export async function deleteHouse(id: number) {
