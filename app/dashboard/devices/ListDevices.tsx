@@ -4,6 +4,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import DevicesIcon from "@mui/icons-material/Devices";
+import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import type { HouseType, AreaType } from "@/store/house-store";
 import { DeviceItem } from "@/component/Devices/Item";
@@ -115,6 +116,7 @@ interface HouseItemProps {
   allDevices: InstalledDeviceType[];
   onEditDevice: (device: InstalledDeviceType) => void;
   onEditHouse: (house: HouseType) => void;
+  onDeleteHouse: (house: HouseType) => void;
 }
 
 export function HouseItem({
@@ -122,6 +124,7 @@ export function HouseItem({
   allDevices,
   onEditDevice,
   onEditHouse: editHouse,
+  onDeleteHouse,
 }: HouseItemProps) {
   const [open, setOpen] = useState(true);
 
@@ -156,13 +159,16 @@ export function HouseItem({
           </Typography>
         </Box>
 
-        <Box display="flex" gap={2}>
-          <IconButton onClick={() => setOpen((p) => !p)} size="small">
-            {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        <Box display="flex" gap={0}>
+          <IconButton onClick={() => onDeleteHouse(house)} size="small">
+            <DeleteIcon />
           </IconButton>
-
           <IconButton onClick={() => editHouse(house)} size="small">
             <EditIcon />
+          </IconButton>
+
+          <IconButton onClick={() => setOpen((p) => !p)} size="small">
+            {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           </IconButton>
         </Box>
       </Box>
