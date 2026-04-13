@@ -3,7 +3,6 @@ import "server-only";
 import createClient, { Middleware } from "openapi-fetch";
 import { paths } from "./types";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 export const apiClient = createClient<paths>({
   baseUrl: process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000",
 });
@@ -21,12 +20,6 @@ const authMiddleware: Middleware = {
   },
 
   async onResponse({ response }) {
-    if (response.status === 401) {
-      const cookieStore = await cookies();
-      cookieStore.delete("access_token");
-      redirect("/login");
-    }
-
     return response;
   },
 };

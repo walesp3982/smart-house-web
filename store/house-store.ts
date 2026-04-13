@@ -1,11 +1,11 @@
 import type { components } from "@/lib/api/types"
 import { create } from "zustand"
 
-type HouseData = components["schemas"]["HouseWithAreas"]
-
+export type HouseType = components["schemas"]["HouseWithAreasResponse"]
+export type AreaType = components["schemas"]["AreaResponse"]
 interface HouseStore {
-    house: HouseData[] | null,
-    setHouse: (house: HouseData[]) => void
+    house: HouseType[] | null,
+    setHouse: (house: HouseType[]) => void
     clearHouse: () => void
 }
 

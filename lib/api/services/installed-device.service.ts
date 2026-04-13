@@ -1,6 +1,7 @@
 "use server";
 
 import { apiClient } from "@/lib/api/client";
+import type { components } from "@/lib/api/types"
 
 export async function getInstalledDevices() {
   return await apiClient.GET("/installed_devices", {});
@@ -12,11 +13,13 @@ export async function getInstalledDevicesWithDevice() {
 }
 
 export async function getInstalledDeviceById(installedDeviceId: number) {
-  return await apiClient.GET("/installed_devices/{installed_device_id}", {
+  const { data, error, response } = await apiClient.GET("/installed_devices/{installed_device_id}", {
     params: {
       path: { installed_device_id: installedDeviceId },
     },
   });
+
+  return { data, error, ok: response.ok, status: response.status }
 }
 
 interface RegisterInstalledDeviceRequest {
@@ -30,21 +33,26 @@ interface RegisterInstalledDeviceRequest {
 export async function registerInstalledDevice(
   body: RegisterInstalledDeviceRequest,
 ) {
-  return await apiClient.POST("/installed_devices", {
+  const { data, error, response } = await apiClient.POST("/installed_devices", {
     body,
   });
+
+  return { data, error, ok: response.ok, status: response.status }
 }
+
+type bodyUpdate = components["schemas"]["UpdateInstalledDeviceRequest"];
 
 export async function updateInstalledDevice(
   installedDeviceId: number,
-  body: object,
+  body: bodyUpdate,
 ) {
-  return await apiClient.PATCH("/installed_devices/{installed_device_id}", {
+  const { data, error, response } = await apiClient.PATCH("/installed_devices/{installed_device_id}", {
     params: {
       path: { installed_device_id: installedDeviceId },
     },
     body,
   });
+  return { data, error, ok: response.ok, status: response.status }
 }
 
 export async function deleteInstalledDevice(installedDeviceId: number) {

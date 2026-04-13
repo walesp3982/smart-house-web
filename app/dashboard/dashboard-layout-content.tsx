@@ -22,7 +22,6 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./Dashboard.module.css";
-import type { UserProfile } from "./DashboardContext";
 import { useUserStore } from "@/store/user-store";
 import { translations } from "./tranlations";
 
@@ -58,6 +57,11 @@ const menuItems: MenuItem[] = [
 interface ButtonOptionProps {
     item: MenuItem;
     active: boolean;
+}
+
+export interface UserProfile {
+    name: string;
+    email: string;
 }
 function ButtonOption({ item, active }: ButtonOptionProps) {
     return (

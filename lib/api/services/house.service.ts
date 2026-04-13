@@ -28,9 +28,11 @@ interface CreateHouseRequest {
 }
 
 export async function createHouse(body: CreateHouseRequest) {
-  return await apiClient.POST("/houses/", {
+  const { data, error, response } = await apiClient.POST("/houses/", {
     body,
   });
+
+  return { data, error, ok: response.ok, status: response.status }
 }
 
 interface UpdateHouseRequest {
