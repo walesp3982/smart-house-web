@@ -25,7 +25,7 @@ export function EditDeviceDrawer({ device, open, onClose }: EditDeviceDrawerProp
         <AppDrawer
             open={open}
             onClose={onClose}
-            title="EditarDispositivo"
+            title="Editar Dispositivo"
             subtitle={device?.device.device_uuid}
             onSubmit={handleSubmit(onSubmit)}
 
