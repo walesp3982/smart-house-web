@@ -11,7 +11,7 @@ import {
 import styles from "../Dashboard.module.css";
 import { translations } from "../tranlations";
 import { useState } from "react";
-import { useHouseStore } from "@/store/house-store";
+import { HouseType, useHouseStore } from "@/store/house-store";
 
 
 import { useInstalledDevicesStore } from "@/store/installed-devices-store";
@@ -20,6 +20,7 @@ import type { InstalledDeviceType } from "@/store/installed-devices-store";
 import { EditDeviceDrawer } from "./EditDeviceDrawer";
 import { CreateNewHouseDialog } from "./CreateNewHouseDialog";
 import { DeviceItemActivity, HouseItem } from "./ListDevices";
+import EditHouseDrawer from "./EditHouseDrawer";
 
 
 
@@ -51,6 +52,8 @@ export default function DevicesPage() {
   const houses = useHouseStore((state) => state.house);
   const installedDevices = useInstalledDevicesStore((state) => state.installedDevices);
   const [editingDevice, setEditingDevice] = useState<InstalledDeviceType | null>(null);
+  const [editingHouse, setEditingHouse] = useState<HouseType | null>(null);
+
 
   // devices sin ninguna casa asignada
   const orphanDevices = installedDevices?.filter((d) => !d.house_id) ?? [];
@@ -85,6 +88,7 @@ export default function DevicesPage() {
               house={house}
               onEditDevice={(device: InstalledDeviceType) => setEditingDevice(device)}
               allDevices={installedDevices ?? []}
+              onEditHouse={(house: HouseType) => { setEditingHouse(house) }}
             />
           ))}
         </Stack>
@@ -99,6 +103,12 @@ export default function DevicesPage() {
         device={editingDevice}
         open={!!editingDevice}
         onClose={() => setEditingDevice(null)}
+      />
+
+      <EditHouseDrawer
+        house={editingHouse}
+        open={!!editingHouse}
+        onClose={() => setEditingHouse(null)}
       />
     </>
   );
