@@ -536,11 +536,10 @@ export interface components {
         /** DeviceResponse */
         DeviceResponse: {
             /** Id */
-            id?: number | null;
+            id: number;
             /** Device Uuid */
             device_uuid: string;
-            /** Type */
-            type: string;
+            type: components["schemas"]["DeviceType"];
         };
         /**
          * DeviceType
@@ -601,7 +600,7 @@ export interface components {
         /** InstalledDeviceResponse */
         InstalledDeviceResponse: {
             /** Id */
-            id?: number | null;
+            id: number;
             /** Name */
             name: string;
             /** Device Id */
@@ -614,7 +613,7 @@ export interface components {
         /** InstalledDeviceWithDeviceResponse */
         InstalledDeviceWithDeviceResponse: {
             /** Id */
-            id?: number | null;
+            id: number;
             /** Name */
             name: string;
             /** Device Id */
