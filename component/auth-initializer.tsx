@@ -6,7 +6,7 @@ import type { components } from "@/lib/api/types"
 import { useRef } from "react"
 
 type UserData = components["schemas"]["VisibleDataUserResponse"]
-type HouseData = components["schemas"]["HouseWithAreas"]
+type HouseData = components["schemas"]["HouseWithAreasResponse"]
 type InstalledDevicesData = components["schemas"]["InstalledDeviceWithDeviceResponse"]
 
 
