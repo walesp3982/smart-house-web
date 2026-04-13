@@ -23,11 +23,15 @@ export function useEditHouse(house: HouseType | null) {
         resolver: zodResolver(EditHouseSchema),
         values: {
             name: house?.name ?? "",
-            location: house?.location ?? null
+            location: house?.location ?? ""
         }
     })
     const onSubmit = async (formData: EditHouseValues) => {
         try {
+
+            if (formData.location === "") {
+                formData.location = null
+            }
             setIsLoading(true)
 
             if (!house) {

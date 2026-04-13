@@ -87,10 +87,10 @@ interface HouseItemProps {
     house: HouseType; // tu tipo
     allDevices: InstalledDeviceType[];
     onEditDevice: (device: InstalledDeviceType) => void
-    editHouse: () => void
+    onEditHouse: (house: HouseType) => void
 }
 
-export function HouseItem({ house, allDevices, onEditDevice, editHouse }: HouseItemProps) {
+export function HouseItem({ house, allDevices, onEditDevice, onEditHouse: editHouse }: HouseItemProps) {
     const [open, setOpen] = useState(false);
 
     // devices asignados a esta casa pero sin área
@@ -128,8 +128,8 @@ export function HouseItem({ house, allDevices, onEditDevice, editHouse }: HouseI
 
                     </IconButton>
 
-                    <IconButton onClick={editHouse} size="small">
-                        <EditIcon onClick={editHouse} />
+                    <IconButton onClick={() => editHouse(house)} size="small">
+                        <EditIcon />
                     </IconButton>
                 </Box>
             </Box>
