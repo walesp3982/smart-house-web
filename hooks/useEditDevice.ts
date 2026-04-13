@@ -3,6 +3,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useHouseStore } from "@/store/house-store";
 import { InstalledDeviceType, useInstalledDevicesStore } from "@/store/installed-devices-store";
+import { updateInstalledDevice } from "@/lib/api/services";
+import { toast } from "sonner";
+import { getErrorMessage } from "@/lib/api/utils/error";
+import { useState } from "react";
 
 const editDeviceSchema = z.object({
     name: z.string().min(1, "Requerido"),
@@ -12,8 +16,9 @@ const editDeviceSchema = z.object({
 
 type EditDeviceForm = z.infer<typeof editDeviceSchema>;
 
-export function useEditDevice(device: InstalledDeviceType | null, onClose: () => void) {
+export function useEditDevice(device: InstalledDeviceType, onClose: () => void) {
     const houses = useHouseStore((state) => state.house);
+    const [isLoading, setIsLoading] = useState(false)
 
     const form = useForm<EditDeviceForm>({
         resolver: zodResolver(editDeviceSchema),
@@ -24,6 +29,7 @@ export function useEditDevice(device: InstalledDeviceType | null, onClose: () =>
         },
     });
 
+
     const selectedHouseId = form.watch("house_id");
     const selectedHouse = houses?.find((h) => h.id === selectedHouseId);
 
@@ -33,16 +39,36 @@ export function useEditDevice(device: InstalledDeviceType | null, onClose: () =>
         form.setValue("area_id", null);
     };
 
-    const onSubmit = async (data: EditDeviceForm) => {
+    const onSubmit = async (formData: EditDeviceForm) => {
         // llamada a tu API: PATCH /devices/{device.id}
         // luego actualiza el store local
+        try {
+            setIsLoading(true)
+            const { data, error } = await updateInstalledDevice(device.id, {
+                area_id: formData?.area_id,
+                house_id: formData?.house_id,
+                name: formData?.name
+            })
+
+            if (data) {
+                toast.success("Dispositivo actualizado correctamente")
+
+            }
+
+            if (error) {
+                toast.error(getErrorMessage(error.detail))
+                return
+            }
+        } finally {
+            setIsLoading(false)
+        }
         useInstalledDevicesStore.setState((prev) => ({
             installedDevices: prev.installedDevices?.map((d) =>
-                d.id === device?.id ? { ...d, ...data } : d
+                d.id === device?.id ? { ...d, ...formData } : d
             ),
         }));
         onClose();
     };
 
-    return { form, selectedHouse, handleHouseChange, onSubmit };
+    return { form, selectedHouse, handleHouseChange, onSubmit, isLoading };
 }
