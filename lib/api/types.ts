@@ -284,7 +284,11 @@ export interface paths {
          * @description Obtiene un installed_device con join a device.
          */
         get: operations["get_installed_device_installed_devices__installed_device_id__get"];
-        put?: never;
+        /**
+         * Update Installed Device
+         * @description Actualiza un installed_device (name, house_id, area_id).
+         */
+        put: operations["update_installed_device_installed_devices__installed_device_id__put"];
         post?: never;
         /**
          * Delete Installed Device
@@ -293,11 +297,7 @@ export interface paths {
         delete: operations["delete_installed_device_installed_devices__installed_device_id__delete"];
         options?: never;
         head?: never;
-        /**
-         * Update Installed Device
-         * @description Actualiza un installed_device (name, house_id, area_id).
-         */
-        patch: operations["update_installed_device_installed_devices__installed_device_id__patch"];
+        patch?: never;
         trace?: never;
     };
     "/installed_devices/{installed_device_id}/command": {
@@ -722,7 +722,7 @@ export interface components {
         /** UpdateInstalledDeviceRequest */
         UpdateInstalledDeviceRequest: {
             /** Name */
-            name?: string | null;
+            name: string;
             /** House Id */
             house_id?: number | null;
             /** Area Id */
@@ -1767,7 +1767,7 @@ export interface operations {
             };
         };
     };
-    delete_installed_device_installed_devices__installed_device_id__delete: {
+    update_installed_device_installed_devices__installed_device_id__put: {
         parameters: {
             query?: never;
             header?: never;
@@ -1776,16 +1776,22 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateInstalledDeviceRequest"];
+            };
+        };
         responses: {
-            /** @description Dispositivo instalado eliminado exitosamente */
-            204: {
+            /** @description Dispositivo instalado actualizado exitosamente */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["InstalledDeviceResponse"];
+                };
             };
-            /** @description ID de usuario no encontrado */
+            /** @description ID de usuario no encontrado o datos inválidos */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -1823,7 +1829,7 @@ export interface operations {
             };
         };
     };
-    update_installed_device_installed_devices__installed_device_id__patch: {
+    delete_installed_device_installed_devices__installed_device_id__delete: {
         parameters: {
             query?: never;
             header?: never;
@@ -1832,22 +1838,16 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateInstalledDeviceRequest"];
-            };
-        };
+        requestBody?: never;
         responses: {
-            /** @description Dispositivo instalado actualizado exitosamente */
-            200: {
+            /** @description Dispositivo instalado eliminado exitosamente */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/json": components["schemas"]["InstalledDeviceResponse"];
-                };
+                content?: never;
             };
-            /** @description ID de usuario no encontrado o datos inválidos */
+            /** @description ID de usuario no encontrado */
             400: {
                 headers: {
                     [name: string]: unknown;

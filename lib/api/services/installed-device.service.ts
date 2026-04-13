@@ -1,25 +1,30 @@
 "use server";
 
 import { apiClient } from "@/lib/api/client";
-import type { components } from "@/lib/api/types"
+import type { components } from "@/lib/api/types";
 
 export async function getInstalledDevices() {
   return await apiClient.GET("/installed_devices", {});
 }
 
 export async function getInstalledDevicesWithDevice() {
-  const { data, error, response } = await apiClient.GET("/installed_devices/with-devices")
-  return { data, error, ok: response.ok, status: response.status }
+  const { data, error, response } = await apiClient.GET(
+    "/installed_devices/with-devices",
+  );
+  return { data, error, ok: response.ok, status: response.status };
 }
 
 export async function getInstalledDeviceById(installedDeviceId: number) {
-  const { data, error, response } = await apiClient.GET("/installed_devices/{installed_device_id}", {
-    params: {
-      path: { installed_device_id: installedDeviceId },
+  const { data, error, response } = await apiClient.GET(
+    "/installed_devices/{installed_device_id}",
+    {
+      params: {
+        path: { installed_device_id: installedDeviceId },
+      },
     },
-  });
+  );
 
-  return { data, error, ok: response.ok, status: response.status }
+  return { data, error, ok: response.ok, status: response.status };
 }
 
 interface RegisterInstalledDeviceRequest {
@@ -37,7 +42,7 @@ export async function registerInstalledDevice(
     body,
   });
 
-  return { data, error, ok: response.ok, status: response.status }
+  return { data, error, ok: response.ok, status: response.status };
 }
 
 type bodyUpdate = components["schemas"]["UpdateInstalledDeviceRequest"];
@@ -46,13 +51,16 @@ export async function updateInstalledDevice(
   installedDeviceId: number,
   body: bodyUpdate,
 ) {
-  const { data, error, response } = await apiClient.PATCH("/installed_devices/{installed_device_id}", {
-    params: {
-      path: { installed_device_id: installedDeviceId },
+  const { data, error, response } = await apiClient.PUT(
+    "/installed_devices/{installed_device_id}",
+    {
+      params: {
+        path: { installed_device_id: installedDeviceId },
+      },
+      body,
     },
-    body,
-  });
-  return { data, error, ok: response.ok, status: response.status }
+  );
+  return { data, error, ok: response.ok, status: response.status };
 }
 
 export async function deleteInstalledDevice(installedDeviceId: number) {
@@ -68,11 +76,11 @@ type DeviceCommand =
   | { action: "on" | "off"; type: "light" }
   | { action: "on" | "off"; type: "movement" }
   | {
-    action: "on" | "off";
-    type: "temperature";
-    enable_auto: boolean;
-    has_limit: number;
-  }
+      action: "on" | "off";
+      type: "temperature";
+      enable_auto: boolean;
+      has_limit: number;
+    }
   | { action: "on" | "off"; type: "camera" };
 export async function sendInstalledDeviceCommand(
   installedDeviceId: number,
@@ -82,7 +90,7 @@ export async function sendInstalledDeviceCommand(
     "/installed_devices/{installed_device_id}/command",
     {
       params: {
-        path: { installed_device_id: installedDeviceId }
+        path: { installed_device_id: installedDeviceId },
       },
       body,
     },
