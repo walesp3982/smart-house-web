@@ -1,18 +1,10 @@
 "use client";
 
-import {
-  Paper,
-  Typography,
-  Stack,
-  Box,
-  Button,
-  Grid,
-} from "@mui/material";
+import { Paper, Typography, Stack, Box, Button, Grid } from "@mui/material";
 import styles from "../Dashboard.module.css";
 import { translations } from "../tranlations";
 import { useState } from "react";
 import { HouseType, useHouseStore } from "@/store/house-store";
-
 
 import { useInstalledDevicesStore } from "@/store/installed-devices-store";
 const t = (key: keyof typeof translations) => translations[key];
@@ -21,11 +13,10 @@ import { EditDeviceDrawer } from "./EditDeviceDrawer";
 import { CreateNewHouseDialog } from "./CreateNewHouseDialog";
 import { DeviceItemActivity, HouseItem } from "./ListDevices";
 import EditHouseDrawer from "./EditHouseDrawer";
-
-
+import { DeleteHouseDialog } from "./DeleteHouseDialog";
 
 interface HeaderDevicesProps {
-  openDialogHouse: () => void
+  openDialogHouse: () => void;
 }
 
 function HeaderDevices({ openDialogHouse }: HeaderDevicesProps) {
@@ -37,23 +28,30 @@ function HeaderDevices({ openDialogHouse }: HeaderDevicesProps) {
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, md: 6 }}>
-        <Button variant="contained" size="large" fullWidth
-          onClick={openDialogHouse}>
+        <Button
+          variant="contained"
+          size="large"
+          fullWidth
+          onClick={openDialogHouse}
+        >
           Agregar Casa
         </Button>
       </Grid>
     </Grid>
-  )
+  );
 }
 
 // ─── DevicesPage ──────────────────────────────────────────────────────────────
 export default function DevicesPage() {
   const [dialogNewHouse, setDialogNewHouse] = useState(false);
   const houses = useHouseStore((state) => state.house);
-  const installedDevices = useInstalledDevicesStore((state) => state.installedDevices);
-  const [editingDevice, setEditingDevice] = useState<InstalledDeviceType | null>(null);
+  const installedDevices = useInstalledDevicesStore(
+    (state) => state.installedDevices,
+  );
+  const [editingDevice, setEditingDevice] =
+    useState<InstalledDeviceType | null>(null);
   const [editingHouse, setEditingHouse] = useState<HouseType | null>(null);
-
+  const [deletingHouse, setDeletingHouse] = useState<HouseType | null>(null);
 
   // devices sin ninguna casa asignada
   const orphanDevices = installedDevices?.filter((d) => !d.house_id) ?? [];
@@ -62,20 +60,26 @@ export default function DevicesPage() {
     <>
       <Paper elevation={0} className={styles.card}>
         {/* Header */}
-        <HeaderDevices
-          openDialogHouse={() => setDialogNewHouse(true)}
-        />
+        <HeaderDevices openDialogHouse={() => setDialogNewHouse(true)} />
 
         <Stack spacing={2} mt={2}>
           {/* Sección: sin casa */}
           {orphanDevices.length > 0 && (
             <Box>
-              <Typography variant="caption" sx={{ color: "text.secondary", pl: 0.5 }}>
+              <Typography
+                variant="caption"
+                sx={{ color: "text.secondary", pl: 0.5 }}
+              >
                 Sin casa asignada
               </Typography>
               <Stack spacing={0.5} mt={0.5}>
                 {orphanDevices.map((d) => (
-                  <DeviceItemActivity key={d.id} device={d} indentLevel={0} onEdit={() => setEditingDevice(d)} />
+                  <DeviceItemActivity
+                    key={d.id}
+                    device={d}
+                    indentLevel={0}
+                    onEdit={() => setEditingDevice(d)}
+                  />
                 ))}
               </Stack>
             </Box>
@@ -86,9 +90,16 @@ export default function DevicesPage() {
             <HouseItem
               key={house.id}
               house={house}
-              onEditDevice={(device: InstalledDeviceType) => setEditingDevice(device)}
+              onEditDevice={(device: InstalledDeviceType) =>
+                setEditingDevice(device)
+              }
               allDevices={installedDevices ?? []}
-              onEditHouse={(house: HouseType) => { setEditingHouse(house) }}
+              onEditHouse={(house: HouseType) => {
+                setEditingHouse(house);
+              }}
+              onDeleteHouse={(house: HouseType) => {
+                setDeletingHouse(house);
+              }}
             />
           ))}
         </Stack>
@@ -99,6 +110,11 @@ export default function DevicesPage() {
         desactivatedDialog={() => setDialogNewHouse(false)}
       />
 
+      <DeleteHouseDialog
+        house={deletingHouse}
+        activatedDialog={!!deletingHouse}
+        desactivatedDialog={() => setDeletingHouse(null)}
+      />
       <EditDeviceDrawer
         device={editingDevice}
         open={!!editingDevice}

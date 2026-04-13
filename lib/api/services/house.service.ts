@@ -4,11 +4,10 @@ import { apiClient } from "@/lib/api/client";
 
 export async function getAllHousesWithArea() {
   const { data, error, response } = await apiClient.GET("/houses/with-areas", {
-    params: {
-    }
-  })
+    params: {},
+  });
 
-  return { data, error, ok: response.ok, status: response.status }
+  return { data, error, ok: response.ok, status: response.status };
 }
 
 export async function getHouseById(id: number) {
@@ -18,7 +17,7 @@ export async function getHouseById(id: number) {
     },
   });
 
-  return { data, error, ok: response.ok, status: response.status }
+  return { data, error, ok: response.ok, status: response.status };
 }
 
 interface CreateHouseRequest {
@@ -32,7 +31,7 @@ export async function createHouse(body: CreateHouseRequest) {
     body,
   });
 
-  return { data, error, ok: response.ok, status: response.status }
+  return { data, error, ok: response.ok, status: response.status };
 }
 
 interface UpdateHouseRequest {
@@ -48,13 +47,15 @@ export async function updateHouse(id: number, body: UpdateHouseRequest) {
     body,
   });
 
-  return { data, error, ok: response.ok, status: response.status }
+  return { data, error, ok: response.ok, status: response.status };
 }
 
 export async function deleteHouse(id: number) {
-  return await apiClient.DELETE("/houses/{id}", {
+  const { data, response, error } = await apiClient.DELETE("/houses/{id}", {
     params: {
       path: { id },
     },
   });
+
+  return { data, error, ok: response.ok, status: response.status };
 }
