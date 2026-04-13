@@ -16,7 +16,7 @@ const editDeviceSchema = z.object({
 
 type EditDeviceForm = z.infer<typeof editDeviceSchema>;
 
-export function useEditDevice(device: InstalledDeviceType, onClose: () => void) {
+export function useEditDevice(device: InstalledDeviceType | null, onClose: () => void) {
     const houses = useHouseStore((state) => state.house);
     const [isLoading, setIsLoading] = useState(false)
 
@@ -43,6 +43,10 @@ export function useEditDevice(device: InstalledDeviceType, onClose: () => void) 
         // llamada a tu API: PATCH /devices/{device.id}
         // luego actualiza el store local
         try {
+            if (!device) {
+                toast.error("No se seleccionó un device")
+                return
+            }
             setIsLoading(true)
             const { data, error } = await updateInstalledDevice(device.id, {
                 area_id: formData?.area_id,
