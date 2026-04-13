@@ -4,9 +4,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import DevicesIcon from "@mui/icons-material/Devices";
+import EditIcon from "@mui/icons-material/Edit"
 import type { HouseType, AreaType } from "@/store/house-store";
 import { DeviceItem } from "@/component/Devices/Item";
-import { Box, Collapse, Divider, Stack, Typography } from "@mui/material";
+import { Box, Collapse, Divider, IconButton, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import styles from "../Dashboard.module.css";
 
@@ -86,9 +87,10 @@ interface HouseItemProps {
     house: HouseType; // tu tipo
     allDevices: InstalledDeviceType[];
     onEditDevice: (device: InstalledDeviceType) => void
+    editHouse: () => void
 }
 
-export function HouseItem({ house, allDevices, onEditDevice }: HouseItemProps) {
+export function HouseItem({ house, allDevices, onEditDevice, editHouse }: HouseItemProps) {
     const [open, setOpen] = useState(false);
 
     // devices asignados a esta casa pero sin área
@@ -97,23 +99,39 @@ export function HouseItem({ house, allDevices, onEditDevice }: HouseItemProps) {
     );
 
     return (
-        <Box className={styles.deviceItem}>
+        <Box className={styles.deviceItem} display={"block"}>
             {/* Header */}
             <Box
                 display="flex"
                 alignItems="center"
                 justifyContent="space-between"
-                onClick={() => setOpen((p) => !p)}
+                onClick={undefined}
                 sx={{ cursor: "pointer" }}
             >
-                <Box display="flex" alignItems="center" gap={1}>
+                <Box display="flex" alignItems="center" gap={1}
+                    justifyContent={"space-between"}
+                // onClick={
+                //     () => setOpen((p) => !p)
+                // }
+                >
                     <HomeIcon />
                     <Typography className={styles.deviceCode}>{house.name}</Typography>
                     <Typography variant="caption" sx={{ color: "text.disabled" }}>
                         ({(house.areas?.length ?? 0)} áreas)
                     </Typography>
                 </Box>
-                {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+
+                <Box display="flex" gap={2}>
+
+                    <IconButton onClick={() => setOpen((p) => !p)} size="small">
+                        {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+
+                    </IconButton>
+
+                    <IconButton onClick={editHouse} size="small">
+                        <EditIcon onClick={editHouse} />
+                    </IconButton>
+                </Box>
             </Box>
 
             {/* Collapse */}

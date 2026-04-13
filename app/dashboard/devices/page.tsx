@@ -85,6 +85,7 @@ export default function DevicesPage() {
               house={house}
               onEditDevice={(device: InstalledDeviceType) => setEditingDevice(device)}
               allDevices={installedDevices ?? []}
+              editHouse={() => { }}
             />
           ))}
         </Stack>
