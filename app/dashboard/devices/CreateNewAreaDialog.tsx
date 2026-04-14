@@ -44,7 +44,7 @@ export function CreateNewAreaDialog({ house_id, active, desactivate }: CreateNew
           rules={{ required: "Selecciona el tipo de área" }} // validación obligatoria
           render={({ field }) => (
             <FormControl fullWidth error={!!errors.type}>
-              <InputLabel id="role-label">Area</InputLabel>
+              <InputLabel id="role-label">Tipo de área</InputLabel>
               <Select
                 {...field}
                 labelId="tipo-area-label"

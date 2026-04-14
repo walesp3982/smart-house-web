@@ -16,6 +16,7 @@ import EditHouseDrawer from "./EditHouseDrawer";
 import { DeleteHouseDialog } from "./DeleteHouseDialog";
 import { CreateNewAreaDialog } from "./CreateNewAreaDialog";
 import { DeleteAreaDialog } from "./DeleteAreaDialog";
+import { EditAreaDrawer } from "./EditAreaDrawer";
 
 interface HeaderDevicesProps {
   openDialogHouse: () => void;
@@ -152,6 +153,12 @@ export default function DevicesPage() {
         house={editingHouse}
         open={!!editingHouse}
         onClose={() => setEditingHouse(null)}
+      />
+
+      <EditAreaDrawer
+        area={editArea}
+        onClose={() => setEditArea(null)}
+        open={!!editArea}
       />
     </>
   );

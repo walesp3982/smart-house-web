@@ -22,7 +22,7 @@ export function useEditArea(area: AreaType | null) {
     const [isLoading, setIsLoading] = useState(false)
     const setHouses = useHouseStore(state => state.setHouse)
     const form = useForm<UpdateAreaValues>({
-        defaultValues: {
+        values: {
             name: area?.name ?? "",
             type: area?.type ?? "bedroom",
         },
