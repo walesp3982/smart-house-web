@@ -14,6 +14,7 @@ import { CreateNewHouseDialog } from "./CreateNewHouseDialog";
 import { DeviceItemActivity, HouseItem } from "./ListDevices";
 import EditHouseDrawer from "./EditHouseDrawer";
 import { DeleteHouseDialog } from "./DeleteHouseDialog";
+import { CreateNewAreaDialog } from "./CreateNewAreaDialog";
 
 interface HeaderDevicesProps {
   openDialogHouse: () => void;
@@ -52,7 +53,7 @@ export default function DevicesPage() {
     useState<InstalledDeviceType | null>(null);
   const [editingHouse, setEditingHouse] = useState<HouseType | null>(null);
   const [deletingHouse, setDeletingHouse] = useState<HouseType | null>(null);
-
+  const [createArea, setCreateArea] = useState<HouseType | null>(null)
   // devices sin ninguna casa asignada
   const orphanDevices = installedDevices?.filter((d) => !d.house_id) ?? [];
 
@@ -100,6 +101,9 @@ export default function DevicesPage() {
               onDeleteHouse={(house: HouseType) => {
                 setDeletingHouse(house);
               }}
+              onCreateArea={(house: HouseType) => {
+                setCreateArea(house)
+              }}
             />
           ))}
         </Stack>
@@ -114,6 +118,12 @@ export default function DevicesPage() {
         house={deletingHouse}
         activatedDialog={!!deletingHouse}
         desactivatedDialog={() => setDeletingHouse(null)}
+      />
+
+      <CreateNewAreaDialog
+        house_id={createArea?.id ?? null}
+        active={!!createArea}
+        desactivate={() => setCreateArea(null)}
       />
       <EditDeviceDrawer
         device={editingDevice}

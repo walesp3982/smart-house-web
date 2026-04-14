@@ -13,6 +13,7 @@ import {
   Collapse,
   Divider,
   IconButton,
+  Link,
   Stack,
   Typography,
 } from "@mui/material";
@@ -117,6 +118,7 @@ interface HouseItemProps {
   onEditDevice: (device: InstalledDeviceType) => void;
   onEditHouse: (house: HouseType) => void;
   onDeleteHouse: (house: HouseType) => void;
+  onCreateArea: (house: HouseType) => void;
 }
 
 export function HouseItem({
@@ -125,6 +127,7 @@ export function HouseItem({
   onEditDevice,
   onEditHouse: editHouse,
   onDeleteHouse,
+  onCreateArea
 }: HouseItemProps) {
   const [open, setOpen] = useState(true);
 
@@ -148,9 +151,9 @@ export function HouseItem({
           alignItems="center"
           gap={1}
           justifyContent={"space-between"}
-          // onClick={
-          //     () => setOpen((p) => !p)
-          // }
+        // onClick={
+        //     () => setOpen((p) => !p)
+        // }
         >
           <HomeIcon />
           <Typography className={styles.deviceCode}>{house.name}</Typography>
@@ -209,7 +212,15 @@ export function HouseItem({
                 variant="caption"
                 sx={{ pl: 1.5, color: "text.disabled" }}
               >
-                Sin dispositivos ni áreas
+                Sin dispositivos ni áreas <Link
+                  onClick={() => onCreateArea(house)} sx={{
+                    cursor: "pointer",
+                    "&:hover": {
+                      color: "red",
+                      textDecoration: "underline",
+                      backgroundColor: "rgba(0,0,0,0.05)",
+                    },
+                  }} >Crear nueva área</Link>
               </Typography>
             )}
           </Stack>
