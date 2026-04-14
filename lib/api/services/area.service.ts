@@ -42,11 +42,14 @@ export async function deleteArea(houseId: number, areaId: number) {
   return { data, error, ok: response.ok, status: response.status }
 }
 
-export async function patchArea(houseId: number, areaId: number, body: object) {
-  return await apiClient.PATCH("/houses/{house_id}/areas/{area_id}", {
+export type UpdateAreaRequest = components["schemas"]["UpdateAreaRequest"]
+export async function patchArea(houseId: number, areaId: number, body: UpdateAreaRequest) {
+  const { data, error, response } = await apiClient.PATCH("/houses/{house_id}/areas/{area_id}", {
     params: {
       path: { house_id: houseId, area_id: areaId },
     },
     body,
   });
+
+  return { data, error, ok: response.ok, status: response.status }
 }
