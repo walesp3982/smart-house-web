@@ -1,4 +1,4 @@
-import { InstalledDeviceType } from "@/store/installed-devices-store";
+import { InstalledDeviceType, selectDeviceState, useInstalledDevicesStore } from "@/store/installed-devices-store";
 import HomeIcon from "@mui/icons-material/Home";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
@@ -25,6 +25,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import styles from "../Dashboard.module.css";
+import { useStateDevice } from "@/hooks/useStateDevice";
 
 interface DeviceItemProps {
   device: InstalledDeviceType; // tu tipo del store
@@ -37,19 +38,33 @@ export function DeviceItemActivity({
   indentLevel = 0,
   onEdit,
 }: DeviceItemProps) {
+  useStateDevice(device.device.device_uuid)
+
+  const { status, lastMessage } = useInstalledDevicesStore(
+    selectDeviceState(device.device.device_uuid)
+  )
 
   const device_icon = (
     <DevicesIcon fontSize="small" sx={{ color: "text.secondary" }} />
   );
 
   return (
-    <DeviceItem
-      device_name={device.name}
-      onEdit={onEdit}
-      indentLevel={indentLevel}
-      active={true}
-      device_icon={device_icon}
-    />
+    <>
+      <DeviceItem
+        device_name={device.name}
+        onEdit={onEdit}
+        indentLevel={indentLevel}
+        active={true}
+        device_icon={device_icon}
+      />
+      <Typography>
+        {status}
+      </Typography>
+      <Typography>
+        {lastMessage}
+      </Typography>
+    </>
+
   );
 }
 

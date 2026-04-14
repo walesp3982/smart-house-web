@@ -21,6 +21,9 @@ interface InstalledDeviceStore {
     updateDeviceState: (uuid: string, patch: Partial<DeviceSocketState>) => void
 }
 
+export const selectDeviceState = (uuid: string) => (state: InstalledDeviceStore): DeviceSocketState =>
+    state.deviceState[uuid] ?? { status: "idle", lastMessage: null }
+
 export const useInstalledDevicesStore = create<InstalledDeviceStore>((set) => ({
     installedDevices: null,
     setInstalledDevices: (installedDevices) => set({ installedDevices }),
