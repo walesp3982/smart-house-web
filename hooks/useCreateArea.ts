@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { getErrorMessage } from "@/lib/api/utils/error";
+import { getAllHousesUser } from "@/actions/houses/houses.actions";
+import { useHouseStore } from "@/store/house-store";
 
 export const rooms = ["living_room", "bedroom", "kitchen", "outside"] as const;
 
@@ -17,6 +19,7 @@ type CreateAreaValues = z.infer<typeof CreateAreaSchema>
 
 export function useCreateArea(house_id: number | null) {
     const [isLoading, setIsLoading] = useState(false)
+    const setHouses = useHouseStore(state => state.setHouse)
     const form = useForm<CreateAreaValues>({
         defaultValues: {
             name: "",
@@ -40,6 +43,12 @@ export function useCreateArea(house_id: number | null) {
 
             if (data) {
                 toast.success("Área creada correctamente")
+                const newHouseData = await getAllHousesUser()
+                if (newHouseData) {
+                    setHouses(newHouseData)
+                } else {
+                    toast.error("No se puedo obtener los nuevos valores")
+                }
             }
 
             if (error) {
