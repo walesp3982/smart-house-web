@@ -37,6 +37,7 @@ export function DeviceItemActivity({
   indentLevel = 0,
   onEdit,
 }: DeviceItemProps) {
+
   const device_icon = (
     <DevicesIcon fontSize="small" sx={{ color: "text.secondary" }} />
   );

@@ -4,11 +4,21 @@ import type { components } from "@/lib/api/types"
 export type InstalledDeviceType = components["schemas"]["InstalledDeviceWithDeviceResponse"]
 
 
+export type DeviceStatus = "connecting" | "open" | "closed" | "error" | "idle" | "fetching-ticket"
+export type DeviceSocketState = {
+    status: DeviceStatus
+    lastMessage: string | null
+}
+
 interface InstalledDeviceStore {
     installedDevices: InstalledDeviceType[] | null
     setInstalledDevices: (installedDevices: InstalledDeviceType[]) => void
     clearInstalledDevices: () => void
     addInstalledDevices: (installedDevice: InstalledDeviceType) => void
+
+    // Websocket state
+    deviceState: Record<string, DeviceSocketState>
+    updateDeviceState: (uuid: string, patch: Partial<DeviceSocketState>) => void
 }
 
 export const useInstalledDevicesStore = create<InstalledDeviceStore>((set) => ({
@@ -17,5 +27,19 @@ export const useInstalledDevicesStore = create<InstalledDeviceStore>((set) => ({
     clearInstalledDevices: () => set({ installedDevices: null }),
     addInstalledDevices: (installedDevice) => set((state) => ({
         installedDevices: state.installedDevices ? [...state.installedDevices, installedDevice] : [installedDevice]
-    }))
+    })),
+
+    // Websocket
+    deviceState: {},
+    updateDeviceState(uuid, patch) {
+        set((state) => ({
+            deviceState: {
+                ...state.deviceState,
+                [uuid]: {
+                    ...(state.deviceState[uuid] ?? { status: "idle", lastMessage: null }),
+                    ...patch
+                }
+            }
+        }))
+    },
 }))
