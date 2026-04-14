@@ -51,9 +51,12 @@ interface AreaItemProps {
   area: AreaType; // tu tipo
   devices: InstalledDeviceType[];
   onEditDevice: (device: InstalledDeviceType) => void;
+  onEditArea: (area: AreaType) => void;
+  onDeleteArea: (area: AreaType) => void;
+
 }
 
-function AreaItem({ area, devices, onEditDevice }: AreaItemProps) {
+function AreaItem({ area, devices, onEditDevice, onEditArea, onDeleteArea }: AreaItemProps) {
   const [open, setOpen] = useState(false);
   const areaDevices = devices.filter((d) => d.area_id === area.id);
 
@@ -79,11 +82,23 @@ function AreaItem({ area, devices, onEditDevice }: AreaItemProps) {
             ({areaDevices.length})
           </Typography>
         </Box>
-        {open ? (
+        <Box display="flex" gap={0}>
+          <IconButton onClick={() => onDeleteArea(area)} size="small">
+            <DeleteIcon />
+          </IconButton>
+          <IconButton onClick={() => onEditArea(area)} size="small">
+            <EditIcon />
+          </IconButton>
+
+          <IconButton onClick={() => setOpen((p) => !p)} size="small">
+            {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          </IconButton>
+        </Box>
+        {/* {open ? (
           <ExpandLessIcon fontSize="small" />
         ) : (
           <ExpandMoreIcon fontSize="small" />
-        )}
+        )} */}
       </Box>
 
       <Collapse in={open}>
@@ -119,6 +134,8 @@ interface HouseItemProps {
   onEditHouse: (house: HouseType) => void;
   onDeleteHouse: (house: HouseType) => void;
   onCreateArea: (house: HouseType) => void;
+  onDeleteArea: (area: AreaType) => void;
+  onEditArea: (area: AreaType) => void;
 }
 
 export function HouseItem({
@@ -127,7 +144,10 @@ export function HouseItem({
   onEditDevice,
   onEditHouse: editHouse,
   onDeleteHouse,
-  onCreateArea
+  onCreateArea,
+  onDeleteArea,
+  onEditArea,
+
 }: HouseItemProps) {
   const [open, setOpen] = useState(true);
 
@@ -204,6 +224,8 @@ export function HouseItem({
                 area={area}
                 devices={allDevices}
                 onEditDevice={onEditDevice}
+                onDeleteArea={onDeleteArea}
+                onEditArea={onEditArea}
               />
             ))}
 

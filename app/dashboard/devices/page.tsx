@@ -4,7 +4,7 @@ import { Paper, Typography, Stack, Box, Button, Grid } from "@mui/material";
 import styles from "../Dashboard.module.css";
 import { translations } from "../tranlations";
 import { useState } from "react";
-import { HouseType, useHouseStore } from "@/store/house-store";
+import { AreaType, HouseType, useHouseStore } from "@/store/house-store";
 
 import { useInstalledDevicesStore } from "@/store/installed-devices-store";
 const t = (key: keyof typeof translations) => translations[key];
@@ -15,6 +15,7 @@ import { DeviceItemActivity, HouseItem } from "./ListDevices";
 import EditHouseDrawer from "./EditHouseDrawer";
 import { DeleteHouseDialog } from "./DeleteHouseDialog";
 import { CreateNewAreaDialog } from "./CreateNewAreaDialog";
+import { DeleteAreaDialog } from "./DeleteAreaDialog";
 
 interface HeaderDevicesProps {
   openDialogHouse: () => void;
@@ -56,6 +57,8 @@ export default function DevicesPage() {
   const [createArea, setCreateArea] = useState<HouseType | null>(null)
   // devices sin ninguna casa asignada
   const orphanDevices = installedDevices?.filter((d) => !d.house_id) ?? [];
+  const [deleteArea, setDeleteArea] = useState<AreaType | null>(null)
+  const [editArea, setEditArea] = useState<AreaType | null>(null)
 
   return (
     <>
@@ -104,6 +107,12 @@ export default function DevicesPage() {
               onCreateArea={(house: HouseType) => {
                 setCreateArea(house)
               }}
+              onDeleteArea={(area: AreaType) => {
+                setDeleteArea(area)
+              }}
+              onEditArea={(area: AreaType) => {
+                setEditArea(area)
+              }}
             />
           ))}
         </Stack>
@@ -125,6 +134,14 @@ export default function DevicesPage() {
         active={!!createArea}
         desactivate={() => setCreateArea(null)}
       />
+
+
+      <DeleteAreaDialog
+        area={deleteArea}
+        active={!!deleteArea}
+        desactivate={() => setDeleteArea(null)}
+      />
+
       <EditDeviceDrawer
         device={editingDevice}
         open={!!editingDevice}

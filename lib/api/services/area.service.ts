@@ -34,11 +34,12 @@ export async function createArea(houseId: number, body: CreateAreaRequest) {
 }
 
 export async function deleteArea(houseId: number, areaId: number) {
-  return await apiClient.DELETE("/houses/{house_id}/areas/{area_id}", {
+  const { data, error, response } = await apiClient.DELETE("/houses/{house_id}/areas/{area_id}", {
     params: {
       path: { house_id: houseId, area_id: areaId },
     },
   });
+  return { data, error, ok: response.ok, status: response.status }
 }
 
 export async function patchArea(houseId: number, areaId: number, body: object) {
