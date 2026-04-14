@@ -3,9 +3,13 @@ import HomeIcon from "@mui/icons-material/Home";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
+import { ListItemIcon } from "@mui/material";
+import { ListItemText } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add"
 import DevicesIcon from "@mui/icons-material/Devices";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import SettingsIcon from "@mui/icons-material/Settings"
 import type { HouseType, AreaType } from "@/store/house-store";
 import { DeviceItem } from "@/component/Devices/Item";
 import {
@@ -13,6 +17,9 @@ import {
   Collapse,
   Divider,
   IconButton,
+  Link,
+  Menu,
+  MenuItem,
   Stack,
   Typography,
 } from "@mui/material";
@@ -50,11 +57,23 @@ interface AreaItemProps {
   area: AreaType; // tu tipo
   devices: InstalledDeviceType[];
   onEditDevice: (device: InstalledDeviceType) => void;
+  onEditArea: (area: AreaType) => void;
+  onDeleteArea: (area: AreaType) => void;
+
 }
 
-function AreaItem({ area, devices, onEditDevice }: AreaItemProps) {
+function AreaItem({ area, devices, onEditDevice, onEditArea, onDeleteArea }: AreaItemProps) {
   const [open, setOpen] = useState(false);
   const areaDevices = devices.filter((d) => d.area_id === area.id);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const menuOpen = Boolean(anchorEl)
+
+  // handle para el menú
+  const handleOpenMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(e.currentTarget)
+  }
+
+  const handleCloseMenu = () => setAnchorEl(null);
 
   return (
     <Box>
@@ -62,7 +81,7 @@ function AreaItem({ area, devices, onEditDevice }: AreaItemProps) {
         display="flex"
         alignItems="center"
         justifyContent="space-between"
-        onClick={() => setOpen((p) => !p)}
+        onClick={undefined}
         sx={{
           pl: 3,
           pr: 1.5,
@@ -78,11 +97,58 @@ function AreaItem({ area, devices, onEditDevice }: AreaItemProps) {
             ({areaDevices.length})
           </Typography>
         </Box>
-        {open ? (
+        <Box display="flex" gap={0}>
+          <IconButton onClick={handleOpenMenu} size="small">
+            <SettingsIcon />
+          </IconButton>
+          {/* <IconButton onClick={() => onDeleteArea(area)} size="small">
+            <DeleteIcon />
+          </IconButton>
+          <IconButton onClick={() => onEditArea(area)} size="small">
+            <EditIcon />
+          </IconButton> */}
+
+          <IconButton onClick={() => setOpen((p) => !p)} size="small">
+            {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          </IconButton>
+
+          <Menu
+            anchorEl={anchorEl}
+            open={menuOpen}
+            onClose={handleCloseMenu}
+            slotProps={{ paper: { sx: { minWidth: 140 } } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onEditArea(area);
+                handleCloseMenu();
+              }}
+            >
+              <ListItemIcon>
+                <EditIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Editar</ListItemText>
+            </MenuItem>
+
+            <MenuItem
+              onClick={() => {
+                onDeleteArea(area);
+                handleCloseMenu();
+              }}
+              sx={{ color: "error.main" }}
+            >
+              <ListItemIcon sx={{ color: "error.main" }}>
+                <DeleteIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Eliminar</ListItemText>
+            </MenuItem>
+          </Menu>
+        </Box>
+        {/* {open ? (
           <ExpandLessIcon fontSize="small" />
         ) : (
           <ExpandMoreIcon fontSize="small" />
-        )}
+        )} */}
       </Box>
 
       <Collapse in={open}>
@@ -117,6 +183,9 @@ interface HouseItemProps {
   onEditDevice: (device: InstalledDeviceType) => void;
   onEditHouse: (house: HouseType) => void;
   onDeleteHouse: (house: HouseType) => void;
+  onCreateArea: (house: HouseType) => void;
+  onDeleteArea: (area: AreaType) => void;
+  onEditArea: (area: AreaType) => void;
 }
 
 export function HouseItem({
@@ -125,8 +194,21 @@ export function HouseItem({
   onEditDevice,
   onEditHouse: editHouse,
   onDeleteHouse,
+  onCreateArea,
+  onDeleteArea,
+  onEditArea,
+
 }: HouseItemProps) {
   const [open, setOpen] = useState(true);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const menuOpen = Boolean(anchorEl)
+
+  // handle para el menú
+  const handleOpenMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(e.currentTarget)
+  }
+
+  const handleCloseMenu = () => setAnchorEl(null);
 
   // devices asignados a esta casa pero sin área
   const directDevices = allDevices.filter(
@@ -148,9 +230,9 @@ export function HouseItem({
           alignItems="center"
           gap={1}
           justifyContent={"space-between"}
-          // onClick={
-          //     () => setOpen((p) => !p)
-          // }
+        // onClick={
+        //     () => setOpen((p) => !p)
+        // }
         >
           <HomeIcon />
           <Typography className={styles.deviceCode}>{house.name}</Typography>
@@ -160,16 +242,62 @@ export function HouseItem({
         </Box>
 
         <Box display="flex" gap={0}>
-          <IconButton onClick={() => onDeleteHouse(house)} size="small">
+          <IconButton onClick={handleOpenMenu} size="small">
+            <SettingsIcon />
+          </IconButton>
+          {/* <IconButton onClick={() => onDeleteHouse(house)} size="small">
             <DeleteIcon />
           </IconButton>
           <IconButton onClick={() => editHouse(house)} size="small">
             <EditIcon />
-          </IconButton>
-
+          </IconButton> */}
           <IconButton onClick={() => setOpen((p) => !p)} size="small">
             {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           </IconButton>
+
+          <Menu
+            anchorEl={anchorEl}
+            open={menuOpen}
+            onClose={handleCloseMenu}
+            slotProps={{ paper: { sx: { minWidth: 140 } } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onCreateArea(house);
+                handleCloseMenu();
+              }}
+            >
+              <ListItemIcon>
+                <AddIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Nueva área</ListItemText>
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                editHouse(house);
+                handleCloseMenu();
+              }}
+            >
+              <ListItemIcon>
+                <EditIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Editar</ListItemText>
+            </MenuItem>
+
+            <MenuItem
+              onClick={() => {
+                onDeleteHouse(house);
+                handleCloseMenu();
+              }}
+              sx={{ color: "error.main" }}
+            >
+              <ListItemIcon sx={{ color: "error.main" }}>
+                <DeleteIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Eliminar</ListItemText>
+            </MenuItem>
+
+          </Menu>
         </Box>
       </Box>
 
@@ -201,6 +329,8 @@ export function HouseItem({
                 area={area}
                 devices={allDevices}
                 onEditDevice={onEditDevice}
+                onDeleteArea={onDeleteArea}
+                onEditArea={onEditArea}
               />
             ))}
 
@@ -209,7 +339,15 @@ export function HouseItem({
                 variant="caption"
                 sx={{ pl: 1.5, color: "text.disabled" }}
               >
-                Sin dispositivos ni áreas
+                Sin dispositivos ni áreas <Link
+                  onClick={() => onCreateArea(house)} sx={{
+                    cursor: "pointer",
+                    "&:hover": {
+                      color: "red",
+                      textDecoration: "underline",
+                      backgroundColor: "rgba(0,0,0,0.05)",
+                    },
+                  }} >Crear nueva área</Link>
               </Typography>
             )}
           </Stack>

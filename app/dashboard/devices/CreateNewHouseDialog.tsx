@@ -20,7 +20,7 @@ export function CreateNewHouseDialog({
       open={activatedDialog}
       onClose={desactivatedDialog}
       title="Agregar nueva casa"
-      description="ingrese los datos para crear una nueva casa"
+      description="Ingrese los datos para crear una nueva casa"
       onSubmit={handleSubmit(onSubmit)}
       actions={
         <>

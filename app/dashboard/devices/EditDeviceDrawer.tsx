@@ -44,7 +44,7 @@ export function EditDeviceDrawer({ device, open, onClose }: EditDeviceDrawerProp
                     label="Casa"
                     onChange={(e) => handleHouseChange(e.target.value ? Number(e.target.value) : null)}
                 >
-                    <MenuItem value="">Sin casa</MenuItem>
+                    <MenuItem value="">(Sin casa)</MenuItem>
                     {houses?.map((h) => (
                         <MenuItem key={h.id} value={h.id}>{h.name}</MenuItem>
                     ))}

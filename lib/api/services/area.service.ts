@@ -1,13 +1,16 @@
 "use server";
 
 import { apiClient } from "@/lib/api/client";
+import { components } from "@/lib/api/types"
 
 export async function getAreasByHouse(houseId: number) {
-  return await apiClient.GET("/houses/{house_id}/areas", {
+  const { data, error, response } = await apiClient.GET("/houses/{house_id}/areas", {
     params: {
       path: { house_id: houseId },
     },
   });
+
+  return { data, error, ok: response.ok, status: response.status }
 }
 
 export async function getAreaById(houseId: number, areaId: number) {
@@ -18,32 +21,35 @@ export async function getAreaById(houseId: number, areaId: number) {
   });
 }
 
-interface CreateAreaRequest {
-  name: string;
-  type: "living_room" | "bedroom" | "kitchen" | "outside";
-}
+export type CreateAreaRequest = components["schemas"]["CreateAreaRequest"]
 export async function createArea(houseId: number, body: CreateAreaRequest) {
-  return await apiClient.POST("/houses/{house_id}/areas", {
+  const { data, error, response } = await apiClient.POST("/houses/{house_id}/areas", {
     params: {
       path: { house_id: houseId },
     },
     body,
   });
+
+  return { data, error, ok: response.ok, status: response.status }
 }
 
 export async function deleteArea(houseId: number, areaId: number) {
-  return await apiClient.DELETE("/houses/{house_id}/areas/{area_id}", {
+  const { data, error, response } = await apiClient.DELETE("/houses/{house_id}/areas/{area_id}", {
     params: {
       path: { house_id: houseId, area_id: areaId },
     },
   });
+  return { data, error, ok: response.ok, status: response.status }
 }
 
-export async function patchArea(houseId: number, areaId: number, body: object) {
-  return await apiClient.PATCH("/houses/{house_id}/areas/{area_id}", {
+export type UpdateAreaRequest = components["schemas"]["UpdateAreaRequest"]
+export async function patchArea(houseId: number, areaId: number, body: UpdateAreaRequest) {
+  const { data, error, response } = await apiClient.PATCH("/houses/{house_id}/areas/{area_id}", {
     params: {
       path: { house_id: houseId, area_id: areaId },
     },
     body,
   });
+
+  return { data, error, ok: response.ok, status: response.status }
 }
