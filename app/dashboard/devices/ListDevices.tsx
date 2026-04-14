@@ -5,6 +5,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import { ListItemIcon } from "@mui/material";
 import { ListItemText } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add"
 import DevicesIcon from "@mui/icons-material/Devices";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -262,6 +263,17 @@ export function HouseItem({
           >
             <MenuItem
               onClick={() => {
+                onCreateArea(house);
+                handleCloseMenu();
+              }}
+            >
+              <ListItemIcon>
+                <AddIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Nueva área</ListItemText>
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
                 editHouse(house);
                 handleCloseMenu();
               }}
@@ -284,6 +296,7 @@ export function HouseItem({
               </ListItemIcon>
               <ListItemText>Eliminar</ListItemText>
             </MenuItem>
+
           </Menu>
         </Box>
       </Box>
