@@ -667,6 +667,11 @@ export interface components {
             /** Has Limit */
             has_limit: number;
         };
+        /** TicketSocket */
+        TicketSocket: {
+            /** Ticket */
+            ticket: string;
+        };
         /** Token */
         Token: {
             /** Access Token */
@@ -2140,7 +2145,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["TicketSocket"];
                 };
             };
         };
