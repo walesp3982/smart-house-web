@@ -1,9 +1,10 @@
 import { getTicketSocket } from "@/lib/api/services/websocket.service";
 import { useCallback, useEffect, useRef } from "react";
 import { useInstalledDevicesStore } from "@/store/installed-devices-store";
-export function buildWebsocketURL(uuid: string, ticket: string) {
+
+export function buildWebsocketURL(installed_device_id: number, ticket: string) {
   const websocketURLBasic = process.env.NEXT_WEB_SOCKET_URL ?? "ws://localhost:8000"
-  return `${websocketURLBasic}/${uuid}?ticket=${ticket}`
+  return `${websocketURLBasic}/ws/${installed_device_id}?ticket=${ticket}`
 }
 
 async function fetchTicket(): Promise<string> {
@@ -11,7 +12,7 @@ async function fetchTicket(): Promise<string> {
   if (!data) throw new Error("No se pudo obtener el ticket")
   return data.ticket
 }
-export function useStateDevice(uuid: string) {
+export function useStateDevice(installed_device_id: number) {
   const updateDevice = useInstalledDevicesStore((s) => s.updateDeviceState)
   const ws = useRef<WebSocket | null>(null)
   const reconnectTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -19,30 +20,30 @@ export function useStateDevice(uuid: string) {
 
   const connect = useCallback(async () => {
     try {
-      updateDevice(uuid, { status: "fetching-ticket" });
+      updateDevice(installed_device_id, { status: "fetching-ticket" });
       const ticket = await fetchTicket();
 
-      const url = buildWebsocketURL(uuid, ticket);
-      updateDevice(uuid, { status: "connecting" });
+      const url = buildWebsocketURL(installed_device_id, ticket);
+      updateDevice(installed_device_id, { status: "connecting" });
 
       ws.current = new WebSocket(url);
 
-      ws.current.onopen = () => updateDevice(uuid, { status: "open" });
+      ws.current.onopen = () => updateDevice(installed_device_id, { status: "open" });
 
-      ws.current.onmessage = (e) => updateDevice(uuid, { lastMessage: e.data });
+      ws.current.onmessage = (e) => updateDevice(installed_device_id, { lastMessage: e.data });
 
-      ws.current.onerror = () => updateDevice(uuid, { status: "error" });
+      ws.current.onerror = () => updateDevice(installed_device_id, { status: "error" });
 
       ws.current.onclose = () => {
-        updateDevice(uuid, { status: "closed" })
+        updateDevice(installed_device_id, { status: "closed" })
         // ticket ya fue consumido, necesitamos uno nuevo
         reconnectTimer.current = setTimeout(() => connectRef.current(), 3000);
       };
     } catch {
-      updateDevice(uuid, { status: "error" });
+      updateDevice(installed_device_id, { status: "error" });
       reconnectTimer.current = setTimeout(() => connectRef.current(), 5000); // reintenta si falla el POST
     }
-  }, [uuid, updateDevice]);
+  }, [installed_device_id, updateDevice]);
 
   useEffect(() => {
     connectRef.current = connect;

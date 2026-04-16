@@ -1,8 +1,8 @@
 import { create } from "zustand"
 import type { components } from "@/lib/api/types"
-
 export type InstalledDeviceType = components["schemas"]["InstalledDeviceWithDeviceResponse"]
 
+const IDLE_STATE: DeviceSocketState = { status: "idle", lastMessage: null }
 
 export type DeviceStatus = "connecting" | "open" | "closed" | "error" | "idle" | "fetching-ticket"
 export type DeviceSocketState = {
@@ -17,12 +17,12 @@ interface InstalledDeviceStore {
     addInstalledDevices: (installedDevice: InstalledDeviceType) => void
 
     // Websocket state
-    deviceState: Record<string, DeviceSocketState>
-    updateDeviceState: (uuid: string, patch: Partial<DeviceSocketState>) => void
+    deviceState: Record<number, DeviceSocketState>
+    updateDeviceState: (uuid: number, patch: Partial<DeviceSocketState>) => void
 }
 
-export const selectDeviceState = (uuid: string) => (state: InstalledDeviceStore): DeviceSocketState =>
-    state.deviceState[uuid] ?? { status: "idle", lastMessage: null }
+export const selectDeviceState = (uuid: number) => (state: InstalledDeviceStore): DeviceSocketState =>
+    state.deviceState[uuid] ?? IDLE_STATE
 
 export const useInstalledDevicesStore = create<InstalledDeviceStore>((set) => ({
     installedDevices: null,

@@ -38,10 +38,10 @@ export function DeviceItemActivity({
   indentLevel = 0,
   onEdit,
 }: DeviceItemProps) {
-  useStateDevice(device.device.device_uuid)
+  useStateDevice(device.id)
 
   const { status, lastMessage } = useInstalledDevicesStore(
-    selectDeviceState(device.device.device_uuid)
+    selectDeviceState(device.id)
   )
 
   const device_icon = (

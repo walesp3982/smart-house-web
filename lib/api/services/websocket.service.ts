@@ -1,3 +1,5 @@
+"use server"
+
 import { apiClient } from "../client";
 import { components } from "@/lib/api/types"
 
