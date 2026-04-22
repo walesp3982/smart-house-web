@@ -11,7 +11,8 @@ const t = (key: keyof typeof translations) => translations[key];
 import type { InstalledDeviceType } from "@/store/installed-devices-store";
 import { EditDeviceDrawer } from "./EditDeviceDrawer";
 import { CreateNewHouseDialog } from "./CreateNewHouseDialog";
-import { DeviceItemActivity, HouseItem } from "./ListDevices";
+import { HouseItem } from "./ListDevices";
+import { DeviceContainer } from "./Device";
 import EditHouseDrawer from "./EditHouseDrawer";
 import { DeleteHouseDialog } from "./DeleteHouseDialog";
 import { CreateNewAreaDialog } from "./CreateNewAreaDialog";
@@ -78,14 +79,9 @@ export default function DevicesPage() {
                 Sin casa asignada
               </Typography>
               <Stack spacing={0.5} mt={0.5}>
-                {orphanDevices.map((d) => (
-                  <DeviceItemActivity
-                    key={d.id}
-                    device={d}
-                    indentLevel={0}
-                    onEdit={() => setEditingDevice(d)}
-                  />
-                ))}
+                <DeviceContainer
+                  devices={orphanDevices}
+                  onEdit={(device: InstalledDeviceType) => setEditingDevice(device)} />
               </Stack>
             </Box>
           )}

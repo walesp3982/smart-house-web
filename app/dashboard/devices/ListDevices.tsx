@@ -10,7 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SettingsIcon from "@mui/icons-material/Settings"
 import type { HouseType, AreaType } from "@/store/house-store";
-import { DeviceItemActivity } from "./Device";
+import { DeviceContainer, DeviceItemActivity } from "./Device";
 import {
   Box,
   Collapse,
@@ -285,14 +285,18 @@ export function HouseItem({
         >
           <Stack spacing={0.5}>
             {/* devices directos sin área */}
-            {directDevices.map((d) => (
+            <DeviceContainer
+              devices={directDevices}
+              onEdit={(device: InstalledDeviceType) => onEditDevice(device)} />
+
+            {/* {directDevices.map((d) => (
               <DeviceItemActivity
                 key={d.id}
                 device={d}
                 indentLevel={1}
                 onEdit={() => onEditDevice(d)}
               />
-            ))}
+            ))} */}
 
             {directDevices.length > 0 &&
               house.areas &&

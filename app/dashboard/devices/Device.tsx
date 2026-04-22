@@ -2,7 +2,27 @@ import DevicesIcon from "@mui/icons-material/Devices";
 import { DeviceItem } from "@/component/Devices/Item";
 import { InstalledDeviceType, selectDeviceState, useInstalledDevicesStore } from "@/store/installed-devices-store";
 import { useStateDevice } from "@/hooks/useStateDevice";
-import { Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
+
+interface DeviceContainerProps {
+  devices: InstalledDeviceType[]; // tu tipo del store
+  onEdit: (device: InstalledDeviceType) => void;
+}
+
+
+export function DeviceContainer({ devices, onEdit }: DeviceContainerProps) {
+  return (
+    <Grid container spacing={2}>
+      {devices.map((device) => (
+        <Grid size={{ xs: 12, sm: 12, md: 6 }} key={device.id}>
+          <Box>
+            <DeviceItemActivity device={device} onEdit={() => onEdit(device)} />
+          </Box>
+        </Grid>
+      ))}
+    </Grid>
+  );
+}
 
 interface DeviceItemProps {
   device: InstalledDeviceType; // tu tipo del store
