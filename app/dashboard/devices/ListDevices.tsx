@@ -1,4 +1,4 @@
-import { InstalledDeviceType, selectDeviceState, useInstalledDevicesStore } from "@/store/installed-devices-store";
+import { InstalledDeviceType } from "@/store/installed-devices-store";
 import HomeIcon from "@mui/icons-material/Home";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
@@ -6,12 +6,11 @@ import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import { ListItemIcon } from "@mui/material";
 import { ListItemText } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add"
-import DevicesIcon from "@mui/icons-material/Devices";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SettingsIcon from "@mui/icons-material/Settings"
 import type { HouseType, AreaType } from "@/store/house-store";
-import { DeviceItem } from "@/component/Devices/Item";
+import { DeviceItemActivity } from "./Device";
 import {
   Box,
   Collapse,
@@ -25,48 +24,9 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import styles from "../Dashboard.module.css";
-import { useStateDevice } from "@/hooks/useStateDevice";
 
-interface DeviceItemProps {
-  device: InstalledDeviceType; // tu tipo del store
-  indentLevel?: 0 | 1 | 2;
-  onEdit: () => void;
-}
 
-export function DeviceItemActivity({
-  device,
-  indentLevel = 0,
-  onEdit,
-}: DeviceItemProps) {
-  useStateDevice(device.id)
 
-  const { status, lastMessage } = useInstalledDevicesStore(
-    selectDeviceState(device.id)
-  )
-
-  const device_icon = (
-    <DevicesIcon fontSize="small" sx={{ color: "text.secondary" }} />
-  );
-
-  return (
-    <>
-      <DeviceItem
-        device_name={device.name}
-        onEdit={onEdit}
-        indentLevel={indentLevel}
-        active={true}
-        device_icon={device_icon}
-      />
-      <Typography>
-        {status}
-      </Typography>
-      <Typography>
-        {lastMessage}
-      </Typography>
-    </>
-
-  );
-}
 
 // ─── AreaItem ─────────────────────────────────────────────────────────────────
 interface AreaItemProps {
