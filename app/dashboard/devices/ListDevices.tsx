@@ -10,7 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SettingsIcon from "@mui/icons-material/Settings"
 import type { HouseType, AreaType } from "@/store/house-store";
-import { DeviceContainer, DeviceItemActivity } from "./Device";
+import { DeviceContainer } from "./Device";
 import {
   Box,
   Collapse,
@@ -39,7 +39,7 @@ interface AreaItemProps {
 }
 
 function AreaItem({ area, devices, onEditDevice, onEditArea, onDeleteArea }: AreaItemProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const areaDevices = devices.filter((d) => d.area_id === area.id);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const menuOpen = Boolean(anchorEl)
@@ -129,23 +129,27 @@ function AreaItem({ area, devices, onEditDevice, onEditArea, onDeleteArea }: Are
 
       <Collapse in={open}>
         <Stack spacing={0.5} mt={0.5}>
-          {areaDevices.length > 0 ? (
-            areaDevices.map((d) => (
-              <DeviceItemActivity
-                key={d.id}
-                device={d}
-                indentLevel={2}
-                onEdit={() => onEditDevice(d)}
-              />
-            ))
-          ) : (
-            <Typography
-              variant="caption"
-              sx={{ pl: 4.5, color: "text.disabled" }}
-            >
-              Sin dispositivos
-            </Typography>
-          )}
+          {areaDevices.length > 0 ? (<DeviceContainer
+            devices={areaDevices}
+            onEdit={(device: InstalledDeviceType) => onEditDevice(device)} />)
+            // (
+            //   areaDevices.map((d) => (
+            //     <DeviceItemActivity
+            //       key={d.id}
+            //       device={d}
+            //       indentLevel={2}
+            //       onEdit={() => onEditDevice(d)}
+            //     />
+            //   ))
+            // ) 
+            : (
+              <Typography
+                variant="caption"
+                sx={{ pl: 4.5, color: "text.disabled" }}
+              >
+                Sin dispositivos
+              </Typography>
+            )}
         </Stack>
       </Collapse>
     </Box>

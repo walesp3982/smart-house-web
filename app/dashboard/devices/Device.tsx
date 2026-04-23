@@ -1,8 +1,27 @@
-import DevicesIcon from "@mui/icons-material/Devices";
 import { DeviceItem } from "@/component/Devices/Item";
 import { InstalledDeviceType, selectDeviceState, useInstalledDevicesStore } from "@/store/installed-devices-store";
 import { useStateDevice } from "@/hooks/useStateDevice";
 import { Box, Grid, Typography } from "@mui/material";
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DoorFrontIcon from '@mui/icons-material/DoorFront';
+import MotionPhotosOnIcon from '@mui/icons-material/MotionPhotosAuto';
+import ThermostatIcon from '@mui/icons-material/Thermostat';
+import VideocamIcon from '@mui/icons-material/Videocam';
+import DevicesOtherIcon from '@mui/icons-material/DevicesOther';
+import { SvgIconProps } from '@mui/material';
+
+const deviceIconMap: Record<string, React.ElementType> = {
+  light: LightModeIcon,
+  door: DoorFrontIcon,
+  movement: MotionPhotosOnIcon,
+  temperature: ThermostatIcon,
+  camera: VideocamIcon,
+};
+
+export function getDeviceIcon(type: string, props?: SvgIconProps): React.ReactElement {
+  const IconComponent = deviceIconMap[type.toLowerCase()] ?? DevicesOtherIcon;
+  return <IconComponent {...props} />;
+}
 
 interface DeviceContainerProps {
   devices: InstalledDeviceType[]; // tu tipo del store
@@ -41,10 +60,10 @@ export function DeviceItemActivity({
     selectDeviceState(device.id)
   )
 
-  const device_icon = (
-    <DevicesIcon fontSize="small" sx={{ color: "text.secondary" }} />
-  );
-
+  // const device_icon = (
+  //   <DevicesIcon fontSize="small" sx={{ color: "text.secondary" }} />
+  // );
+  const device_icon = getDeviceIcon(device.device.type)
   return (
     <>
       <DeviceItem
