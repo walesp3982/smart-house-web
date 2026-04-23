@@ -18,6 +18,7 @@ import {
     Devices as DeviceIcon,
     Timeline as TimelineIcon,
     Settings as SettingsIcon,
+    Chat as ChatIcon,
 } from "@mui/icons-material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -51,6 +52,11 @@ const menuItems: MenuItem[] = [
         text: t("menuSeguimiento"),
         icon: <TimelineIcon />,
         href: "/dashboard/tracking",
+    },
+    {
+        text: t("menuChat"),
+        icon: <ChatIcon />,
+        href: "/dashboard/chat",
     },
 ];
 
