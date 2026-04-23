@@ -18,6 +18,7 @@ const deviceIconMap: Record<string, React.ElementType> = {
   camera: VideocamIcon,
 };
 
+
 export function getDeviceIcon(type: string, props?: SvgIconProps): React.ReactElement {
   const IconComponent = deviceIconMap[type.toLowerCase()] ?? DevicesOtherIcon;
   return <IconComponent {...props} />;
@@ -89,6 +90,7 @@ export function DeviceItemActivity({
         indentLevel={indentLevel}
         active={true}
         device_icon={device_icon}
+        color="green"
       />
       <Box display={"block"}>
         <Paper sx={{
