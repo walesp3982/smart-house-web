@@ -7,10 +7,20 @@ interface DeviceItemProps {
     device_name: string
     active: boolean
     device_icon: React.ReactElement
+    color: StatusColor
 }
 
+const colorMap: Record<StatusColor, string> = {
+    green: "success.main",
+    yellow: "warning.main",
+    red: "error.main",
+};
+
+export type StatusColor = "red" | "yellow" | "green"
+
+
 export function DeviceItem({
-    indentLevel, onEdit, device_name, active = true, device_icon
+    indentLevel, onEdit, device_name, active = true, device_icon, color = "green"
 }: DeviceItemProps) {
     const paddingLeft = indentLevel === 0 ? 1.5 : indentLevel === 1 ? 3 : 4.5;
 
@@ -38,7 +48,7 @@ export function DeviceItem({
             <Box
                 sx={{
                     width: 8, height: 8, borderRadius: "50%",
-                    bgcolor: active ? "success.main" : "text.disabled",
+                    bgcolor: active ? colorMap[color] : "text.disabled",
                 }}
             />
         </Box>

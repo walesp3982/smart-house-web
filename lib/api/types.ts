@@ -38,6 +38,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/users/forgot-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Forgot Password */
+        post: operations["forgot_password_users_forgot_password_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/reset-password/{token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reset Password */
+        post: operations["reset_password_users_reset_password__token__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/users/me": {
         parameters: {
             query?: never;
@@ -411,6 +445,39 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/ask": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Ask Ollama
+         * @description Procesa preguntas y órdenes de voz mediante Ollama
+         *
+         *     Ejemplos:
+         *     - "¿Cuántas luces están prendidas?" → Consulta estado y responde
+         *     - "Apaga todas las luces" → Ejecuta el comando
+         *     - "¿Cuál es la temperatura?" → Consulta termostatos
+         *
+         *     Args:
+         *         request: Pregunta u orden del usuario
+         *         current_user: Usuario autenticado
+         *         ollama_service: Servicio de integración con Ollama
+         *
+         *     Returns:
+         *         AskResponse con la respuesta natural y el historial de conversación
+         */
+        post: operations["ask_ollama_ask_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/": {
         parameters: {
             query?: never;
@@ -447,6 +514,14 @@ export interface components {
          * @enum {string}
          */
         AreaType: "living_room" | "bedroom" | "kitchen" | "outside";
+        /**
+         * AskRequest
+         * @description Solicitud para consultar o controlar dispositivos mediante Ollama
+         */
+        AskRequest: {
+            /** Question */
+            question: string;
+        };
         /** Body_token_token_post */
         Body_token_token_post: {
             /** Grant Type */
@@ -478,11 +553,8 @@ export interface components {
         };
         /** Camera */
         Camera: {
-            /**
-             * Action
-             * @enum {string}
-             */
-            action: "on" | "off";
+            /** Action */
+            action: ("on" | "off") | null;
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -502,6 +574,8 @@ export interface components {
             type: components["schemas"]["DeviceType"];
             /** Activation Code */
             activation_code: string;
+            /** Chip Id */
+            chip_id: string | null;
         };
         /** CreateDeviceResponse */
         CreateDeviceResponse: {
@@ -540,6 +614,8 @@ export interface components {
             /** Device Uuid */
             device_uuid: string;
             type: components["schemas"]["DeviceType"];
+            /** Chip Id */
+            chip_id: string | null;
         };
         /**
          * DeviceType
@@ -548,11 +624,8 @@ export interface components {
         DeviceType: "light" | "thermostat" | "camera" | "door" | "movement";
         /** Door */
         Door: {
-            /**
-             * Action
-             * @enum {string}
-             */
-            action: "on" | "off";
+            /** Action */
+            action: ("on" | "off") | null;
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -563,6 +636,19 @@ export interface components {
         ErrorResponse: {
             /** Detail */
             detail: string;
+        };
+        /** ForgotPasswordRequest */
+        ForgotPasswordRequest: {
+            /**
+             * Email
+             * Format: email
+             */
+            email: string;
+        };
+        /** ForgotPasswordResponse */
+        ForgotPasswordResponse: {
+            /** Message */
+            message: string;
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -626,11 +712,8 @@ export interface components {
         };
         /** Light */
         Light: {
-            /**
-             * Action
-             * @enum {string}
-             */
-            action: "on" | "off";
+            /** Action */
+            action: ("on" | "off") | null;
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -639,33 +722,42 @@ export interface components {
         };
         /** MovementSensor */
         MovementSensor: {
-            /**
-             * Action
-             * @enum {string}
-             */
-            action: "on" | "off";
+            /** Action */
+            action: ("on" | "off") | null;
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
              */
             type: "movement";
         };
+        /** ResetPasswordRequest */
+        ResetPasswordRequest: {
+            /** Password */
+            password: string;
+        };
+        /** ResetPasswordResponse */
+        ResetPasswordResponse: {
+            /** Message */
+            message: string;
+        };
         /** TemperatureSensor */
         TemperatureSensor: {
-            /**
-             * Action
-             * @enum {string}
-             */
-            action: "on" | "off";
+            /** Action */
+            action: ("on" | "off") | null;
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
              */
             type: "temperature";
             /** Enable Auto */
-            enable_auto: boolean;
+            enable_auto: boolean | null;
             /** Has Limit */
-            has_limit: number;
+            has_limit: number | null;
+        };
+        /** TicketSocket */
+        TicketSocket: {
+            /** Ticket */
+            ticket: string;
         };
         /** Token */
         Token: {
@@ -692,12 +784,6 @@ export interface components {
         TranscribeResponse: {
             /** Transcription */
             transcription: string;
-            /** Action */
-            action: string;
-            /** Device */
-            device?: string | null;
-            /** Message */
-            message: string;
         };
         /** UpdateAreaRequest */
         UpdateAreaRequest: {
@@ -847,6 +933,92 @@ export interface operations {
             };
             /** @description Email ya registrado */
             400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    forgot_password_users_forgot_password_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ForgotPasswordRequest"];
+            };
+        };
+        responses: {
+            /** @description Se ha enviado un correo para restablecer la contraseña */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ForgotPasswordResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reset_password_users_reset_password__token__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResetPasswordRequest"];
+            };
+        };
+        responses: {
+            /** @description Contraseña restablecida correctamente */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ResetPasswordResponse"];
+                };
+            };
+            /** @description Token inválido */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Token expirado */
+            406: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -2087,7 +2259,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Transcripción y comando procesado exitosamente */
+            /** @description Transcripción de audio a texto */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2140,7 +2312,40 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
+                    "application/json": components["schemas"]["TicketSocket"];
+                };
+            };
+        };
+    };
+    ask_ollama_ask_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AskRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

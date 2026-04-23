@@ -6,12 +6,11 @@ import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import { ListItemIcon } from "@mui/material";
 import { ListItemText } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add"
-import DevicesIcon from "@mui/icons-material/Devices";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SettingsIcon from "@mui/icons-material/Settings"
 import type { HouseType, AreaType } from "@/store/house-store";
-import { DeviceItem } from "@/component/Devices/Item";
+import { DeviceContainer } from "./Device";
 import {
   Box,
   Collapse,
@@ -26,31 +25,8 @@ import {
 import { useState } from "react";
 import styles from "../Dashboard.module.css";
 
-interface DeviceItemProps {
-  device: InstalledDeviceType; // tu tipo del store
-  indentLevel?: 0 | 1 | 2;
-  onEdit: () => void;
-}
 
-export function DeviceItemActivity({
-  device,
-  indentLevel = 0,
-  onEdit,
-}: DeviceItemProps) {
-  const device_icon = (
-    <DevicesIcon fontSize="small" sx={{ color: "text.secondary" }} />
-  );
 
-  return (
-    <DeviceItem
-      device_name={device.name}
-      onEdit={onEdit}
-      indentLevel={indentLevel}
-      active={true}
-      device_icon={device_icon}
-    />
-  );
-}
 
 // ─── AreaItem ─────────────────────────────────────────────────────────────────
 interface AreaItemProps {
@@ -63,7 +39,7 @@ interface AreaItemProps {
 }
 
 function AreaItem({ area, devices, onEditDevice, onEditArea, onDeleteArea }: AreaItemProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const areaDevices = devices.filter((d) => d.area_id === area.id);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const menuOpen = Boolean(anchorEl)
@@ -153,23 +129,27 @@ function AreaItem({ area, devices, onEditDevice, onEditArea, onDeleteArea }: Are
 
       <Collapse in={open}>
         <Stack spacing={0.5} mt={0.5}>
-          {areaDevices.length > 0 ? (
-            areaDevices.map((d) => (
-              <DeviceItemActivity
-                key={d.id}
-                device={d}
-                indentLevel={2}
-                onEdit={() => onEditDevice(d)}
-              />
-            ))
-          ) : (
-            <Typography
-              variant="caption"
-              sx={{ pl: 4.5, color: "text.disabled" }}
-            >
-              Sin dispositivos
-            </Typography>
-          )}
+          {areaDevices.length > 0 ? (<DeviceContainer
+            devices={areaDevices}
+            onEdit={(device: InstalledDeviceType) => onEditDevice(device)} />)
+            // (
+            //   areaDevices.map((d) => (
+            //     <DeviceItemActivity
+            //       key={d.id}
+            //       device={d}
+            //       indentLevel={2}
+            //       onEdit={() => onEditDevice(d)}
+            //     />
+            //   ))
+            // ) 
+            : (
+              <Typography
+                variant="caption"
+                sx={{ pl: 4.5, color: "text.disabled" }}
+              >
+                Sin dispositivos
+              </Typography>
+            )}
         </Stack>
       </Collapse>
     </Box>
@@ -309,14 +289,18 @@ export function HouseItem({
         >
           <Stack spacing={0.5}>
             {/* devices directos sin área */}
-            {directDevices.map((d) => (
+            <DeviceContainer
+              devices={directDevices}
+              onEdit={(device: InstalledDeviceType) => onEditDevice(device)} />
+
+            {/* {directDevices.map((d) => (
               <DeviceItemActivity
                 key={d.id}
                 device={d}
                 indentLevel={1}
                 onEdit={() => onEditDevice(d)}
               />
-            ))}
+            ))} */}
 
             {directDevices.length > 0 &&
               house.areas &&
