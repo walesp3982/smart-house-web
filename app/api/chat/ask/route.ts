@@ -11,8 +11,8 @@ export async function POST(request: Request) {
     }
 
     const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
-    const cookieStore = cookies();
-    const token = await cookieStore.get("access_token")?.value;
+    const cookieStore = await cookies();
+    const token = cookieStore.get("access_token")?.value;
 
     const backendResponse = await fetch(`${apiUrl}/ask`, {
       method: "POST",
@@ -20,25 +20,25 @@ export async function POST(request: Request) {
         "Content-Type": "application/json",
         Accept: "text/event-stream",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        ...(request.headers.get("cookie")
-          ? { Cookie: request.headers.get("cookie")! }
-          : {}),
       },
       body: JSON.stringify({ question }),
     });
 
     if (!backendResponse.ok) {
-      const errorText = await backendResponse.text().catch(() => "Error en backend");
+      console.log(backendResponse);
+      const errorText = await backendResponse
+        .text()
+        .catch(() => "Error en backend");
       return NextResponse.json(
         { error: errorText || "Error al consultar el chat" },
-        { status: backendResponse.status }
+        { status: backendResponse.status },
       );
     }
 
     if (!backendResponse.body) {
       return NextResponse.json(
         { error: "No se recibió flujo de respuesta del chat" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -57,8 +57,8 @@ export async function POST(request: Request) {
       err instanceof Error
         ? err.message
         : typeof err === "string"
-        ? err
-        : "Error interno del servidor";
+          ? err
+          : "Error interno del servidor";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

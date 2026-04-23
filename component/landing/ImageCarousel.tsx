@@ -14,11 +14,11 @@ interface Image {
   alt: string;
 }
 const images: Image[] = [
-  { id: 1, src: "/images/img1.png", alt: "Img1" },
-  { id: 2, src: "/images/img2.png", alt: "Img2" },
-  { id: 3, src: "/images/img3.png", alt: "Img3" },
-  { id: 4, src: "/images/img4.png", alt: "Img4" },
-  { id: 5, src: "/images/img5.png", alt: "Img5" },
+  { id: 1, src: "/images/img1.jpeg", alt: "Img1" },
+  { id: 2, src: "/images/img2.jpeg", alt: "Img2" },
+  { id: 3, src: "/images/img3.jpeg", alt: "Img3" },
+  { id: 4, src: "/images/img4.jpeg", alt: "Img4" },
+  { id: 5, src: "/images/img5.jpeg", alt: "Img5" },
 ];
 
 // Duplicamos las imágenes para que el loop sea infinito y sin cortes
