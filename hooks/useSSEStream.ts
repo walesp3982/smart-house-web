@@ -19,7 +19,7 @@ export function useSSEStream(endpoint: string) {
         content: userInput,
       };
 
-      const aiId = crypto.randomUUID();
+      let aiId = crypto.randomUUID();
       const aiMsg: Message = {
         id: aiId,
         role: "assistant",
@@ -59,15 +59,32 @@ export function useSSEStream(endpoint: string) {
 
           if (line.startsWith("data: ")) {
             const chunk = line.slice(6);
-            // Limpia las comillas del formato que tienes
             const clean = chunk.replace(/^"|"$/g, "");
-            if (clean && clean !== "null") {
+
+            if (!clean || clean === "null") continue;
+
+            // Nueva burbuja
+            if (clean.includes("[NEXT_BUBBLE]")) {
+              const closingId = aiId;
               setMessages((prev) =>
                 prev.map((m) =>
-                  m.id === aiId ? { ...m, content: m.content + clean } : m,
+                  m.id === closingId ? { ...m, streaming: false } : m,
                 ),
               );
+
+              aiId = crypto.randomUUID();
+              setMessages((prev) => [
+                ...prev,
+                { id: aiId, role: "assistant", content: "", streaming: true },
+              ]);
+              continue;
             }
+
+            setMessages((prev) =>
+              prev.map((m) =>
+                m.id === aiId ? { ...m, content: m.content + clean } : m,
+              ),
+            );
           }
         }
       }
