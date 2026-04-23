@@ -16,7 +16,7 @@ const colorMap: Record<StatusColor, string> = {
     red: "error.main",
 };
 
-type StatusColor = "red" | "yellow" | "green"
+export type StatusColor = "red" | "yellow" | "green"
 
 
 export function DeviceItem({

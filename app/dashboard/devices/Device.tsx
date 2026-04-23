@@ -1,4 +1,4 @@
-import { DeviceItem } from "@/component/Devices/Item";
+import { DeviceItem, StatusColor } from "@/component/Devices/Item";
 import { DeviceStatus, InstalledDeviceType, selectDeviceState, useInstalledDevicesStore } from "@/store/installed-devices-store";
 import { useStateDevice } from "@/hooks/useStateDevice";
 import { Box, Grid, Paper } from "@mui/material";
@@ -61,6 +61,7 @@ export function DeviceItemActivity({
     selectDeviceState(device.id)
   )
 
+  const color_status: StatusColor = status === "open" ? "green" : status === "error" ? "red" : "yellow"
   const text_status = (status: DeviceStatus): string => {
     switch (status) {
       case "idle":
@@ -90,7 +91,7 @@ export function DeviceItemActivity({
         indentLevel={indentLevel}
         active={true}
         device_icon={device_icon}
-        color="green"
+        color={color_status}
       />
       <Box display={"block"}>
         <Paper sx={{
