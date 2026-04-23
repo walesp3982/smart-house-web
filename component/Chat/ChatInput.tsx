@@ -10,6 +10,7 @@ import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
 import SendIcon from "@mui/icons-material/Send";
 import { useAudioRecorder } from "@/hooks/useAudioRecorder";
+import { get_transcription } from "@/lib/api/services/transcription";
 
 interface ChatInputProps {
   onSend: (text: string) => void;
@@ -20,11 +21,9 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
   const [value, setValue] = useState("");
 
   const { isRecording, start, stop } = useAudioRecorder(async (blob) => {
-    const form = new FormData();
-    form.append("file", blob, "audio.webm");
-    const res = await fetch("/api/voice", { method: "POST", body: form });
-    const { transcript } = await res.json();
-    onSend(transcript);
+    const { data, error } = await get_transcription(blob);
+    if (error || !data) return;
+    onSend(data.transcription);
   });
 
   const handleSend = () => {
