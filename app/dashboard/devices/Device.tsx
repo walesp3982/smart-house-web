@@ -1,7 +1,7 @@
 import { DeviceItem } from "@/component/Devices/Item";
-import { InstalledDeviceType, selectDeviceState, useInstalledDevicesStore } from "@/store/installed-devices-store";
+import { DeviceStatus, InstalledDeviceType, selectDeviceState, useInstalledDevicesStore } from "@/store/installed-devices-store";
 import { useStateDevice } from "@/hooks/useStateDevice";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Paper } from "@mui/material";
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DoorFrontIcon from '@mui/icons-material/DoorFront';
 import MotionPhotosOnIcon from '@mui/icons-material/MotionPhotosAuto';
@@ -60,6 +60,23 @@ export function DeviceItemActivity({
     selectDeviceState(device.id)
   )
 
+  const text_status = (status: DeviceStatus): string => {
+    switch (status) {
+      case "idle":
+        return "Intentando conectarse..."
+      case "fetching-ticket":
+        return "Obteniendo token..."
+      case "connecting":
+        return "Conectando..."
+      case "open":
+        return "Conexión exitosa"
+      case "error":
+        return "Error en la conexión"
+      case "closed":
+        return "Conexión cerrada"
+    }
+  }
+  const json_message = JSON.parse(lastMessage ?? '{"message": "json no encontrado"}');
   // const device_icon = (
   //   <DevicesIcon fontSize="small" sx={{ color: "text.secondary" }} />
   // );
@@ -73,12 +90,21 @@ export function DeviceItemActivity({
         active={true}
         device_icon={device_icon}
       />
-      <Typography>
-        {status}
-      </Typography>
-      <Typography>
-        {lastMessage}
-      </Typography>
+      <Box display={"block"}>
+        <Paper sx={{
+          padding: 1,
+        }}>
+          {text_status(status)}
+        </Paper>
+        <Paper sx={{
+          padding: 1,
+        }}>
+          {json_message.message}
+        </Paper>
+
+
+      </Box>
+
     </>
 
   );
