@@ -17,7 +17,6 @@ import {
   Home as HomeIcon,
   Devices as DeviceIcon,
   Timeline as TimelineIcon,
-  Settings as SettingsIcon,
   Chat as ChatIcon,
 } from "@mui/icons-material";
 import Link from "next/link";
@@ -25,6 +24,8 @@ import { usePathname } from "next/navigation";
 import styles from "./Dashboard.module.css";
 import { useUserStore } from "@/store/user-store";
 import { translations } from "./tranlations";
+import { Logout } from "@mui/icons-material";
+import { useLogout } from "@/hooks/useLogout";
 
 const t = (key: keyof typeof translations) => translations[key];
 
@@ -127,6 +128,7 @@ function SideBarHeader() {
 }
 
 function SideBarFooter({ userProfile }: { userProfile: UserProfile | null }) {
+  const { logout } = useLogout();
   if (!userProfile) {
     return (
       <Box className={styles.userFooter}>
@@ -150,8 +152,13 @@ function SideBarFooter({ userProfile }: { userProfile: UserProfile | null }) {
           {userProfile.email}
         </Typography>
       </Box>
-      <IconButton onClick={undefined} className={styles.settingsIcon}>
-        <SettingsIcon fontSize="small" />
+      <IconButton
+        onClick={logout}
+        className={styles.settingsIcon}
+        title="Cerrar sesión"
+        sx={{ color: "error.main" }}
+      >
+        <Logout fontSize="small" />
       </IconButton>
     </Box>
   );

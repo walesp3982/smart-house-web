@@ -6,7 +6,6 @@ import theme from "@/theme";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Toaster } from "sonner";
-
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
