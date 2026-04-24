@@ -37,7 +37,7 @@ export const translations = {
   trackingTitle: "Seguimiento de Actividad",
   trackingDescription:
     "Aquí podrás ver el historial de eventos de tus dispositivos.",
-  trackingPlaceholder: "Gráficos y métricas próximamente.",
+  trackingPlaceholder: "No hay historial de algún dispositivo actualmente.",
   snackbarDeviceAdded: "Dispositivo agregado correctamente",
   snackbarDeviceUpdated: "Dispositivo actualizado",
   snackbarDeviceDeleted: "Dispositivo eliminado",
