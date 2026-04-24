@@ -12,7 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import HomeIcon from "@mui/icons-material/Home";
 import { Paper } from "@mui/material";
 // ─── Pon aquí la ruta de tu imagen, ej: '/images/img4.jpeg' ──────────────
-const CTA_IMAGE_SRC = "/images/img2.png";
+const CTA_IMAGE_SRC = "/images/img6.jpeg";
 // ─────────────────────────────────────────────────────────────────────────
 interface CTASectionProps {
   onClickStarted: () => void;

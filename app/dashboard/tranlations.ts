@@ -4,6 +4,7 @@ export const translations = {
   menuInicio: "Inicio",
   menuDispositivos: "Dispositivos",
   menuSeguimiento: "Seguimiento",
+  menuChat: "Chat",
   welcome: "Bienvenido",
   enterDeviceCode: "Ingresa el código de tu dispositivo para agregarlo.",
   deviceCodeLabel: "Código de dispositivo",
@@ -35,7 +36,7 @@ export const translations = {
   houseDescriptionLabel: "Descripción (opcional)",
   trackingTitle: "Seguimiento de Actividad",
   trackingDescription:
-    "Aquí podrás ver estadísticas y eventos de tus dispositivos.",
+    "Aquí podrás ver el historial de eventos de tus dispositivos.",
   trackingPlaceholder: "Gráficos y métricas próximamente.",
   snackbarDeviceAdded: "Dispositivo agregado correctamente",
   snackbarDeviceUpdated: "Dispositivo actualizado",
@@ -52,4 +53,13 @@ export const translations = {
   houseOfficeDesc: "Oficina central",
   houseCountry: "Casa de Campo",
   houseCountryDesc: "Casa de vacaciones",
+  chatTitle: "Asistente Inteligente",
+  chatSubtitle: "Haz preguntas sobre tus dispositivos o controla tu hogar",
+  chatPlaceholder: "Escribe tu pregunta...",
+  chatSendButton: "Enviar",
+  chatRecordButton: "Grabar mensaje",
+  chatStopRecordButton: "Detener grabación",
+  chatEmptyState:
+    "Inicia una conversación. Puedes preguntar sobre tus dispositivos, hacer órdenes de control, o simplemente conversar.",
+  chatErrorTranscribe: "No se pudo transcribir el audio",
 };
