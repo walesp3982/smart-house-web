@@ -36,7 +36,7 @@ export const translations = {
   houseDescriptionLabel: "Descripción (opcional)",
   trackingTitle: "Seguimiento de Actividad",
   trackingDescription:
-    "Aquí podrás ver estadísticas y eventos de tus dispositivos.",
+    "Aquí podrás ver el historial de eventos de tus dispositivos.",
   trackingPlaceholder: "Gráficos y métricas próximamente.",
   snackbarDeviceAdded: "Dispositivo agregado correctamente",
   snackbarDeviceUpdated: "Dispositivo actualizado",
@@ -59,7 +59,7 @@ export const translations = {
   chatSendButton: "Enviar",
   chatRecordButton: "Grabar mensaje",
   chatStopRecordButton: "Detener grabación",
-  chatEmptyState: "Inicia una conversación. Puedes preguntar sobre tus dispositivos, hacer órdenes de control, o simplemente conversar.",
+  chatEmptyState:
+    "Inicia una conversación. Puedes preguntar sobre tus dispositivos, hacer órdenes de control, o simplemente conversar.",
   chatErrorTranscribe: "No se pudo transcribir el audio",
 };
-
