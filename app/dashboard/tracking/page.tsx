@@ -99,7 +99,7 @@ export default function TrackingPage() {
       <Typography color="text.secondary" sx={{ mb: 3 }}>
         {t("trackingDescription")}
       </Typography>
-      {!data ? (
+      {!data || data.length == 0 ? (
         <Box className={styles.trackingPlaceholder}>
           <Typography variant="body2" color="text.secondary" align="center">
             {t("trackingPlaceholder")}
