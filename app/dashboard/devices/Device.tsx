@@ -102,13 +102,31 @@ export function DeviceItemActivity({
       >
         <Stack spacing={2}>
           <KeyValueDisplay data={JSON.parse(lastMessage ?? "{}")} />
-          <Button fullWidth variant="contained">
-            Encender
-          </Button>
+          <ButtonTurnDevice
+            executeAction={() => {
+              console.log("Ejecutar acción para dispositivo", device.id);
+            }}
+            status={"on"}
+          />
         </Stack>
       </Paper>
     </>
   );
+}
+
+interface ButtonTurnDeviceProps {
+  executeAction: () => void;
+  status?: "on" | "off";
+}
+
+export function ButtonTurnDevice({ executeAction, status = undefined }: ButtonTurnDeviceProps) {
+  const textButton = status === "on" ? "Apagar" : status === "off" ? "Encender" : "No disponible";
+  return (
+    <Button fullWidth variant="contained" onClick={executeAction} disabled={status === undefined}
+    color={status === "on" ? "error" : status === "off" ? "success" : "primary"}>
+      {textButton}
+    </Button>
+  )
 }
 
 const EXCLUDED_KEYS = ["type", "ip", "message", "status"];
