@@ -111,11 +111,11 @@ export function DeviceItemActivity({
             executeAction={() => {
               console.log("Ejecutar acción para dispositivo", device.id);
               console.log("Estado actual:", status);
-              console.log("Último mensaje:", lastMessage);
+              console.log("Último mensaje:", jsonMessage);
               turnDevice();
               
             }}
-            status={jsonMessage.state}
+            status={jsonMessage.status === "online" ? jsonMessage.state : undefined}
             loading={loading}
           />
         </Stack>
