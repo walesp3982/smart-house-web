@@ -78,15 +78,15 @@ type DeviceCommand =
   | {
       action: "on" | "off";
       type: "temperature";
-      enable_auto: boolean;
-      has_limit: number;
+      enable_auto?: boolean;
+      has_limit?: number;
     }
   | { action: "on" | "off"; type: "camera" };
 export async function sendInstalledDeviceCommand(
   installedDeviceId: number,
   body: DeviceCommand,
 ) {
-  return await apiClient.POST(
+  const {data, error, response} = await apiClient.POST(
     "/installed_devices/{installed_device_id}/command",
     {
       params: {
@@ -95,4 +95,5 @@ export async function sendInstalledDeviceCommand(
       body,
     },
   );
+  return { data, error, ok: response.ok, status: response.status };
 }
