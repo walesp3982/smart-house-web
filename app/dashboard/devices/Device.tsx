@@ -22,6 +22,7 @@ import ThermostatIcon from "@mui/icons-material/Thermostat";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import DevicesOtherIcon from "@mui/icons-material/DevicesOther";
 import { SvgIconProps } from "@mui/material";
+import { useTurnDevice } from "@/hooks/useTurnDevice";
 
 const deviceIconMap: Record<string, React.ElementType> = {
   light: LightModeIcon,
@@ -75,6 +76,10 @@ export function DeviceItemActivity({
     selectDeviceState(device.id),
   );
 
+  const jsonMessage = JSON.parse(lastMessage ?? "{}");
+  
+  const {turnDevice, loading} = useTurnDevice(device.id, device.device.type,jsonMessage.state);
+
   const color_status: StatusColor =
     status === "open" ? "green" : status === "error" ? "red" : "yellow";
   const device_icon = getDeviceIcon(device.device.type);
@@ -101,14 +106,38 @@ export function DeviceItemActivity({
         }}
       >
         <Stack spacing={2}>
-          <KeyValueDisplay data={JSON.parse(lastMessage ?? "{}")} />
-          <Button fullWidth variant="contained">
-            Encender
-          </Button>
+          <KeyValueDisplay data={jsonMessage} />
+          <ButtonTurnDevice
+            executeAction={() => {
+              console.log("Ejecutar acción para dispositivo", device.id);
+              console.log("Estado actual:", status);
+              console.log("Último mensaje:", lastMessage);
+              turnDevice();
+              
+            }}
+            status={jsonMessage.state}
+            loading={loading}
+          />
         </Stack>
       </Paper>
     </>
   );
+}
+
+interface ButtonTurnDeviceProps {
+  executeAction: () => void;
+  status?: "on" | "off";
+  loading?: boolean;
+}
+
+export function ButtonTurnDevice({ executeAction, status = undefined, loading = false}: ButtonTurnDeviceProps) {
+  const textButton = status === "on" ? "Apagar" : status === "off" ? "Encender" : "No disponible";
+  return (
+    <Button fullWidth variant="contained" onClick={executeAction} disabled={status === undefined || loading}
+    color={status === "on" ? "error" : status === "off" ? "success" : "primary"}>
+      {textButton}
+    </Button>
+  )
 }
 
 const EXCLUDED_KEYS = ["type", "ip", "message", "status"];

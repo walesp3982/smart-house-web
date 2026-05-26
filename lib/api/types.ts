@@ -554,7 +554,7 @@ export interface components {
         /** Camera */
         Camera: {
             /** Action */
-            action: ("on" | "off") | null;
+            action?: ("on" | "off") | null;
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -625,7 +625,7 @@ export interface components {
         /** Door */
         Door: {
             /** Action */
-            action: ("on" | "off") | null;
+            action?: ("on" | "off") | null;
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -713,7 +713,7 @@ export interface components {
         /** Light */
         Light: {
             /** Action */
-            action: ("on" | "off") | null;
+            action?: ("on" | "off") | null;
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -723,7 +723,7 @@ export interface components {
         /** MovementSensor */
         MovementSensor: {
             /** Action */
-            action: ("on" | "off") | null;
+            action?: ("on" | "off") | null;
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -743,16 +743,16 @@ export interface components {
         /** TemperatureSensor */
         TemperatureSensor: {
             /** Action */
-            action: ("on" | "off") | null;
+            action?: ("on" | "off") | null;
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
              */
             type: "temperature";
             /** Enable Auto */
-            enable_auto: boolean | null;
+            enable_auto?: boolean | null;
             /** Has Limit */
-            has_limit: number | null;
+            has_limit?: number | null;
         };
         /** TicketSocket */
         TicketSocket: {
