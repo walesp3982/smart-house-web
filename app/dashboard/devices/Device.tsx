@@ -23,6 +23,8 @@ import VideocamIcon from "@mui/icons-material/Videocam";
 import DevicesOtherIcon from "@mui/icons-material/DevicesOther";
 import { SvgIconProps } from "@mui/material";
 import { useTurnDevice } from "@/hooks/useTurnDevice";
+import { DraggableVideoDialog } from "@/component/Devices/Camera";
+import { useState } from "react";
 
 const deviceIconMap: Record<string, React.ElementType> = {
   light: LightModeIcon,
@@ -77,8 +79,8 @@ export function DeviceItemActivity({
   );
 
   const jsonMessage = JSON.parse(lastMessage ?? "{}");
-  
-  const {turnDevice, loading} = useTurnDevice(device.id, device.device.type,jsonMessage.state);
+
+  const { turnDevice, loading } = useTurnDevice(device.id, device.device.type, jsonMessage.state);
 
   const color_status: StatusColor =
     status === "open" ? "green" : status === "error" ? "red" : "yellow";
@@ -107,13 +109,16 @@ export function DeviceItemActivity({
       >
         <Stack spacing={2}>
           <KeyValueDisplay data={jsonMessage} />
+          {device.device.type === "camera" && jsonMessage.state === "on" && jsonMessage.status === "online" && (
+            <CameraDialog streamUrl={jsonMessage.stream_url} title={device.name} />
+          )}
           <ButtonTurnDevice
             executeAction={() => {
               console.log("Ejecutar acción para dispositivo", device.id);
               console.log("Estado actual:", status);
               console.log("Último mensaje:", jsonMessage);
               turnDevice();
-              
+
             }}
             status={jsonMessage.status === "online" ? jsonMessage.state : undefined}
             loading={loading}
@@ -130,16 +135,41 @@ interface ButtonTurnDeviceProps {
   loading?: boolean;
 }
 
-export function ButtonTurnDevice({ executeAction, status = undefined, loading = false}: ButtonTurnDeviceProps) {
+export function ButtonTurnDevice({ executeAction, status = undefined, loading = false }: ButtonTurnDeviceProps) {
   const textButton = status === "on" ? "Apagar" : status === "off" ? "Encender" : "No disponible";
   return (
     <Button fullWidth variant="contained" onClick={executeAction} disabled={status === undefined || loading}
-    color={status === "on" ? "error" : status === "off" ? "success" : "primary"}>
+      color={status === "on" ? "error" : status === "off" ? "success" : "primary"}>
       {textButton}
     </Button>
   )
 }
 
+interface CameraDialogProps {
+  streamUrl: string;
+  title?: string;
+}
+
+function CameraDialog({ streamUrl, title = "Stream" }: CameraDialogProps) {
+  const [open, setOpen] = useState(false);
+  return (<>
+    <Button
+      variant="outlined"
+      color="success"
+      startIcon={<VideocamIcon />}
+      onClick={() => setOpen(v => !v)}
+    >
+      {open ? 'Cerrar stream' : 'Ver stream'}
+    </Button>
+
+    <DraggableVideoDialog
+      open={open}
+      onClose={() => setOpen(false)}
+      streamUrl={streamUrl}
+      title={title}
+    />
+  </>)
+}
 const EXCLUDED_KEYS = ["type", "ip", "message", "status"];
 interface StateDeviceDisplay {
   data: Record<string, string | number>;
