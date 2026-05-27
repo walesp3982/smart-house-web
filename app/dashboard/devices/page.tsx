@@ -1,0 +1,161 @@
+"use client";
+
+import { Paper, Typography, Stack, Box, Button, Grid } from "@mui/material";
+import styles from "../Dashboard.module.css";
+import { translations } from "../tranlations";
+import { useState } from "react";
+import { AreaType, HouseType, useHouseStore } from "@/store/house-store";
+
+import { useInstalledDevicesStore } from "@/store/installed-devices-store";
+const t = (key: keyof typeof translations) => translations[key];
+import type { InstalledDeviceType } from "@/store/installed-devices-store";
+import { EditDeviceDrawer } from "./EditDeviceDrawer";
+import { CreateNewHouseDialog } from "./CreateNewHouseDialog";
+import { HouseItem } from "./ListDevices";
+import { DeviceContainer } from "./Device";
+import EditHouseDrawer from "./EditHouseDrawer";
+import { DeleteHouseDialog } from "./DeleteHouseDialog";
+import { CreateNewAreaDialog } from "./CreateNewAreaDialog";
+import { DeleteAreaDialog } from "./DeleteAreaDialog";
+import { EditAreaDrawer } from "./EditAreaDrawer";
+
+interface HeaderDevicesProps {
+  openDialogHouse: () => void;
+}
+
+function HeaderDevices({ openDialogHouse }: HeaderDevicesProps) {
+  return (
+    <Grid container spacing={2} alignItems="center">
+      <Grid size={{ xs: 12, md: 6 }}>
+        <Typography variant="h4" className={styles.title}>
+          {t("myDevices")}
+        </Typography>
+      </Grid>
+      <Grid size={{ xs: 12, md: 6 }}>
+        <Button
+          variant="contained"
+          size="large"
+          fullWidth
+          onClick={openDialogHouse}
+        >
+          Agregar Casa
+        </Button>
+      </Grid>
+    </Grid>
+  );
+}
+
+// ─── DevicesPage ──────────────────────────────────────────────────────────────
+export default function DevicesPage() {
+  const [dialogNewHouse, setDialogNewHouse] = useState(false);
+  const houses = useHouseStore((state) => state.house);
+  const installedDevices = useInstalledDevicesStore(
+    (state) => state.installedDevices,
+  );
+  const [editingDevice, setEditingDevice] =
+    useState<InstalledDeviceType | null>(null);
+  const [editingHouse, setEditingHouse] = useState<HouseType | null>(null);
+  const [deletingHouse, setDeletingHouse] = useState<HouseType | null>(null);
+  const [createArea, setCreateArea] = useState<HouseType | null>(null)
+  // devices sin ninguna casa asignada
+  const orphanDevices = installedDevices?.filter((d) => !d.house_id) ?? [];
+  const [deleteArea, setDeleteArea] = useState<AreaType | null>(null)
+  const [editArea, setEditArea] = useState<AreaType | null>(null)
+
+  return (
+    <>
+      <Paper elevation={0} className={styles.card}>
+        {/* Header */}
+        <HeaderDevices openDialogHouse={() => setDialogNewHouse(true)} />
+
+        <Stack spacing={2} mt={2}>
+          {/* Sección: sin casa */}
+          {orphanDevices.length > 0 && (
+            <Box>
+              <Typography
+                variant="caption"
+                sx={{ color: "text.secondary", pl: 0.5 }}
+              >
+                Sin casa asignada
+              </Typography>
+              <Stack spacing={0.5} mt={0.5}>
+                <DeviceContainer
+                  devices={orphanDevices}
+                  onEdit={(device: InstalledDeviceType) => setEditingDevice(device)} />
+              </Stack>
+            </Box>
+          )}
+
+          {/* Sección: casas */}
+          {houses?.map((house) => (
+            <HouseItem
+              key={house.id}
+              house={house}
+              onEditDevice={(device: InstalledDeviceType) =>
+                setEditingDevice(device)
+              }
+              allDevices={installedDevices ?? []}
+              onEditHouse={(house: HouseType) => {
+                setEditingHouse(house);
+              }}
+              onDeleteHouse={(house: HouseType) => {
+                setDeletingHouse(house);
+              }}
+              onCreateArea={(house: HouseType) => {
+                setCreateArea(house)
+              }}
+              onDeleteArea={(area: AreaType) => {
+                setDeleteArea(area)
+              }}
+              onEditArea={(area: AreaType) => {
+                setEditArea(area)
+              }}
+            />
+          ))}
+        </Stack>
+      </Paper>
+
+      <CreateNewHouseDialog
+        activatedDialog={dialogNewHouse}
+        desactivatedDialog={() => setDialogNewHouse(false)}
+      />
+
+      <DeleteHouseDialog
+        house={deletingHouse}
+        activatedDialog={!!deletingHouse}
+        desactivatedDialog={() => setDeletingHouse(null)}
+      />
+
+      <CreateNewAreaDialog
+        house_id={createArea?.id ?? null}
+        active={!!createArea}
+        desactivate={() => setCreateArea(null)}
+      />
+
+
+      <DeleteAreaDialog
+        area={deleteArea}
+        active={!!deleteArea}
+        desactivate={() => setDeleteArea(null)}
+      />
+
+      <EditDeviceDrawer
+        device={editingDevice}
+        open={!!editingDevice}
+        onClose={() => setEditingDevice(null)}
+      />
+
+      <EditHouseDrawer
+        house={editingHouse}
+        open={!!editingHouse}
+        onClose={() => setEditingHouse(null)}
+      />
+
+      <EditAreaDrawer
+        area={editArea}
+        onClose={() => setEditArea(null)}
+        open={!!editArea}
+      />
+    </>
+  );
+}

@@ -1,0 +1,13 @@
+.title {
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  color: var(--mui-palette-text-primary) !important;
+  letter-spacing: -0.5px !important;
+  margin-bottom: 8px !important;
+}
+
+.subtitle {
+  color: var(--mui-palette-text-secondary) !important;
+  margin-bottom: 32px !important;
+  font-size: 14px !important;
+}

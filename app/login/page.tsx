@@ -1,44 +1,17 @@
 "use client";
 
-import { useState } from "react";
 import "./login.css";
+import LoginForm from "./LoginForm";
+import Background from "@/component/Background";
 
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Container from "@mui/material/Container";
 
 export default function Login() {
-  const [showPassword, setShowPassword] = useState(false);
-
   return (
-    <div className="container">
-      <div className="card">
-        <h1>Iniciar Sesión</h1>
-
-        <form>
-          <input
-            type="email"
-            placeholder="Correo electrónico"
-            className="input"
-          />
-
-          <div className="password-container">
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Contraseña"
-              className="input"
-            />
-
-            <span
-              className="eye"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <Visibility /> : <VisibilityOff />}
-            </span>
-          </div>
-
-          <button className="button">Ingresar</button>
-        </form>
-      </div>
-    </div>
+    <Background>
+      <Container maxWidth="sm">
+        <LoginForm></LoginForm>
+      </Container>
+    </Background>
   );
 }
